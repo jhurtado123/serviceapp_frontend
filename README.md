@@ -72,7 +72,7 @@ A complete system of Rewards and Levels for the users.
 | GET  | `/logout` 				| logout session   |                          |
 
 ​
-##VIEWS
+## VIEWS
 ​
 | View(Component) 	| Path             | Description              |
 | ------------------| -----------------| ------------------------ |
