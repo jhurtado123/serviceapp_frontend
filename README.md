@@ -89,7 +89,7 @@ A complete system of Rewards and Levels for the users.
 | ChatList				  | `/chats`         | chat list       		      |	
 | Chat	            | `/chat/:id`	     | chat page          		  |   
 | Rewards           | `/rewards`    	 | rewards page 				    |
-| Notifications     | '/Notifications' | notifications page       |
+| Notifications     | `/Notifications` | notifications page       |
 
 ## Links
 ​
