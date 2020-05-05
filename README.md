@@ -14,7 +14,7 @@ It's an app for posting ads or/and hiring neighbours of your City to do little j
 ​
 ## Motivation
 ​
-Connect the community of neighbours by helping each other with his knowledge.
+Create and app with react that connects the community of neighbours by helping each other with his knowledge.
 ​
 ## User Stories
 ​
@@ -35,10 +35,16 @@ Connect the community of neighbours by helping each other with his knowledge.
 **Ad create** - As a user I want to create an ad so that I can offer my services to others.
  
 **Ad detail** - As a user I want to see the ad details and been able to contact the Publisher
+
+**Ad edit** - As a user I want to edit the ad details.
+
+**Ad delete** - As a user I want to delete an ad.
  
 **Hire Ad** - As a user I want to be able to hire an Ad.
  
 **Chat** - AS a User I want to be able to chat with other users to negotiate the conditions of the ad.
+
+**Notifications** - AS a User I want to be able to see the notifications of my user.
  
 **Buy Tokens** - As a User I want to be able to buy more tokens.
  
@@ -47,134 +53,44 @@ Connect the community of neighbours by helping each other with his knowledge.
 ​
 ## Backlog
 ​
-List of other features outside of the MVPs scope
-​
+List of other features outside of the MVPs scope:
+
+Chat
+
 A complete system of Rewards and Levels for the users.
-​
+
 ## ROUTES:
 ​
 ### Endpoints Auth
 ​
 ​
-| Method | Path      				| description      | Body                     |
-| :----: | -----------------| -----------------| ------------------------ |
-|  GET   | `/whoami` 				| who am i         |                          |
-|  POST  | `/signup` 				| signup a user    | `{ username, password }` |
-|  POST  | `/login`  				| login a user     | `{ username, password }` |
-|  GET   | `/logout` 				| logout session   |                          |
-|	 GET	 | `/home` 					| homepage         | 				                  |
-|  GET   | `/search` 				| search page      | 	`{filters }`            |
-|  GET   | `/ad/:id` 				| ad details       |          		        		|
-|  GET   | `/chats`  				| chat list        |          		            |	
-|  GET   | `/chat/:id`			| chat page        |          		            |   
-|  GET   | `/profile/:id`		| users profile    |  				   					    |
-|  GET   | `/profile/edit` 	| edit user profile|                          |
-|  PUT   | `/profile/edit`  | edit user profile| {userData}               |
-|  PUT   | `/ad/:id/edit`   | edit ad   			 | {adData}                 |
-|  PUT   | `/ad/:id/edit`   | edit ad          | {adData}                 |
-|  GET   | `/rewards`       | rewards page   	 |  				                |
+|Method| Path      				| description      | Body                     |
+|------| -----------------| -----------------| ------------------------ |
+| GET  | `/whoami` 				| who am i         |                          |
+| POST | `/signup` 				| signup a user    | `{ username, password }` |
+| POST | `/login`  				| login a user     | `{ username, password }` |
+| GET  | `/logout` 				| logout session   |                          |
+
 ​
+##VIEWS
 ​
-## Models
-​
-User model
-​
-```javascript
-{
-	username: String,
-	password: String,
-	name: String,
-	role: Array,
-	profile_image: String,
-	description: String,
-	level: Number,
-	address: String,
-	review: {
-		content: String,
-		rating: Number (1-5),
-		userid: ObjectId<User>,
-	}
-}
-```
-​
-Ad model
-​
-```javascript
-{
-	owner: ObjectId<User>,
-	name: String,
-	description: String,
-	coords: { 
-		lat: Number,
-		lng: Number,
-	}
-	price: Number,
-	tags: Array,
-	category: Array,
-	image: String,
-	deletedad: DateTime,
-	Appointment: {
-		date: DateTime
-		saler: ObjectId<User>
-		buyer: ObjectId<User>
-		status: String
-	} 
-}
-```
-​
-Wallet model
-​
-```javascript
-{
-	owner: ObjectId<User>,
-	tokens: Number,
-	history: [{ 
-		chatid: ObjectId<Chat>,
-		tokens: Number,
-	}]
-}
-```
-​
-Chat model
-​
-```javascript
-{
-	adid: ObjectId<Ad>,
-	saler: ObjectId<User>,
-	buyer: ObjectId<User>,
-	pendingtokens: Number,
-	description: String,
-	Appointment: {
-		type: Boolean,
-		default: false, 
-	}
-}
-```
-​
-Message model
-​
-```javascript
-{
-	chatid: ObjectId<Chat>,
-	senderid: ObjectId<User>,
-	content: String,
-	type: String,
-	isReaded: {
-		type: Boolean,
-		default: false, 
-	}
-}
-```
-​
-SupportRequest model
-​
-```javascript
-{
-	saler: ObjectId<User>,
-	buyer: ObjectId<User>,
-}
-```
-​
+| View(Component) 	| Path             | Description              |
+| ------------------| -----------------| ------------------------ |
+|	Home	      			| `/`              | home                     |
+| Signup		        | `/signup`        | signup page 	   					|
+| Login		          | `/login`         | login page 	   					|
+| AdList				    | `/ads`           | list of ads              |
+| AdCreate          | `/ad/create`     | create and ad page       |
+| AdDetail				  | `/ad/:id`        | detail of an ad       		|
+| AdEdit            | `/ad/:id/edit`   | edit and ad              |
+| Favourites        | `/favourites`    | list of favourite ads    |
+| Profile		        | `/profile/:id`   | user profile 	   				|
+| ProfileEdit       |`/profile/edit`   | edit user profile        |
+| ChatList				  | `/chats`         | chat list       		      |	
+| Chat	            | `/chat/:id`	     | chat page          		  |   
+| Rewards           | `/rewards`    	 | rewards page 				    |
+| Notifications     | '/Notifications' | notifications page       |
+
 ## Links
 ​
 ### Trello
