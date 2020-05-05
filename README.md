@@ -10,7 +10,7 @@ start with `npm run start-dev`
 ​
 ## Description
 ​
-It's an API that serves data  and allows the React Application to manage database. Furthermore,  it allows admin users to manage data as a Root User.
+It's an app for posting ads or/and hiring neighbours of your City to do little jobs like fixing a pipe. The user will pay with tokens. It has a reward system.
 ​
 ## Motivation
 ​
@@ -49,7 +49,7 @@ Connect the community of neighbours by helping each other with his knowledge.
 ​
 List of other features outside of the MVPs scope
 ​
-Backoffice: allow the root users to manage the information from a backend administrator.
+A complete system of Rewards and Levels for the users.
 ​
 ## ROUTES:
 ​
@@ -73,23 +73,6 @@ Backoffice: allow the root users to manage the information from a backend admini
 |  PUT   | `/ad/:id/edit`   | edit ad   			 | {adData}                 |
 |  PUT   | `/ad/:id/edit`   | edit ad          | {adData}                 |
 |  GET   | `/rewards`       | rewards page   	 |  				                |
-​
-### Endpoints Backoffice 
-*All theese routes has /admin before route
-​
-| Method | Path      				| description        | Body                     |
-| :----: | -----------------| -------------------| ------------------------ |
-|  GET   | `/users`       	| list all users page|  											  |
-|  GET   | `/user/:id`      | list user details  |    											|
-|  GET   | `/user/:id/edit` | edit user details  | 													|
-|  POST  | `/user/:id/edit` | edit user details  | {userData}   						|
-|  GET   | `/ad/:id`        | list ad details    |                          |
-|  GET   | `/ad/:id/edit`   | edit ad details    | 		                      |
-|  POST  | `/ad/:id/edit`   | edit ad details    | {adData}                 |
-|  POST  | `/ad/:id/delete` | deletes ad   			 |                          |
-|  GET   | `/mediations`    | list all active mediations|                   |
-|  GET   | `/mediation/:id` | shows mediation  |                            | 
-|  POST  | `/mediation/:id/resolve`| resolve a mediation  | {mediationData} |
 ​
 ​
 ## Models
