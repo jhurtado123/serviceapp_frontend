@@ -1,25 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './assets/css/main.scss';
+import {Route, Switch} from "react-router-dom";
+import Login from "./views/Login";
+import AuthProvider from "./context/AuthContext";
+import AnonRoute from "./Components/AnonRoute";
+import PrivateRoute from "./Components/PrivateRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <Switch>
+          <AnonRoute exact path={'/login'} component={Login}/>
+        </Switch>
+      </div>
+    </AuthProvider>
   );
 }
 
