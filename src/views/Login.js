@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import BottomWave from '../assets/images/login/wave-login-bottom.png'
-import TopWave from '../assets/images/login/wave-login-top.png'
+import BottomWave from '../assets/images/views/login/wave-login-bottom.png'
+import TopWave from '../assets/images/views/login/wave-login-top.png'
 import '../assets/css/views/login/login.scss';
 import InputWithIcon from "../Components/InputWithIcon";
 import {Link} from "react-router-dom";
@@ -41,9 +41,9 @@ class Login extends Component {
         <img className={'wave-top'} src={TopWave}/>
         <div>LOGO</div>
         <form method={'post'} onSubmit={this.handleSubmit}>
-          <InputWithIcon icon={'user-purple'} name={'username'} value={username} type={'text'}
+          <InputWithIcon icon={'user-purple'} name={'username'} placeholder={'Tu username'} value={username} type={'text'}
                          handleChange={this.handleChange}/>
-          <InputWithIcon icon={'lock-purple'} name={'password'} value={password} type={'password'}
+          <InputWithIcon icon={'lock-purple'} name={'password'} placeholder={'Tu contraseña'} value={password} type={'password'}
                          handleChange={this.handleChange}/>
           <button className={'submit-login'}>Login</button>
         </form>
