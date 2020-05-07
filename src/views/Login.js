@@ -36,6 +36,7 @@ class Login extends Component {
 
   render() {
     const {username, password, formError} = this.state;
+    const {hasError, errorMessage} = this.props;
     return (
       <div className={'login'}>
         <img className={'wave-top'} src={TopWave}/>
@@ -48,6 +49,7 @@ class Login extends Component {
           <button className={'submit-login'}>Login</button>
         </form>
         {formError && <div className={'error-form'}>{formError}</div> }
+        {hasError && <div className={'error-form'}>{errorMessage}</div> }
         <Link to={'/register'} className={'button-bck-purple register-button'}>
           Registrarse
         </Link>
