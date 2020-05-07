@@ -66,7 +66,7 @@ class AuthProvider extends Component {
   componentDidMount() {
     authApiClient
       .whoami()
-      .then((user) => {
+      .then(({data: user}) => {
         this.setState({
           isLoading: false,
           isLoggedIn: true,
