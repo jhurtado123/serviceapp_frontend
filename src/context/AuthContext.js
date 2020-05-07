@@ -8,11 +8,12 @@ export const withAuth = (Comp) => {
     render() {
       return (
         <AuthContext.Consumer>
-          {({ user, isLoggedIn, handleLogin, handleLogout }) => {
+          {({ user, isLoggedIn, handleLogin, handleLogout, isLoading }) => {
             return (
               <Comp
                 onLogin={handleLogin}
                 user={user}
+                isLoading={isLoading}
                 isLoggedIn={isLoggedIn}
                 onLogout={handleLogout}
                 {...this.props}
@@ -39,12 +40,14 @@ class AuthProvider extends Component {
         this.setState({
           isLoggedIn: true,
           user,
+          isLoading:false,
         });
       })
       .catch(error => {
         this.setState({
           isLoggedIn: false,
           user: null,
+          isLoading: false,
         });
       })
   };
@@ -84,10 +87,11 @@ class AuthProvider extends Component {
 
   render() {
     const {children} = this.props;
-    const {isLoggedIn, user} = this.state;
+    const {isLoggedIn, user, isLoading} = this.state;
     return (
       <AuthContext.Provider value={{
         isLoggedIn,
+        isLoading,
         user,
         handleLogin: this.handleLogin,
         handleLogout: this.handleLogout,
