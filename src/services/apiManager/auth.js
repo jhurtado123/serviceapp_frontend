@@ -9,7 +9,6 @@ class AuthApiClient {
   }
 
   login(body) {
-    console.log(body);
     return this.apiClient.post("/login", body);
   }
 
@@ -17,12 +16,16 @@ class AuthApiClient {
     return this.apiClient.get("/logout");
   }
 
-  doesUsernameExist() {
-    return this.apiClient.get('/doesUsernameExist');
+  doesUsernameExist(username) {
+    return this.apiClient.post('/doesUsernameExist', username);
   }
 
   whoami() {
     return this.apiClient.get("/whoami");
+  }
+
+  signup(body) {
+    return this.apiClient.post('/signup', body);
   }
 
 }

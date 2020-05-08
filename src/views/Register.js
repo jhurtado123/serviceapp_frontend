@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import TopWave from '../assets/images/views/register/wave-top.png'
-import InputWithIcon from "../Components/InputWithIcon";
 import '../assets/css/views/register/register.scss';
 import authApiClient from "../services/apiManager/auth";
 import RegisterPartOne from "../Components/RegisterPartOne";
@@ -32,10 +31,10 @@ class Register extends Component {
       });
       authApiClient.doesUsernameExist({username: e.target.value})
         .then(({data}) => {
-          this.setState({
-            usernameValidated: true,
-            validatingUsername: false,
-          });
+            this.setState({
+              usernameValidated: !data.data,
+              validatingUsername: false,
+            });
         })
         .catch(error => {
           this.setState({
@@ -58,12 +57,24 @@ class Register extends Component {
         error: 'El nombre de usuario ya existe',
       });
     } else {
-          this.setState({
-            isInSecondStep: true,
-            error: undefined,
-          });
-      }
+      this.setState({
+        isInSecondStep: true,
+        error: undefined,
+      });
+    }
   };
+
+  handleRegister = () => {
+    const {name, username, password, postalCode} = this.state;
+
+    if (!postalCode) {
+      this.setState({
+        error: 'Debes rellenar todos los campos para continuar.',
+      });
+    }
+  };
+
+  _isValidPostalCode(postal)
 
   render() {
     const {isInSecondStep, usernameValidated, postalCode, error, validatingUsername} = this.state;
@@ -72,8 +83,10 @@ class Register extends Component {
         <img className={'wave-top'} src={TopWave}/>
         <div className={'wrapper'}>
           {!isInSecondStep ?
-            <RegisterPartOne {...this.state} usernameValidated={usernameValidated} validatingUsername={validatingUsername} handleChange={this.handleChange} handleNextClick={this.handleNextClick}/> :
-            <RegisterPartTwo postalCode={postalCode} error={error} handleChange={this.handleChange}  />
+            <RegisterPartOne {...this.state} usernameValidated={usernameValidated}
+                             validatingUsername={validatingUsername} handleChange={this.handleChange}
+                             handleNextClick={this.handleNextClick}/> :
+            <RegisterPartTwo onRegister={this.handleRegister} postalCode={postalCode} error={error} handleChange={this.handleChange}/>
           }
         </div>
       </div>
