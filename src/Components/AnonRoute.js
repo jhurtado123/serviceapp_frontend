@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {withAuth} from "../context/AuthContext";
 import {Route, Redirect} from "react-router-dom";
+import Loading from "../views/Loading";
 
 
 class AnonRoute extends Component {
   render() {
-    const {component : Comp, isLoggedIn, ...rest} = this.props;
+    const {component : Comp, isLoggedIn, isLoading, ...rest} = this.props;
     return (
-      <Route
+      isLoading ?
+        <Loading/> :
+      (<Route
         {...rest}
         render={(props) =>
           !isLoggedIn ? (
@@ -21,7 +24,7 @@ class AnonRoute extends Component {
             />
           )
         }
-      />
+      />)
     );
   }
 }

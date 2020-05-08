@@ -13,6 +13,8 @@ class Register extends Component {
     username: '',
     password: '',
     isInSecondStep: false,
+    validatingUsername: false,
+    usernameValidated: false,
     postalCode: '',
     error: undefined,
   };
@@ -25,28 +27,32 @@ class Register extends Component {
   };
 
   handleNextClick = () => {
-    const {name, username, password} = this.state;
+    const {name, username, password, usernameValidated} = this.state;
 
     if (!name || !username || !password) {
       this.setState({
         error: 'Debes rellenar todos los campos para continuar.',
-      })
-    } else {
-      this.setState({
-        isInSecondStep: true,
-        error: undefined,
       });
-    }
+    } else if (!usernameValidated) {
+      this.setState({
+        error: 'El nombre de usuario ya existe',
+      });
+    } else {
+          this.setState({
+            isInSecondStep: true,
+            error: undefined,
+          });
+      }
   };
 
   render() {
-    const {isInSecondStep, postalCode, error} = this.state;
+    const {isInSecondStep, postalCode, error, validatingUsername} = this.state;
     return (
       <div className={'register'}>
         <img className={'wave-top'} src={TopWave}/>
         <div className={'wrapper'}>
           {!isInSecondStep ?
-            <RegisterPartOne {...this.state} handleChange={this.handleChange} handleNextClick={this.handleNextClick}/> :
+            <RegisterPartOne {...this.state} validatingUsername={validatingUsername} handleChange={this.handleChange} handleNextClick={this.handleNextClick}/> :
             <RegisterPartTwo postalCode={postalCode} error={error} handleChange={this.handleChange}  />
           }
         </div>

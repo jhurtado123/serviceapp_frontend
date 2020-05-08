@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import InputWithIcon from "./InputWithIcon";
+import Spinner from '../assets/images/icons'
 
 class RegisterPartOne extends Component {
 
   render() {
-    const {handleChange, username, name, password , handleNextClick, error} = this.props;
+    const {handleChange, username, name, password , handleNextClick, error, validatingUsername} = this.props;
+    let feedback = false;
+    if (validatingUsername) feedback = ''
+
     return (
       <React.Fragment>
         <h1>

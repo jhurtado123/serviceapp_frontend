@@ -6,6 +6,7 @@ import AuthProvider from "./context/AuthContext";
 import AnonRoute from "./Components/AnonRoute";
 import PrivateRoute from "./Components/PrivateRoute";
 import Register from "./views/Register";
+import Logout from "./views/Logout";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <div className="App">
         <Switch>
           <AnonRoute exact path={'/login'} component={Login}/>
+          <PrivateRoute exact path={'/logout'} component={Logout}/>
           <AnonRoute exact path={'/register'} component={Register}/>
         </Switch>
       </div>
