@@ -4,6 +4,7 @@ import '../assets/css/views/register/register.scss';
 import authApiClient from "../services/apiManager/auth";
 import RegisterPartOne from "../Components/RegisterPartOne";
 import RegisterPartTwo from "../Components/RegisterPartTwo";
+import {withAuth} from "../context/AuthContext";
 
 
 class Register extends Component {
@@ -65,16 +66,35 @@ class Register extends Component {
   };
 
   handleRegister = () => {
+    const {onRegister} = this.props;
     const {name, username, password, postalCode} = this.state;
 
     if (!postalCode) {
       this.setState({
         error: 'Debes rellenar todos los campos para continuar.',
       });
+      return;
     }
+    if (!this._isValidPostalCode(postalCode)) {
+      this.setState({
+        error: 'El código postal no es válido.',
+      });
+      return;
+    }
+    authApiClient.signup({name,username,password,postalCode})
+      .then(({data}) => {
+        onRegister(data);
+      })
+      .catch(err => {
+        this.setState({
+          error: 'Server error.',
+        });
+      })
   };
 
-  _isValidPostalCode(postal)
+  _isValidPostalCode(postalCode) {
+    return /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/.test(postalCode);
+  }
 
   render() {
     const {isInSecondStep, usernameValidated, postalCode, error, validatingUsername} = this.state;
@@ -94,4 +114,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default withAuth(Register);
