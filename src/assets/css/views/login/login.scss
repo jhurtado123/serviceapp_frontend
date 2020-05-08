@@ -9,6 +9,7 @@
   justify-content: center;
 
   form {
+    width: 80%;
     position: relative;
     text-align: center;
 
@@ -26,7 +27,11 @@
     }
   }
   .register-button {
-    width: 51%;
+    position: absolute;
+    bottom:100px;
+    left:50%;
+    transform: translateX(-50%);
+    width: 56%;
     margin-top: 20px;
     font-size: 22px;
     text-align: center;

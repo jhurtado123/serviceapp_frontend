@@ -16,8 +16,16 @@ class AuthApiClient {
     return this.apiClient.get("/logout");
   }
 
+  doesUsernameExist(username) {
+    return this.apiClient.post('/doesUsernameExist', username);
+  }
+
   whoami() {
     return this.apiClient.get("/whoami");
+  }
+
+  signup(body) {
+    return this.apiClient.post('/signup', body);
   }
 
 }

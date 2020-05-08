@@ -8,7 +8,7 @@ export const withAuth = (Comp) => {
     render() {
       return (
         <AuthContext.Consumer>
-          {({ user, isLoggedIn, handleLogin, handleLogout, isLoading, hasError, errorMessage }) => {
+          {({ user, isLoggedIn, handleLogin, handleLogout, isLoading, hasError, errorMessage, handleRegister }) => {
             return (
               <Comp
                 onLogin={handleLogin}
@@ -18,6 +18,7 @@ export const withAuth = (Comp) => {
                 isLoading={isLoading}
                 isLoggedIn={isLoggedIn}
                 onLogout={handleLogout}
+                onRegister={handleRegister}
                 {...this.props}
               />
             );
@@ -58,6 +59,16 @@ class AuthProvider extends Component {
           errorMessage,
         });
       })
+  };
+
+  handleRegister = (user) => {
+    this.setState({
+      isLoggedIn: true,
+      user,
+      isLoading:false,
+      hasError: false,
+      errorMessage: undefined,
+    });
   };
 
   handleLogout = () => {
@@ -102,6 +113,7 @@ class AuthProvider extends Component {
         isLoading,
         user,
         hasError,
+        handleRegister: this.handleRegister,
         errorMessage,
         handleLogin: this.handleLogin,
         handleLogout: this.handleLogout,
