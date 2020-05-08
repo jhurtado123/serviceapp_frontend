@@ -46,8 +46,8 @@ class Login extends Component {
           <InputWithIcon icon={'lock-purple'} name={'password'} placeholder={'Tu contraseña'} value={password} type={'password'}
                          handleChange={this.handleChange}/>
           <button className={'submit-login'}>Login</button>
+          {formError && <div className={'error-form'}>{formError}</div> }
         </form>
-        {formError && <div className={'error-form'}>{formError}</div> }
         <Link to={'/register'} className={'button-bck-purple register-button'}>
           Registrarse
         </Link>

@@ -27,6 +27,10 @@
     }
   }
   .register-button {
+    position: absolute;
+    bottom:100px;
+    left:50%;
+    transform: translateX(-50%);
     width: 56%;
     margin-top: 20px;
     font-size: 22px;
