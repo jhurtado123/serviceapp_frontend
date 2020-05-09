@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../../assets/css/views/ad/create.scss';
 import adApiClient from '../../services/apiManager/ad';
 import AdForm from "../../components/AdForm";
+import {withAuth} from "../../context/AuthContext";
 
 
 class AdCreate extends Component {
@@ -18,8 +19,8 @@ class AdCreate extends Component {
     images: [],
     usePersonalAddress: true,
     mapCoords: {
-      lat: -77.04,
-      lng: 38.907,
+      lat: this.props.user.location.coordinates[0],
+      lng: this.props.user.location.coordinates[1],
     },
     error: undefined,
   };
@@ -79,4 +80,4 @@ class AdCreate extends Component {
   }
 }
 
-export default AdCreate;
+export default withAuth(AdCreate);
