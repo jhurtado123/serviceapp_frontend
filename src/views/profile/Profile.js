@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { withAuth } from "../context/AuthContext";
-import profileApiClient from "../services/apiManager/profile";
-import HeaderProfile  from "../Components/HeaderProfile";
-import '../assets/css/components/Profile.scss';
+import { withAuth } from "../../context/AuthContext";
+import profileApiClient from "../../services/apiManager/profile";
+import HeaderProfile  from "../../Components/HeaderProfile";
+import '../../assets/css/views/profile/Profile.scss';
+
 
 class Profile extends Component {
   state = {

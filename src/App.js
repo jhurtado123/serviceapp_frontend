@@ -10,7 +10,7 @@ import Logout from "./views/Logout";
 import AdCreate from "./views/ad/AdCreate";
 import AdEdit from "./views/ad/AdEdit";
 
-import Profile from "./views/Profile";
+import Profile from "./views/profile/Profile";
 
 function App() {
   return (

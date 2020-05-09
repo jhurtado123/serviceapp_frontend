@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../assets/css/components/Profile.scss';
+import '../assets/css/views/profile/Profile.scss';
 
 class HeaderProfile extends Component {
 
