@@ -11,6 +11,8 @@ import AdCreate from "./views/ad/AdCreate";
 import AdEdit from "./views/ad/AdEdit";
 
 import Profile from "./views/profile/Profile";
+import ProfileAds from "./views/profile/ProfileAds";
+import RecoverAds from "./views/profile/RecoverAds";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <AnonRoute exact path={'/register'} component={Register}/>
           <PrivateRoute exact path={'/ad/create'} component={AdCreate}/>
           <PrivateRoute exact path={'/ad/:id/edit'} component={AdEdit}/>
+          <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
+          <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
           <PrivateRoute exact path={'/profile'} component={Profile}/>
         </Switch>
       </div>

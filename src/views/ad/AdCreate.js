@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../../assets/css/views/ad/create.scss';
 import adApiClient from '../../services/apiManager/ad';
 import AdForm from "../../components/AdForm";
+import {withAuth} from "../../context/AuthContext";
 
 
 class AdCreate extends Component {
@@ -18,8 +19,8 @@ class AdCreate extends Component {
     images: [],
     usePersonalAddress: true,
     mapCoords: {
-      lat: -77.04,
-      lng: 38.907,
+      lat: this.props.user.location.coordinates[0],
+      lng: this.props.user.location.coordinates[1],
     },
     error: undefined,
   };
@@ -45,6 +46,11 @@ class AdCreate extends Component {
       images: this.state.images.filter(image => image !== file),
     })
   };
+  handleChangeCoordinates = (coords) =>{
+    this.setState({
+      mapCoords: coords,
+    })
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -67,11 +73,11 @@ class AdCreate extends Component {
         <form onSubmit={this.handleSubmit}>
           <AdForm  {...this.state} handleRemoveFile={this.handleRemoveFile} handleNewFile={this.handleNewFile}
                    setCategory={this.setCategory} onChangeEvent={this.handleChange}
-                   checkboxChange={this.handleCheckboxChange}/>
+                   checkboxChange={this.handleCheckboxChange} changeCoords={this.handleChangeCoordinates}/>
         </form>
       </div>
     );
   }
 }
 
-export default AdCreate;
+export default withAuth(AdCreate);
