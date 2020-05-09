@@ -15,6 +15,14 @@ class ProfileApiClient {
   getLevel() {
     return this.apiClient.get("/profile/level");
   }
+
+  getAds() {
+    return this.apiClient.get('/profile/ads');
+  }
+
+  getRemovedAds() {
+    return this.apiClient.get('/profile/ads/removed');
+  }
 }
 
 

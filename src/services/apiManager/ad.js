@@ -49,6 +49,14 @@ class AdApiClient {
 
        return this.apiClient.put(`/ad/${id}`, formData, {headers: {'Content-Type': 'multipart/form-data'}});
    }
+
+   removeAd(id) {
+        return this.apiClient.delete(`/ad/${id}`);
+   }
+   recoverAd(id) {
+       return this.apiClient.put(`/ad/${id}/recover`);
+   }
+
 }
 
 const adApiClient = new AdApiClient();
