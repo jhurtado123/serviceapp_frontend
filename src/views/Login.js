@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import BottomWave from '../assets/images/views/login/wave-login-bottom.png'
 import TopWave from '../assets/images/views/login/wave-login-top.png'
 import '../assets/css/views/login/login.scss';
-import InputWithIcon from "../Components/InputWithIcon";
+import InputWithIcon from "../components/InputWithIcon";
 import {Link} from "react-router-dom";
 import {withAuth} from "../context/AuthContext";
 
