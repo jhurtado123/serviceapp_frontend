@@ -1,0 +1,81 @@
+@import '../../variables';
+
+form {
+
+  .custom-location {
+    max-height: 0px;
+    height: 0px;
+    overflow-y: hidden;
+    transition: all 0.4s ease-in-out;
+    &.open {
+      max-height: 2000px;
+      transition: all 0.4s ease-in-out;
+      height: auto;
+    }
+  }
+  .map {
+   position: relative;
+    height: 200px!important;
+    width: 100%!important;
+    overflow: hidden;
+  }
+  .mapboxgl-map {
+    position: absolute;
+    .mapboxgl-canvas-container {
+      position: absolute;
+      top:0;
+      left: 0;
+      right: 0;
+      bottom:0;
+      canvas {
+        position: absolute;
+      }
+      .mapboxgl-marker {
+        stroke : $purple-color;
+        g {
+          fill: $purple-color;
+        }
+      }
+    }
+    .mapboxgl-ctrl-bottom-right {
+      display: none;
+    }
+  }
+  .form-group {
+    .container {
+      cursor: pointer;
+      border:2px dashed #C4C4C4;
+      padding: 15px;
+      min-height: 100px;
+      color:#C4C4C4;
+      .dropzone {
+      }
+      aside {
+        justify-content: space-between;
+        &>div {
+          width: 90px!important;
+          height: 90px!important;
+          position: relative;
+          .remove {
+            position: absolute;
+            top:10px;
+            right: 10px;
+            img {
+              width: 12px;
+              height: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+  button {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .error-form {
+    margin-top: -20px;
+  }
+}
