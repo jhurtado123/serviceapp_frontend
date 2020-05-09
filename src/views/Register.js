@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import TopWave from '../assets/images/views/register/wave-top.png'
 import '../assets/css/views/register/register.scss';
 import authApiClient from "../services/apiManager/auth";
-import RegisterPartOne from "../Components/RegisterPartOne";
-import RegisterPartTwo from "../Components/RegisterPartTwo";
+import RegisterPartOne from "../components/RegisterPartOne";
+import RegisterPartTwo from "../components/RegisterPartTwo";
 import {withAuth} from "../context/AuthContext";
 
 
