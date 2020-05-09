@@ -45,10 +45,16 @@ class AdEdit extends Component {
       images: this.state.images.filter(image => image !== file),
     })
   };
+  handleChangeCoordinates = (coords) =>{
+    this.setState({
+      mapCoords: coords,
+    })
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await adApiClient.updateAd(this.state);
+      const {match: {params: { id}}} = this.props;
+      await adApiClient.updateAd(this.state, id);
     } catch ({response: {data: {data: errorMessage}}}) {
       this.setState({
         error: errorMessage,
@@ -56,15 +62,11 @@ class AdEdit extends Component {
     }
   };
 
-  setCategory = (category) => {
-    this.setState({category});
-  };
-
   async componentDidMount() {
     try {
       const {match: {params: { id}}} = this.props;
       const {data: {ad}} = await adApiClient.getAd(id);
-      const {data: {images}} = await adApiClient.getAdImages(id);
+
       this.setState({
         name: ad.name,
         description: ad.description,
@@ -79,13 +81,27 @@ class AdEdit extends Component {
           lat: ad.location.coordinates[0],
           lng: ad.location.coordinates[1],
         },
+        images: await this.getImages(ad.images, id),
         isLoading: false,
       });
-    } catch ({response: {data: {data: errorMessage}}}) {
+    } catch (e) {
       this.props.history.push('/');
     }
   }
 
+  async getImages(images, id) {
+    let responseFiles = [];
+    images.map(async (image) => {
+      const url =  `${ process.env.REACT_APP_BACKEND_URI}/uploads/adImages/${id}/${image}`;
+      let response = await fetch(url);
+      let data = await response.blob();
+      let metadata = {
+        type: 'image/*'
+      };
+     responseFiles.push(new File([data], image, metadata));
+    });
+   return responseFiles;
+  }
 
   render() {
     const {isLoading} = this.state;
@@ -96,8 +112,8 @@ class AdEdit extends Component {
           <div className={'container'}>
             <form onSubmit={this.handleSubmit}>
               <AdForm  {...this.state} handleRemoveFile={this.handleRemoveFile} handleNewFile={this.handleNewFile}
-                       setCategory={this.setCategory} onChangeEvent={this.handleChange}
-                       checkboxChange={this.handleCheckboxChange}/>
+                       onChangeEvent={this.handleChange}
+                       checkboxChange={this.handleCheckboxChange} changeCoords={this.handleChangeCoordinates}/>
             </form>
           </div>
       }

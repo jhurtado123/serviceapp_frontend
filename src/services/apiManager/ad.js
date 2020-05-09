@@ -30,10 +30,25 @@ class AdApiClient {
   getAd(id) {
     return this.apiClient.get(`/ad/${id}`);
   }
-  getAdImages(id) {
-    return this.apiClient.get(`/ad/${id}/images`);
-  }
 
+  updateAd({name, description, price, number, address, postalCode, category, images, mapCoords, tags}, id) {
+       const formData = new FormData();
+       images.forEach(image => {
+         formData.append('image', image);
+       });
+       formData.append('name', name);
+       formData.append('description', description);
+       formData.append('price', price);
+       formData.append('number', number);
+       formData.append('address', address);
+       formData.append('postalCode', postalCode);
+       formData.append('category', category);
+       formData.append('lat', mapCoords.lat);
+       formData.append('lng', mapCoords.lng);
+       formData.append('tags', tags);
+
+       return this.apiClient.put(`/ad/${id}`, formData, {headers: {'Content-Type': 'multipart/form-data'}});
+   }
 }
 
 const adApiClient = new AdApiClient();

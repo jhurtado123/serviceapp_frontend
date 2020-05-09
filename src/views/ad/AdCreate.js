@@ -45,6 +45,11 @@ class AdCreate extends Component {
       images: this.state.images.filter(image => image !== file),
     })
   };
+  handleChangeCoordinates = (coords) =>{
+    this.setState({
+      mapCoords: coords,
+    })
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -67,7 +72,7 @@ class AdCreate extends Component {
         <form onSubmit={this.handleSubmit}>
           <AdForm  {...this.state} handleRemoveFile={this.handleRemoveFile} handleNewFile={this.handleNewFile}
                    setCategory={this.setCategory} onChangeEvent={this.handleChange}
-                   checkboxChange={this.handleCheckboxChange}/>
+                   checkboxChange={this.handleCheckboxChange} changeCoords={this.handleChangeCoordinates}/>
         </form>
       </div>
     );

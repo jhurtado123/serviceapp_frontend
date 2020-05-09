@@ -21,8 +21,10 @@ class AdForm extends Component {
       this.setState({
         categories,
       });
-
-      this.props.setCategory(categories[0]._id);
+      const {setCategory} = this.props;
+      if (setCategory) {
+        setCategory(categories[0]._id);
+      }
     } catch (e) {
       this.props.history.push('/');
     }
@@ -46,7 +48,7 @@ class AdForm extends Component {
 
 
   handleMapboxPosition = async () => {
-    const {address, postalCode, number, usePersonalAddress} = this.props;
+    const {address, postalCode, number, usePersonalAddress, changeCoords} = this.props;
     let data;
     let lat = undefined;
     let lng = undefined;
@@ -55,12 +57,14 @@ class AdForm extends Component {
       try {
         lat = data.data.features[0].geometry.coordinates[0];
         lng = data.data.features[0].geometry.coordinates[1];
+        changeCoords({lat, lng});
       } catch (e) {
       }
     }
     if (usePersonalAddress) {
       lat = data.data.features[0].geometry.coordinates[0];
       lng = data.data.features[0].geometry.coordinates[1];
+      changeCoords({lat, lng});
     }
 
     if (lat && lng) {
@@ -84,19 +88,15 @@ class AdForm extends Component {
 
 
   printCategories() {
-    const {category} = this.props;
-    return this.state.categories.map((element, index) => {
-      const elementId = element._id;
-      return <option key={index}
-              value={elementId} selected={elementId === category}>{element.name}</option>
-    });
+    return this.state.categories.map((element, index) =>  <option key={index}
+              value={element._id} >{element.name}</option>);
   }
 
   render() {
     const {name, description, price, number, address, postalCode, tags,
       images, usePersonalAddress, error, onChangeEvent, category,
       handleMapboxPosition, checkboxChange, handleRemoveFile, handleNewFile} = this.props;
-
+    console.log(category);
     return (
       <React.Fragment>
         <div className={'form-title'}>Información general</div>
@@ -148,9 +148,10 @@ class AdForm extends Component {
         <div className={'form-title'}>Otros</div>
         <div className={'form-group'}>
           <label>Categoría</label>
-          <select name={'category'} onChange={onChangeEvent}>
+          <select name={'category'} onChange={onChangeEvent} value={category}>
             {this.printCategories()}
           </select>
+
         </div>
         <div className={'form-group'}>
           <label>Tags</label>
