@@ -1,0 +1,36 @@
+@import '../variables';
+.HeaderProfile{
+  background-color: $purple-color;
+  color: #fff;
+  padding: 20px 15px;
+  font-family: $font-monserrat;
+}
+
+.HeaderColumns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.SecondLevel {
+  margin-top: 25px ;
+}
+
+.ImgHeader {
+  width: 25px;
+}
+
+.Gold {
+  color: $gold-color;
+}
+
+.ImgProfile {
+  border-radius: 50%;
+  background-color: $gold-color;
+  width: 76px;
+  height: 76px;
+}
+.Avatar {
+  width: 50px;
+  margin: 13px;
+}
