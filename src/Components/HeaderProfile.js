@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import '../assets/css/components/HeaderProfile.scss';
+import '../assets/css/components/Profile.scss';
 
 class HeaderProfile extends Component {
+
   render(){
-    const { name, level, tokens } = this.props;
+    const { name, level, missingpoints, tokens } = this.props;
     return (
       <div className="HeaderProfile">
         <div className="HeaderColumns">
-          <img className="ImgHeader" src={require('../assets/images/icons/menu.png')} alt="menu"></img>
-          <span>{name}</span>
+          <img className="ImgHeader" src={require('../assets/images/icons/menu.png')} alt="menu" />
+          <span className="UserName">{name}</span>
           <img className="ImgHeader" src={require('../assets/images/icons/notifications.png')} alt="notifications"></img>
         </div>
         <div className="HeaderColumns SecondLevel">
@@ -17,12 +18,20 @@ class HeaderProfile extends Component {
           <span>nivel</span>
           </div>
           <div className="ImgProfile">
-            <img className="Avatar" src={require('../assets/images/icons/avatar.png')} alt="avatar"></img>
+          <img className="Avatar" src={require('../assets/images/icons/avatar.png')} alt="avatar"/>
           </div>
           <div className="Gold">
             <span>{tokens} </span>
-            <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin"></img>
+            <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin" />
           </div>
+        </div>
+        <div className="CenterColumns Gold">
+          <div></div>
+          <div>
+            Próxima recompensa: 50
+            <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin" />
+          </div>
+          <div>Faltan {missingpoints} puntos para subir al {level + 1} nivel</div>
         </div>
       </div>
     )

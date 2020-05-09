@@ -1,0 +1,66 @@
+@import '../variables';
+.HeaderProfile{
+  background-color: $purple-color;
+  color: #fff;
+  padding: 40px 15px 20px;
+  font-family: $font-monserrat;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  width: 100%;
+  position: absolute;
+  top: -20px;
+}
+
+.HeaderColumns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.SecondLevel {
+  margin: 25px 10px ;
+}
+
+.CenterColumns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  font-family: $font-muli;
+}
+
+.ImgHeader {
+  width: 25px;
+}
+.UserName {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.Gold {
+  color: $gold-color;
+}
+
+.ImgProfile {
+  border-radius: 50%;
+  background-color: $gold-color;
+  width: 76px;
+  height: 76px;
+}
+.Avatar {
+  width: 50px;
+  margin: 13px;
+  border-radius: 50%;
+}
+
+.ButtonUser {
+  color: $purple-color;
+  margin: 250px 0px 15px 5px;
+  font-size: 16px;
+  font-family: $font-monserrat;
+  font-weight: 600;
+  background-color: #fff;
+  border: 1px solid $purple-color;
+  border-radius: 10px;
+  padding: 5px;
+}

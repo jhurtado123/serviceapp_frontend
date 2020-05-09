@@ -11,7 +11,10 @@ class ProfileApiClient {
   getProfile() { 
     return this.apiClient.get("/profile");
   }
-
+  
+  getLevel() {
+    return this.apiClient.get("/profile/level");
+  }
 }
 
 
