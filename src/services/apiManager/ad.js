@@ -31,6 +31,10 @@ class AdApiClient {
     return this.apiClient.get(`/ad/${id}`);
   }
 
+  getAdWithRelated(id) {
+    return this.apiClient.get(`/ad/${id}/withRelated`);
+  }
+
   updateAd({name, description, price, number, address, postalCode, category, images, mapCoords, tags}, id) {
        const formData = new FormData();
        images.forEach(image => {
