@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
+import REDIRECT from "../../errorRedirects";
+import BaseLayout from "../layouts/BaseLayout";
 
 class ProfileAds extends Component {
 
@@ -19,9 +21,14 @@ class ProfileAds extends Component {
       const {data: {ads}} = await profileApiClient.getAds();
       this.setState({
         ads,
-        isLoading:false
+        isLoading: false
       });
-    } catch (e) {
+    } catch (error) {
+      if (error.response) {
+        this.props.history.push(REDIRECT[error.response.status]);
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   }
 
@@ -41,7 +48,11 @@ class ProfileAds extends Component {
         });
       })
       .catch(error => {
-
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
       });
   };
 
@@ -51,7 +62,7 @@ class ProfileAds extends Component {
     search = search.toLowerCase();
     return ads.map((ad, index) => {
       if ((search && (ad.name.toLowerCase().includes(search) || ad.description.toLowerCase().includes(search))) || !search) {
-        return <ProfileAdBox key={index} {...ad} handleDelete={this.handleDelete}/>;
+        return <ProfileAdBox key={index} ad={ad} handleDelete={this.handleDelete}/>;
       }
     });
   };
@@ -59,7 +70,7 @@ class ProfileAds extends Component {
   render() {
     const {search, ads, isLoading} = this.state;
     return (
-      <React.Fragment>
+      <BaseLayout>
         {isLoading ? <Loading/> : (
           <div>
             <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar anuncios'}/>
@@ -71,7 +82,7 @@ class ProfileAds extends Component {
                 </div>}
             </div>
           </div>)}
-      </React.Fragment>
+      </BaseLayout>
     )
   }
 }

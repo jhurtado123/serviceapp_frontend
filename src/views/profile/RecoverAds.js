@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
+import REDIRECT from "../../errorRedirects";
+import HeaderWithTitle from "../../components/HeaderWithTitle";
 
 class RecoverAds extends Component {
 
@@ -21,7 +23,12 @@ class RecoverAds extends Component {
         ads,
         isLoading:false
       });
-    } catch (e) {
+    } catch (error) {
+      if (error.response) {
+        this.props.history.push(REDIRECT[error.response.status]);
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   }
 
@@ -41,7 +48,11 @@ class RecoverAds extends Component {
         });
       })
       .catch(error => {
-
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
       });
   };
 
@@ -51,7 +62,7 @@ class RecoverAds extends Component {
     search = search.toLowerCase();
     return ads.map((ad, index) => {
       if ((search && (ad.name.toLowerCase().includes(search) || ad.description.toLowerCase().includes(search))) || !search) {
-        return <ProfileAdBox key={index} {...ad} handleRecover={this.handleRecover} isRecover={true}/>;
+        return <ProfileAdBox key={index} ad={ad} handleRecover={this.handleRecover} isRecover={true}/>;
       }
     });
   };
@@ -60,6 +71,7 @@ class RecoverAds extends Component {
     const {search, ads, isLoading} = this.state;
     return (
       <React.Fragment>
+        <HeaderWithTitle title={'Recuperar anuncios'}/>
         {isLoading ? <Loading/> : (
           <div>
             <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar anuncios'}/>

@@ -3,6 +3,8 @@ import '../../assets/css/views/ad/create.scss';
 import adApiClient from '../../services/apiManager/ad';
 import AdForm from "../../components/AdForm";
 import {withAuth} from "../../context/AuthContext";
+import REDIRECT from "../../errorRedirects";
+import HeaderWithTitle from "../../components/HeaderWithTitle";
 
 
 class AdCreate extends Component {
@@ -46,7 +48,7 @@ class AdCreate extends Component {
       images: this.state.images.filter(image => image !== file),
     })
   };
-  handleChangeCoordinates = (coords) =>{
+  handleChangeCoordinates = (coords) => {
     this.setState({
       mapCoords: coords,
     })
@@ -56,10 +58,18 @@ class AdCreate extends Component {
     try {
       await adApiClient.createAd(this.state);
       this.props.history.push('/ads');
-    } catch ({response: {data: {data: errorMessage}}}) {
-      this.setState({
-        error: errorMessage,
-      })
+    } catch (error) {
+      if (error.response) {
+        if (error.response.data.data) {
+          this.setState({
+            error: error.response.data.data,
+          });
+        } else {
+          this.props.history.push(REDIRECT[error.response.status]);
+        }
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   };
 
@@ -70,13 +80,16 @@ class AdCreate extends Component {
 
   render() {
     return (
-      <div className={'container'}>
-        <form onSubmit={this.handleSubmit}>
-          <AdForm  {...this.state} handleRemoveFile={this.handleRemoveFile} handleNewFile={this.handleNewFile}
-                   setCategory={this.setCategory} onChangeEvent={this.handleChange}
-                   checkboxChange={this.handleCheckboxChange} changeCoords={this.handleChangeCoordinates}/>
-        </form>
-      </div>
+      <React.Fragment>
+        <HeaderWithTitle title={'Publicar anuncio'}/>
+        <div className={'container'}>
+          <form onSubmit={this.handleSubmit}>
+            <AdForm  {...this.state} handleRemoveFile={this.handleRemoveFile} handleNewFile={this.handleNewFile}
+                     setCategory={this.setCategory} onChangeEvent={this.handleChange}
+                     checkboxChange={this.handleCheckboxChange} changeCoords={this.handleChangeCoordinates}/>
+          </form>
+        </div>
+      </React.Fragment>
     );
   }
 }

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import adApiClient from "../../services/apiManager/ad";
 import AdForm from "../../components/AdForm";
 import Loading from "../Loading";
+import REDIRECT from "../../errorRedirects";
+import HeaderWithTitle from "../../components/HeaderWithTitle";
 
 
 class AdEdit extends Component {
@@ -56,17 +58,25 @@ class AdEdit extends Component {
       const {match: {params: { id}}} = this.props;
       await adApiClient.updateAd(this.state, id);
       this.props.history.push('/ads');
-    } catch ({response: {data: {data: errorMessage}}}) {
-      this.setState({
-        error: errorMessage,
-      })
+    } catch (error) {
+      if (error.response) {
+        if (error.response.data.data) {
+          this.setState({
+            error: error.response.data.data,
+          });
+        } else {
+          this.props.history.push(REDIRECT[error.response.status]);
+        }
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   };
 
   async componentDidMount() {
     try {
       const {match: {params: { id}}} = this.props;
-      const {data: {ad}} = await adApiClient.getAd(id);
+      const {data: {ad}} = await adApiClient.getAdData(id);
 
       this.setState({
         name: ad.name,
@@ -85,8 +95,12 @@ class AdEdit extends Component {
         images: await this.getImages(ad.images, id),
         isLoading: false,
       });
-    } catch (e) {
-      this.props.history.push('/');
+    } catch (error) {
+      if (error.response) {
+        this.props.history.push(REDIRECT[error.response.status]);
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   }
 
@@ -108,6 +122,7 @@ class AdEdit extends Component {
     const {isLoading} = this.state;
     return (
       <React.Fragment>
+        <HeaderWithTitle title={'Editar anuncio'} />
       {
         isLoading ? <Loading/> :
           <div className={'container'}>

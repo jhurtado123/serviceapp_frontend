@@ -9,7 +9,7 @@ class Logout extends Component {
       <div>
         {this.props.onLogout()}
         <Redirect to={{
-          pathname: "/home",
+          pathname: "/",
           state: {from: this.props.location},
         }}/>
       </div>

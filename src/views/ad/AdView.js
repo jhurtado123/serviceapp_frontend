@@ -10,6 +10,7 @@ import mapboxgl from "mapbox-gl";
 import ProfileImage from "../../components/ProfileImage";
 import SmallAd from "../../components/SmallAd";
 import {Sticky, StickyContainer} from 'react-sticky';
+import REDIRECT from "../../errorRedirects";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -39,7 +40,7 @@ class AdView extends Component {
   printRelatedAds = () => {
     const {relatedAds} = this.state;
     if (relatedAds.length) {
-      return relatedAds.map((relatedAd, index) => <SmallAd {...relatedAd} key={index}/>);
+      return relatedAds.map((relatedAd, index) => <SmallAd ad={relatedAd} key={index}/>);
     }
     return <div className={'no-related-ads'}>No hay servicios relacionados</div>
   };
@@ -66,13 +67,17 @@ class AdView extends Component {
           .setLngLat([coordinates[0], coordinates[1]])
           .addTo(map);
       })
-    } catch (e) {
-
+    } catch (error) {
+      if (error.response) {
+        this.props.history.push(REDIRECT[error.response.status]);
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   }
 
   componentWillUnmount() {
-    map.remove();
+    if (map) map.remove();
   }
 
   render() {

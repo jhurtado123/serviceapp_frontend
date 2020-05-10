@@ -8,15 +8,15 @@
   align-items: center;
   justify-content: space-between;
   margin:15px 0;
-  min-height: 130px;
+  height: 120px;
   .preview-image {
     width: 50%;
-    min-height: 130px;
+    height: 120px;
       }
   .ad-data {
     padding: 15px;
     flex: 1;
-    min-height: 130px;
+    height: 120px;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
@@ -24,6 +24,8 @@
     position: relative;
     h2 {
       font-size: 16px;
+      margin: 0;
+      margin-top: 5px;
       font-family: $font-montserrat;
     }
     .action-buttons {
