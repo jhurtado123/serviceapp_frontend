@@ -18,7 +18,7 @@ class AnonRoute extends Component {
           ) : (
             <Redirect
               to={{
-                pathname: "/home",
+                pathname: "/",
                 state: { from: props.location },
               }}
             />
