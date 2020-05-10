@@ -19,6 +19,7 @@ import Error500 from "./views/error/Error500";
 import BaseLayout from "./views/layouts/BaseLayout";
 import SidebarProvider from "./context/SidebarContext";
 import Home from "./views/Home";
+import Search from "./views/Search";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route exact path={'/500'} component={Error500}/>
 
             <Route exact path={'/'} component={Home}/>
+            <Route exact path={'/search'} component={Search}/>
           </Switch>
         </div>
       </AuthProvider>
