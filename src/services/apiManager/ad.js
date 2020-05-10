@@ -27,6 +27,10 @@ class AdApiClient {
     return this.apiClient.post('/ad', formData, {headers: {'Content-Type': 'multipart/form-data'}});
   }
 
+  getAdData(id) {
+      return this.apiClient.get(`/ad/${id}/data`);
+    }
+
   getAd(id) {
     return this.apiClient.get(`/ad/${id}`);
   }
