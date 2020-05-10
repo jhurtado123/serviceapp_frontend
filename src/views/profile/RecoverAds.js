@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
+import REDIRECT from "../../errorRedirects";
 
 class RecoverAds extends Component {
 
@@ -21,7 +22,12 @@ class RecoverAds extends Component {
         ads,
         isLoading:false
       });
-    } catch (e) {
+    } catch (error) {
+      if (error.response) {
+        this.props.history.push(REDIRECT[error.response.status]);
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   }
 
@@ -41,7 +47,11 @@ class RecoverAds extends Component {
         });
       })
       .catch(error => {
-
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
       });
   };
 

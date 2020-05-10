@@ -9,7 +9,7 @@ class Error401 extends Component {
       <React.Fragment>
         <div className={'container error-page'}>
           <h1>No estás autorizado para hacer eso.</h1>
-          <Link to={'/'} className={'button-bck-purple'}>Ir a la home</Link>
+          <Link to={'/login'} className={'button-bck-purple'}>Ir al login</Link>
         </div>
         <img className={'wave-bottom'} src={BottomWave}/>
       </React.Fragment>

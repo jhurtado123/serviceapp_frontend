@@ -3,6 +3,7 @@ import '../../assets/css/views/ad/create.scss';
 import adApiClient from '../../services/apiManager/ad';
 import AdForm from "../../components/AdForm";
 import {withAuth} from "../../context/AuthContext";
+import REDIRECT from "../../errorRedirects";
 
 
 class AdCreate extends Component {
@@ -56,10 +57,18 @@ class AdCreate extends Component {
     try {
       await adApiClient.createAd(this.state);
       this.props.history.push('/ads');
-    } catch ({response: {data: {data: errorMessage}}}) {
-      this.setState({
-        error: errorMessage,
-      })
+    } catch (error) {
+      if (error.response) {
+        if (error.response.data.data) {
+          this.setState({
+            error: error.response.data.data,
+          });
+        } else {
+          this.props.history.push(REDIRECT[error.response.status]);
+        }
+        return;
+      }
+      this.props.history.push(REDIRECT[500]);
     }
   };
 
