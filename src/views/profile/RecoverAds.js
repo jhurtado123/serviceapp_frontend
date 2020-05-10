@@ -6,6 +6,7 @@ import Loading from "../Loading";
 import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
 import REDIRECT from "../../errorRedirects";
+import HeaderWithTitle from "../../components/HeaderWithTitle";
 
 class RecoverAds extends Component {
 
@@ -70,6 +71,7 @@ class RecoverAds extends Component {
     const {search, ads, isLoading} = this.state;
     return (
       <React.Fragment>
+        <HeaderWithTitle title={'Recuperar anuncios'}/>
         {isLoading ? <Loading/> : (
           <div>
             <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar anuncios'}/>

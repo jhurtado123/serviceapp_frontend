@@ -6,6 +6,7 @@ import Loading from "../Loading";
 import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
 import REDIRECT from "../../errorRedirects";
+import BaseLayout from "../layouts/BaseLayout";
 
 class ProfileAds extends Component {
 
@@ -20,7 +21,7 @@ class ProfileAds extends Component {
       const {data: {ads}} = await profileApiClient.getAds();
       this.setState({
         ads,
-        isLoading:false
+        isLoading: false
       });
     } catch (error) {
       if (error.response) {
@@ -69,7 +70,7 @@ class ProfileAds extends Component {
   render() {
     const {search, ads, isLoading} = this.state;
     return (
-      <React.Fragment>
+      <BaseLayout>
         {isLoading ? <Loading/> : (
           <div>
             <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar anuncios'}/>
@@ -81,7 +82,7 @@ class ProfileAds extends Component {
                 </div>}
             </div>
           </div>)}
-      </React.Fragment>
+      </BaseLayout>
     )
   }
 }
