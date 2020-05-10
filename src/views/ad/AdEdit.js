@@ -3,6 +3,7 @@ import adApiClient from "../../services/apiManager/ad";
 import AdForm from "../../components/AdForm";
 import Loading from "../Loading";
 import REDIRECT from "../../errorRedirects";
+import HeaderWithTitle from "../../components/HeaderWithTitle";
 
 
 class AdEdit extends Component {
@@ -121,6 +122,7 @@ class AdEdit extends Component {
     const {isLoading} = this.state;
     return (
       <React.Fragment>
+        <HeaderWithTitle title={'Editar anuncio'} />
       {
         isLoading ? <Loading/> :
           <div className={'container'}>
