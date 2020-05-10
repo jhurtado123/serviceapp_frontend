@@ -55,6 +55,7 @@ class AdCreate extends Component {
     e.preventDefault();
     try {
       await adApiClient.createAd(this.state);
+      this.props.history.push('/ads');
     } catch ({response: {data: {data: errorMessage}}}) {
       this.setState({
         error: errorMessage,

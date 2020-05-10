@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import '../assets/css/components/smallAd.scss';
 import ProfileImage from "./ProfileImage";
 import Token from '../assets/images/icons/coin.png';
-import {Link} from "react-router-dom";
-
+import {Link, withRouter} from "react-router-dom";
 
 class SmallAd extends Component {
   render() {
@@ -23,4 +22,4 @@ class SmallAd extends Component {
   }
 }
 
-export default SmallAd;
+export default withRouter(SmallAd);

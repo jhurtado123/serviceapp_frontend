@@ -11,7 +11,6 @@ import ProfileImage from "../../components/ProfileImage";
 import SmallAd from "../../components/SmallAd";
 import {Sticky, StickyContainer} from 'react-sticky';
 
-
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
 let marker;
