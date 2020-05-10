@@ -61,7 +61,7 @@ class RecoverAds extends Component {
     search = search.toLowerCase();
     return ads.map((ad, index) => {
       if ((search && (ad.name.toLowerCase().includes(search) || ad.description.toLowerCase().includes(search))) || !search) {
-        return <ProfileAdBox key={index} {...ad} handleRecover={this.handleRecover} isRecover={true}/>;
+        return <ProfileAdBox key={index} ad={ad} handleRecover={this.handleRecover} isRecover={true}/>;
       }
     });
   };

@@ -61,7 +61,7 @@ class ProfileAds extends Component {
     search = search.toLowerCase();
     return ads.map((ad, index) => {
       if ((search && (ad.name.toLowerCase().includes(search) || ad.description.toLowerCase().includes(search))) || !search) {
-        return <ProfileAdBox key={index} {...ad} handleDelete={this.handleDelete}/>;
+        return <ProfileAdBox key={index} ad={ad} handleDelete={this.handleDelete}/>;
       }
     });
   };
