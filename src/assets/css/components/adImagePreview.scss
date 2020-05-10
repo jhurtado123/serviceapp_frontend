@@ -1,0 +1,10 @@
+.ad-preview-image {
+  width: 50%;
+  height: 120px;
+  border-radius: 15px 0 0 15px;
+  &.small {
+    border-radius: 15px 15px 0 0;
+    height: 80px;
+    width: 100%;
+  }
+}

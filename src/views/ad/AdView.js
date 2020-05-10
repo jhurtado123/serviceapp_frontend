@@ -40,7 +40,7 @@ class AdView extends Component {
   printRelatedAds = () => {
     const {relatedAds} = this.state;
     if (relatedAds.length) {
-      return relatedAds.map((relatedAd, index) => <SmallAd {...relatedAd} key={index}/>);
+      return relatedAds.map((relatedAd, index) => <SmallAd ad={relatedAd} key={index}/>);
     }
     return <div className={'no-related-ads'}>No hay servicios relacionados</div>
   };
