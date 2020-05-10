@@ -57,6 +57,10 @@ class AdApiClient {
        return this.apiClient.put(`/ad/${id}/recover`);
    }
 
+  getAdsFromUser() {
+    return this.apiClient.get('/ad/user');
+  }
+
 }
 
 const adApiClient = new AdApiClient();
