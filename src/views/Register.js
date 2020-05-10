@@ -81,7 +81,7 @@ class Register extends Component {
       });
       return;
     }
-    authApiClient.signup({name,username,password,postalCode})
+    authApiClient.signup({name,username,password,postalcode: postalCode})
       .then(({data}) => {
         onRegister(data);
       })

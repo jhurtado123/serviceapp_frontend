@@ -55,6 +55,7 @@ class AdEdit extends Component {
     try {
       const {match: {params: { id}}} = this.props;
       await adApiClient.updateAd(this.state, id);
+      this.props.history.push('/ads');
     } catch ({response: {data: {data: errorMessage}}}) {
       this.setState({
         error: errorMessage,
@@ -74,7 +75,7 @@ class AdEdit extends Component {
         postalCode: ad.postalCode,
         address: ad.address,
         price: ad.price,
-        category: ad.category,
+        category: ad.category._id,
         tags: ad.tags.toString(),
         usePersonalAddress: !(ad.address || ad.postalCode),
         mapCoords: {

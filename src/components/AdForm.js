@@ -4,6 +4,7 @@ import categoriesApiClient from "../services/apiManager/categories";
 import mapboxgl from 'mapbox-gl';
 import mapBoxApiClient from "../services/apiManager/mapbox";
 import {withRouter} from 'react-router-dom';
+import {withAuth} from "../context/AuthContext";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -62,17 +63,12 @@ class AdForm extends Component {
       }
     }
     if (usePersonalAddress) {
-      lat = data.data.features[0].geometry.coordinates[0];
-      lng = data.data.features[0].geometry.coordinates[1];
+      lat = this.props.user.location.coordinates[0];
+      lng = this.props.user.location.coordinates[1];
       changeCoords({lat, lng});
     }
 
     if (lat && lng) {
-      this.setState({
-        mapCoords: {
-          lat, lng
-        }
-      });
       if (marker) marker.remove();
       map.flyTo({
         center: [lat, lng],
@@ -86,17 +82,24 @@ class AdForm extends Component {
 
   };
 
+  handleCheckboxChangeForm = (e) => {
+    const {checkboxChange} = this.props;
+    checkboxChange(e);
+    setTimeout(this.handleMapboxPosition, 200);
+  };
+
 
   printCategories() {
-    return this.state.categories.map((element, index) =>  <option key={index}
-              value={element._id} >{element.name}</option>);
+    return this.state.categories.map((element, index) => <option key={index}
+                                                                 value={element._id}>{element.name}</option>);
   }
 
   render() {
-    const {name, description, price, number, address, postalCode, tags,
+    const {
+      name, description, price, number, address, postalCode, tags,
       images, usePersonalAddress, error, onChangeEvent, category,
-      handleMapboxPosition, checkboxChange, handleRemoveFile, handleNewFile} = this.props;
-    console.log(category);
+      handleMapboxPosition, handleRemoveFile, handleNewFile
+    } = this.props;
     return (
       <React.Fragment>
         <div className={'form-title'}>Información general</div>
@@ -116,7 +119,7 @@ class AdForm extends Component {
         </div>
         <div className={'form-title'}>Localización</div>
         <div className={'form-group checkbox'}>
-          <input onChange={checkboxChange} onBlur={handleMapboxPosition} id={'usePersonalAddress'}
+          <input onChange={this.handleCheckboxChangeForm} onBlur={handleMapboxPosition} id={'usePersonalAddress'}
                  type={'checkbox'} checked={usePersonalAddress} value={usePersonalAddress}
                  name={'usePersonalAddress'}/>
           <label htmlFor={'usePersonalAddress'} className={'checkbox-pretty'}/>
@@ -164,10 +167,10 @@ class AdForm extends Component {
           <Dropzone handleNewFile={handleNewFile} onRemoveImage={handleRemoveFile} images={images}/>
         </div>
         <button className={'button-bck-purple'}>Publicar</button>
-        {error && <div className={'error-form'}>{error}</div> }
+        {error && <div className={'error-form'}>{error}</div>}
       </React.Fragment>
     );
   }
 }
 
-export default withRouter(AdForm);
+export default withRouter(withAuth(AdForm));

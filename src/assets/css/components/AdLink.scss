@@ -1,0 +1,33 @@
+@import '../variables.scss';
+.AdLink{
+  display: flex;
+  border-radius: 15px;
+  margin: 0px 15px 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.AdLinkImg{
+  width: 50%;
+}
+
+.AdLinKInfo{
+  width: 50%;
+}
+
+.AdLinkTitle{
+  font-size: 18px;
+  font-weight: 600;
+  font-family: $font-montserrat;
+  margin-block-end: 0.2em;
+}
+
+.AdLinkPrice{
+  background-color: $purple-color;
+  color: $gold-color;
+  border-radius: 15px;
+  padding: 5px 10px;
+}
+
+.AdLinkPriceContainer{
+  margin: 35px 0px 15px 70px;
+}
