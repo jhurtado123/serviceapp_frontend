@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import '../../assets/css/views/layouts/baseLayout.scss';
-import plusIcon from '../../assets/images/views/layouts/baseLayout/plus.png';
-import addNewFooter from '../../assets/images/views/layouts/baseLayout/footer-add.png';
-import appointmentsIcon from '../../assets/images/views/layouts/baseLayout/appointments.png';
-import chatIcon from '../../assets/images/views/layouts/baseLayout/chat-purple.png';
-import homeIcon from '../../assets/images/views/layouts/baseLayout/home.png';
-import notificationsIcon from '../../assets/images/views/layouts/baseLayout/notifications.png';
+
 import hamburguerIcon from '../../assets/images/views/layouts/baseLayout/hamburguer-white.png';
 import waveSidebar from '../../assets/images/views/layouts/baseLayout/wave-top-layout.png';
 import closeIcon from '../../assets/images/views/layouts/baseLayout/close-white.png';
@@ -15,8 +10,10 @@ import {Link} from "react-router-dom";
 import ProfileImage from "../../components/ProfileImage";
 import {withSidebar} from "../../context/SidebarContext";
 import {withAuth} from "../../context/AuthContext";
+import Footer from "../../components/Footer";
 
 class BaseLayout extends Component {
+
   render() {
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
     return (
@@ -58,28 +55,7 @@ class BaseLayout extends Component {
         </div>
         {children}
 
-        {isLoggedIn && <footer>
-          <div className={'group-icons'}>
-            <Link to={''}>
-              <img src={homeIcon} alt=""/>
-            </Link>
-            <Link to={''}>
-              <img src={appointmentsIcon} alt=""/>
-            </Link>
-          </div>
-          <Link to={'/ad/create'} className={'footer-add-new'}>
-            <img src={addNewFooter}/>
-            <img src={plusIcon} className={'plus-icon'}/>
-          </Link>
-          <div className={'group-icons'}>
-            <Link to={''}>
-              <img src={notificationsIcon} alt=""/>
-            </Link>
-            <Link to={''}>
-              <img src={chatIcon} alt=""/>
-            </Link>
-          </div>
-        </footer>}
+        {isLoggedIn && <Footer/>}
         {isOpened && <div className={'backdrop'}/>}
       </div>
     );
