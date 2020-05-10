@@ -115,13 +115,16 @@ select {
     margin-bottom: 10px;
     color:#C4C4C4;
   }
-  input[type=text], textarea, select {
+  input[type=text], textarea, select, input[type=number] {
     padding: 10px 14px;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 50px;
     border:none;
     font-size: 18px;
     background: white;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
   }
   input[type=checkbox] {
     margin-right: 15px;
