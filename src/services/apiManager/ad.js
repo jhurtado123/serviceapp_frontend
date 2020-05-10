@@ -34,6 +34,10 @@ class AdApiClient {
     return this.apiClient.get(`/ad/${id}/images`);
   }
 
+  getAdsFromUser() {
+    return this.apiClient.get('/ad/user');
+  }
+
 }
 
 const adApiClient = new AdApiClient();
