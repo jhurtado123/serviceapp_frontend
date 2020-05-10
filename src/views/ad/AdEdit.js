@@ -75,7 +75,7 @@ class AdEdit extends Component {
   async componentDidMount() {
     try {
       const {match: {params: { id}}} = this.props;
-      const {data: {ad}} = await adApiClient.getAd(id);
+      const {data: {ad}} = await adApiClient.getAdData(id);
 
       this.setState({
         name: ad.name,
