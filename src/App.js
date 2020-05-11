@@ -11,6 +11,7 @@ import AdCreate from "./views/ad/AdCreate";
 import AdEdit from "./views/ad/AdEdit";
 
 import Profile from "./views/profile/Profile";
+import ProfileEdit from "./views/profile/ProfileEdit";
 import ProfileAds from "./views/profile/ProfileAds";
 import RecoverAds from "./views/profile/RecoverAds";
 
@@ -27,6 +28,7 @@ function App() {
           <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
           <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
           <PrivateRoute exact path={'/profile'} component={Profile}/>
+          <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
         </Switch>
       </div>
     </AuthProvider>

@@ -90,7 +90,7 @@
 }
 
 .ReviewTitle{
-  font-family: $font-monserrat;
+  font-family: $font-montserrat;
   font-weight: 600;
   margin-block-start: 0.2em;
 
@@ -100,4 +100,30 @@
   border: 1px solid #E5E5E5;
   border-radius: 15px;
   padding: 10px;
+}
+
+.HeaderEdit {
+  background-image: url('/src/assets/images/viewsofile/header-edit.png');
+  height: 143px;
+  width: 100%;
+  top:0px;
+  left: 0px;
+  position: absolute;
+  
+}
+
+.profile-form {
+  margin-top: 125px;
+}
+
+.text-edit {
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  right: 20px;
+}
+.profile-image{
+  position: absolute;
+  right: 150px;
+  top: 60px;
 }
