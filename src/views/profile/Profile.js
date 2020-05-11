@@ -8,6 +8,7 @@ import AdLink from "../../components/AdLink";
 import ReviewUser from "../../components/ReviewUser";
 import Loading from "../Loading";
 import '../../assets/css/views/profile/Profile.scss';
+import REDIRECT from "../../errorRedirects";
 
 
 class Profile extends Component {
@@ -52,9 +53,13 @@ class Profile extends Component {
         })
         
       }
-    catch (error)  {
-      console.log(error);
-      }
+      catch(error) {
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
+      };
     adApiClient
       .getAdsFromUser()
       .then(({ data }) => {
@@ -63,7 +68,13 @@ class Profile extends Component {
           ads: data,
         })
       })
-      .catch((error) => console.log(error))      
+      .catch((error) => {
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
+      })
     }
 
   getLevel = () => {
@@ -76,7 +87,13 @@ class Profile extends Component {
         })
         this.getMissingPoints()
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
+      })
   }
 
   async getImages(images, id) {

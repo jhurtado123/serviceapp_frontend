@@ -86,7 +86,7 @@ class AdForm extends Component {
     const {checkboxChange} = this.props;
     checkboxChange(e);
     setTimeout(this.handleMapboxPosition, 200);
-  }
+  };
 
 
   printCategories() {
@@ -98,9 +98,8 @@ class AdForm extends Component {
     const {
       name, description, price, number, address, postalCode, tags,
       images, usePersonalAddress, error, onChangeEvent, category,
-      handleMapboxPosition, checkboxChange, handleRemoveFile, handleNewFile
+      handleMapboxPosition, handleRemoveFile, handleNewFile
     } = this.props;
-    console.log(category);
     return (
       <React.Fragment>
         <div className={'form-title'}>Información general</div>

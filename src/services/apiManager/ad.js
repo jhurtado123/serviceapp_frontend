@@ -27,8 +27,16 @@ class AdApiClient {
     return this.apiClient.post('/ad', formData, {headers: {'Content-Type': 'multipart/form-data'}});
   }
 
+  getAdData(id) {
+      return this.apiClient.get(`/ad/${id}/data`);
+    }
+
   getAd(id) {
     return this.apiClient.get(`/ad/${id}`);
+  }
+
+  getAdWithRelated(id) {
+    return this.apiClient.get(`/ad/${id}/withRelated`);
   }
 
   updateAd({name, description, price, number, address, postalCode, category, images, mapCoords, tags}, id) {

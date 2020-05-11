@@ -1,0 +1,21 @@
+@import '../variables';
+.error-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 20vh;
+  h1 {
+    font-size: 36px;
+    font-family: $font-montserrat;
+    font-weight: bold;
+    margin-bottom: 50px;
+  }
+  a {
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+
+}

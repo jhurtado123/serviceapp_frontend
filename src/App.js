@@ -9,29 +9,46 @@ import Register from "./views/Register";
 import Logout from "./views/Logout";
 import AdCreate from "./views/ad/AdCreate";
 import AdEdit from "./views/ad/AdEdit";
-
 import Profile from "./views/profile/Profile";
 import ProfileEdit from "./views/profile/ProfileEdit";
 import ProfileAds from "./views/profile/ProfileAds";
 import RecoverAds from "./views/profile/RecoverAds";
+import AdView from "./views/ad/AdView";
+import Error401 from "./views/error/Error401";
+import Error404 from "./views/error/Error404";
+import Error500 from "./views/error/Error500";
+import BaseLayout from "./views/layouts/BaseLayout";
+import SidebarProvider from "./context/SidebarContext";
+import Home from "./views/Home";
+import Search from "./views/Search";
 
 function App() {
   return (
-    <AuthProvider>
-      <div className="App">
-        <Switch>
-          <AnonRoute exact path={'/login'} component={Login}/>
-          <PrivateRoute exact path={'/logout'} component={Logout}/>
-          <AnonRoute exact path={'/register'} component={Register}/>
-          <PrivateRoute exact path={'/ad/create'} component={AdCreate}/>
-          <PrivateRoute exact path={'/ad/:id/edit'} component={AdEdit}/>
-          <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
-          <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
-          <PrivateRoute exact path={'/profile'} component={Profile}/>
-          <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
-        </Switch>
-      </div>
-    </AuthProvider>
+    <SidebarProvider>
+      <AuthProvider>
+        <div className="App">
+          <Switch>
+            <AnonRoute exact path={'/login'} component={Login}/>
+            <PrivateRoute exact path={'/logout'} component={Logout}/>
+            <AnonRoute exact path={'/register'} component={Register}/>
+            <PrivateRoute exact path={'/ad/create'} component={AdCreate}/>
+            <PrivateRoute exact path={'/ad/:id/edit'} component={AdEdit}/>
+            <PrivateRoute exact path={'/ad/:id'} component={AdView}/>
+            <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
+            <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
+            <PrivateRoute exact path={'/profile'} component={Profile}/>
+            <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>            
+
+            <Route exact path={'/401'} component={Error401}/>
+            <Route exact path={'/404'} component={Error404}/>
+            <Route exact path={'/500'} component={Error500}/>
+
+            <Route exact path={'/'} component={Home}/>
+            <Route exact path={'/search'} component={Search}/>
+          </Switch>
+        </div>
+      </AuthProvider>
+    </SidebarProvider>
   );
 }
 
