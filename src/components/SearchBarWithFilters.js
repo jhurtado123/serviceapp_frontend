@@ -50,7 +50,7 @@ class SearchBarWithFilters extends Component {
               <input type="number" name={'maxPrice'} value={maxPrice} onChange={handleChange} min={'1'}/>
             </div>
             <div className={'form-group'}>
-              <label htmlFor="">Distancia máxima</label>
+              <label htmlFor="">Distancia máxima (Km)</label>
               <input type="number" name={'maxRadius'} value={maxRadius} onChange={handleChange} min={'1'} max={'100'}/>
             </div>
           </div>
