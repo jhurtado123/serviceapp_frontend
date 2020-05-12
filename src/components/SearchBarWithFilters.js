@@ -34,12 +34,12 @@ class SearchBarWithFilters extends Component {
 
   render() {
     const {showFilters} = this.state;
-    const {searchValue, handleChange, placeholder, orderBy, maxPrice, category, maxRadius} = this.props;
+    const {search, handleChange, placeholder, orderBy, maxPrice, category, maxRadius} = this.props;
     return (
       <React.Fragment>
         <div className={'search-bar'}>
           <img src={Lupa} alt=""/>
-          <input type="text" name={'search'} value={searchValue} onChange={handleChange} placeholder={placeholder}/>
+          <input type="text" name={'search'} autoFocus={true} value={search} onChange={handleChange} placeholder={placeholder}/>
           <div className={'toggle-filters'} onClick={this.toggleFiltersBox}>Filtros</div>
         </div>
         <div className={'filters-box ' + (showFilters ? 'open' : '')}>
