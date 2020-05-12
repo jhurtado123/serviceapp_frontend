@@ -46,6 +46,10 @@ class AdView extends Component {
   };
 
   async componentDidMount() {
+    this.getAdData();
+  }
+
+  getAdData = async () => {
     try {
       const {match: {params: {id}}} = this.props;
       const {data: {ad, relatedAds}} = await adApiClient.getAdWithRelated(id);
@@ -73,6 +77,12 @@ class AdView extends Component {
         return;
       }
       this.props.history.push(REDIRECT[500]);
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.getAdData();
     }
   }
 
