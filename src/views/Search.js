@@ -14,13 +14,15 @@ let markers = [];
 
 class Search extends Component {
 
+  stateFromHome = this.props.location.state;
+
   state = {
-    search: '',
-    maxRadius: 10,
-    maxPrice: '',
+    search: this.stateFromHome ? this.stateFromHome.search : '',
+    maxRadius: this.stateFromHome ? this.stateFromHome.maxRadius : 10,
+    maxPrice: this.stateFromHome ? this.stateFromHome.maxPrice : '',
     ads: [],
-    orderBy: 'distance',
-    category: '',
+    orderBy: this.stateFromHome ? this.stateFromHome.orderBy : 'distance',
+    category: this.stateFromHome ? this.stateFromHome.category : '',
     isMapShown: false,
   };
 
@@ -148,7 +150,6 @@ class Search extends Component {
   };
 
   addMarkers = (ads) => {
-    console.log(this.props);
     this.removeMarkers();
     ads.forEach(ad => {
       const popup = new mapboxgl.Popup({offset: 15})
@@ -200,6 +201,7 @@ class Search extends Component {
   };
 
   render() {
+    console.log(this.props);
     const {isMapShown} = this.state;
     return (
       <BaseLayout>
