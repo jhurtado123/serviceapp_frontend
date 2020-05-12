@@ -85,8 +85,8 @@ class AuthProvider extends Component {
       });
   };
 
-  componentDidMount() {
-    authApiClient
+  async componentDidMount() {
+    await authApiClient
       .whoami()
       .then(({data: user}) => {
         this.setState({

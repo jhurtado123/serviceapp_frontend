@@ -12,6 +12,7 @@
     color:white;
     font-family: $font-montserrat;
     display: flex;
+    z-index: 100;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
@@ -35,7 +36,7 @@
     &.open {
       transform: translateX(0);
     }
-    z-index: 50;
+    z-index: 110;
     width: 80vw;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     height: 100vh;
