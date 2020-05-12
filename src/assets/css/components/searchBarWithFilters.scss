@@ -9,6 +9,7 @@
   background: white;
   justify-content: space-between;
   position: fixed;
+  z-index: 100;
   img {
     width: 20px;
     margin-right: 20px;
@@ -37,6 +38,7 @@
   max-height: 0;
   height: 0;
   overflow: hidden;
+  z-index: 100;
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
   &.open {
