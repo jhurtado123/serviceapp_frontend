@@ -23,6 +23,25 @@ class ProfileApiClient {
   getRemovedAds() {
     return this.apiClient.get('/profile/ads/removed');
   }
+
+  updateProfile({ name, description, address, number, postalcode, mapCoords, images}) {
+    const formData = new FormData();
+    if(images[0] !== ''){
+      images.forEach(image => {
+        formData.append('image', image);
+      });
+    }
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('number', number);
+    formData.append('address', address);
+    formData.append('postalcode', postalcode);
+    formData.append('lat', mapCoords.lat);
+    formData.append('lng', mapCoords.lng);
+
+    return this.apiClient.put('/profile/edit', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+  }
+
 }
 
 

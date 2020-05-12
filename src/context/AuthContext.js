@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import authApiClient from "../services/apiManager/auth";
+import Loading from "../views/Loading";
 
 export const AuthContext = React.createContext();
 
@@ -10,7 +11,8 @@ export const withAuth = (Comp) => {
         <AuthContext.Consumer>
           {({ user, isLoggedIn, handleLogin, handleLogout, isLoading, hasError, errorMessage, handleRegister }) => {
             return (
-              <Comp
+              <React.Fragment>
+              {!isLoading ? <Comp
                 onLogin={handleLogin}
                 user={user}
                 hasError={hasError}
@@ -20,7 +22,8 @@ export const withAuth = (Comp) => {
                 onLogout={handleLogout}
                 onRegister={handleRegister}
                 {...this.props}
-              />
+              /> : <Loading/>}
+              </React.Fragment>
             );
           }}
         </AuthContext.Consumer>
@@ -85,8 +88,8 @@ class AuthProvider extends Component {
       });
   };
 
-  componentDidMount() {
-    authApiClient
+  async componentDidMount() {
+    await authApiClient
       .whoami()
       .then(({data: user}) => {
         this.setState({

@@ -4,7 +4,7 @@ import '../assets/css/views/profile/Profile.scss';
 class HeaderProfile extends Component {
 
   render(){
-    const { name, level, missingpoints, tokens } = this.props;
+    const { name, level, url, missingpoints, tokens } = this.props;
     return (
       <div className="HeaderProfile">
         <div className="HeaderColumns">
@@ -18,7 +18,7 @@ class HeaderProfile extends Component {
           <span>nivel</span>
           </div>
           <div className="ImgProfile">
-          <img className="Avatar" src={require('../assets/images/icons/avatar.png')} alt="avatar"/>
+          <img className="Avatar" src={url !=='' ? url : require('../assets/images/icons/avatar.png')} alt="avatar"/>
           </div>
           <div className="Gold">
             <span>{tokens} </span>

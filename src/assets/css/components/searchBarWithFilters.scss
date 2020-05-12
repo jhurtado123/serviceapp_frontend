@@ -1,0 +1,83 @@
+@import '../variables';
+.search-bar {
+  width: 100%;
+  border-bottom: 1px solid #C4C4C4;
+  padding: 10px 20px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  background: white;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 100;
+  img {
+    width: 20px;
+    margin-right: 20px;
+  }
+  input {
+    flex:1;
+    font-size: 16px;
+    border: none;
+  }
+  .toggle-filters {
+    color:$gold-color;
+    background: $purple-color;
+    font-size: 16px;
+    margin-left: 10px;
+    padding:5px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+}
+.filters-box {
+  position: fixed;
+  background: white;
+  top:101px;
+  padding: 0 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  max-height: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: 100;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  &.open {
+    padding: 20px 20px;
+    max-height: 100vh;
+    height: auto;
+    transition: all 0.2s ease-in-out;
+  }
+  .dual-form-group {
+    .form-group {
+      width: 46%;
+      input {
+        width: 100%;
+      }
+    }
+  }
+  .form-title:first-child {
+    margin-top: 0;
+  }
+  .form-title {
+    font-size: 16px;
+  }
+  .form-group {
+    label {
+      font-size: 14px;
+    }
+    input, select {
+      padding: 5px 10px;
+    }
+    &.order-by-options {
+      &>div {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        label {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
