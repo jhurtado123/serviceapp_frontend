@@ -7,6 +7,7 @@ import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
 import REDIRECT from "../../errorRedirects";
 import HeaderWithTitle from "../../components/HeaderWithTitle";
+import '../../assets/css/views/profile/ads.scss';
 
 class RecoverAds extends Component {
 

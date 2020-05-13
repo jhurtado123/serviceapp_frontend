@@ -1,5 +1,8 @@
 @import "../variables";
 
+body {
+  overflow: hidden;
+}
 .search-view {
   margin-top: -10px;
   display: block;
@@ -36,10 +39,10 @@
   }
 }
 .map {
-  margin-top: 25px;
+  margin-top: 6px;
   position: relative!important;
-  height: 300px!important;
-  width: 400px!important;
+  height: 100vh!important;
+  width: 100vw!important;
   overflow: hidden;
 }
 .mapboxgl-map {
@@ -52,6 +55,7 @@
     bottom:0;
     canvas {
       position: absolute;
+      height: 100vh!important;
     }
     .mapboxgl-marker {
       position: absolute!important;

@@ -201,7 +201,6 @@ class Search extends Component {
   };
 
   render() {
-    console.log(this.props);
     const {isMapShown} = this.state;
     return (
       <BaseLayout>
@@ -215,7 +214,7 @@ class Search extends Component {
           {this.printAds()}
         </div>
         <div className={'search-view search-container-map map ' + (isMapShown ? 'show' : 'hide')}>
-          <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
+          <div ref={el => this.mapContainer = el} className={'mapContainer'} style={{width:'100vw', height:'100vh'}}/>
         </div>
       </BaseLayout>
     );

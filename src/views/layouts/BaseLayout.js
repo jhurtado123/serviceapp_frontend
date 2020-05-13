@@ -32,7 +32,7 @@ class BaseLayout extends Component {
             </div>
             {isLoggedIn &&
             <div className={'user-data'}>
-              <ProfileImage/>
+              <ProfileImage user={user}/>
               <div className={'data'}>
                 <p>{user.name}</p>
                 <div className={'actions'}>

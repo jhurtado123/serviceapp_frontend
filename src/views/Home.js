@@ -21,7 +21,6 @@ class Home extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     }, () => {
-      console.log(this.state);
       history.push(
         {
           pathname: "/search",
