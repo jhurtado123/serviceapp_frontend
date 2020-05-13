@@ -26,38 +26,10 @@ class AdEdit extends Component {
     isLoading: true,
   };
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      error: undefined,
-    });
-  };
-  handleCheckboxChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.checked,
-    })
-  };
-  handleNewFile = (files) => {
-    console.log(files);
-    this.setState({
-      images: this.state.images.concat(files),
-    })
-  };
-  handleRemoveFile = (file) => {
-    this.setState({
-      images: this.state.images.filter(image => image !== file),
-    })
-  };
-  handleChangeCoordinates = (coords) =>{
-    this.setState({
-      mapCoords: coords,
-    })
-  };
-  handleSubmit = async (e) => {
-    e.preventDefault();
+  handleSubmit = async (state) => {
     try {
-      const {match: {params: { id}}} = this.props;
-      await adApiClient.updateAd(this.state, id);
+      const {match: {params: {id}}} = this.props;
+      await adApiClient.updateAd(state, id);
       this.props.history.push('/ads');
     } catch (error) {
       if (error.response) {
@@ -76,7 +48,7 @@ class AdEdit extends Component {
 
   async componentDidMount() {
     try {
-      const {match: {params: { id}}} = this.props;
+      const {match: {params: {id}}} = this.props;
       const {data: {ad}} = await adApiClient.getAdData(id);
 
       this.setState({
@@ -108,7 +80,7 @@ class AdEdit extends Component {
   async getImages(images, id) {
     let responseFiles = [];
     images.map(async (image) => {
-      const url =  `${ process.env.REACT_APP_BACKEND_URI}/uploads/adImages/${id}/${image}`;
+      const url = `${process.env.REACT_APP_BACKEND_URI}/uploads/adImages/${id}/${image}`;
       let response = await fetch(url);
       let data = await response.blob();
       let metadata = {
@@ -117,27 +89,22 @@ class AdEdit extends Component {
       const newFile = new File([data], image, metadata);
       newFile.preview = window.URL.createObjectURL(newFile);
       newFile.path = newFile.name;
-      console.log();
-     responseFiles.push(newFile);
+      responseFiles.push(newFile);
     });
-   return responseFiles;
+    return responseFiles;
   }
 
   render() {
     const {isLoading} = this.state;
     return (
       <React.Fragment>
-        <HeaderWithTitle title={'Editar anuncio'} />
-      {
-        isLoading ? <Loading/> :
-          <div className={'container'}>
-            <form onSubmit={this.handleSubmit}>
-              <AdForm  {...this.state} handleRemoveFile={this.handleRemoveFile} handleNewFile={this.handleNewFile}
-                       onChangeEvent={this.handleChange}
-                       checkboxChange={this.handleCheckboxChange} changeCoords={this.handleChangeCoordinates}/>
-            </form>
-          </div>
-      }
+        <HeaderWithTitle title={'Editar anuncio'}/>
+        {
+          isLoading ? <Loading/> :
+            <div className={'container'}>
+              <AdForm onSubmit={this.handleSubmit} {...this.state}/>
+            </div>
+        }
       </React.Fragment>
     );
   }

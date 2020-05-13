@@ -35,7 +35,6 @@ const img = {
 
 
 export default function Dropzone(props) {
-  console.log(props);
   const {handleNewFile, images, onRemoveImage} = props;
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
