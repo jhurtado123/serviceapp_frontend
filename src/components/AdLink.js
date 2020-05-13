@@ -4,7 +4,6 @@ import '../assets/css/components/AdLink.scss';
 class AdLink extends Component {
   render(){
     const { name, price, url} = this.props;
-    console.log('img', url)
     return(
       <div className="AdLink">
         <div className="AdLinkImg">

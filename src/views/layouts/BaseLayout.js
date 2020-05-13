@@ -16,7 +16,6 @@ class BaseLayout extends Component {
 
   render() {
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
-    console.log(user);
     return (
       <div className={'base-layout'}>
         <header>

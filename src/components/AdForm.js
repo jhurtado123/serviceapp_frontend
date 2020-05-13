@@ -46,7 +46,6 @@ class AdForm extends Component {
     })
   };
   handleNewFile = (files) => {
-    console.log(files);
     this.setState({
       images: this.state.images.concat(files),
     })

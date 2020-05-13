@@ -39,7 +39,6 @@ class Profile extends Component {
     try{
       const { data } = await profileApiClient
       .getProfile()
-        console.log(data)
         this.setState({
           _id: data._id,
           name: data.name,
@@ -63,7 +62,6 @@ class Profile extends Component {
     adApiClient
       .getAdsFromUser()
       .then(({ data }) => {
-        console.log("Los anucions son", data)
         this.setState({
           ads: data,
         })
