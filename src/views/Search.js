@@ -47,7 +47,6 @@ class Search extends Component {
       scrollZoom: true,
     });
     map.on('load', function () {
-      map.resize();
       map.addImage('pulsing-dot', pulsingDot, {pixelRatio: 2});
 
       map.addSource('points', {
@@ -74,6 +73,7 @@ class Search extends Component {
         }
       });
     });
+    map.resize();
   }
 
   getPulsingDot(size) {
@@ -168,6 +168,7 @@ class Search extends Component {
         });
       });
     });
+    map.resize();
   };
 
   removeMarkers() {
@@ -184,6 +185,8 @@ class Search extends Component {
   handleViewMap = () => {
     this.setState({
       isMapShown: true
+    }, () => {
+      map.resize();
     });
   };
   handleViewList = () => {
@@ -204,7 +207,6 @@ class Search extends Component {
     const {isMapShown} = this.state;
     return (
       <BaseLayout>
-
         <SearchBarWithFilters placeholder={'Buscar'} handleChange={this.handleChange} {...this.state}/>
         <div className={'view-options container'}>
           <div className={'view-option ' + (!isMapShown ? 'active' : '')} onClick={this.handleViewList}>Lista</div>
