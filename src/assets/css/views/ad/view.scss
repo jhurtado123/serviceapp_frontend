@@ -3,6 +3,20 @@
   .ad-images {
     height: 230px;
     width: 100%;
+    .image-slider {
+      * {
+        background-position: center;
+      }
+      .image-slider-bullets {
+        width: 10px!important;
+        height: 10px!important;
+      }
+      button {
+        img {
+          width: 30px;
+        }
+      }
+    }
   }
   .ad-owner {
     width: 100%;
@@ -14,6 +28,7 @@
     color:$purple-color;
     background: white;
     padding:10px 15px;
+    z-index: 90;
     margin-bottom: 15px;
     .owner-profile {
       display: flex;
