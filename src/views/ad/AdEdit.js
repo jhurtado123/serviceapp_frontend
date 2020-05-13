@@ -38,6 +38,7 @@ class AdEdit extends Component {
     })
   };
   handleNewFile = (files) => {
+    console.log(files);
     this.setState({
       images: this.state.images.concat(files),
     })
@@ -85,7 +86,7 @@ class AdEdit extends Component {
         postalCode: ad.postalCode,
         address: ad.address,
         price: ad.price,
-        category: ad.category._id,
+        category: ad.category,
         tags: ad.tags.toString(),
         usePersonalAddress: !(ad.address || ad.postalCode),
         mapCoords: {
@@ -113,7 +114,11 @@ class AdEdit extends Component {
       let metadata = {
         type: 'image/*'
       };
-     responseFiles.push(new File([data], image, metadata));
+      const newFile = new File([data], image, metadata);
+      newFile.preview = window.URL.createObjectURL(newFile);
+      newFile.path = newFile.name;
+      console.log();
+     responseFiles.push(newFile);
     });
    return responseFiles;
   }

@@ -35,6 +35,7 @@ const img = {
 
 
 export default function Dropzone(props) {
+  console.log(props);
   const {handleNewFile, images, onRemoveImage} = props;
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps} = useDropzone({
@@ -44,7 +45,7 @@ export default function Dropzone(props) {
       setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
       })));
-    }
+    },
   });
 
   const thumbs = images.map(file => (
