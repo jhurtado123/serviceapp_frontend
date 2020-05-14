@@ -9,7 +9,9 @@ import ProfileImage from "../../components/ProfileImage";
 import {Link} from 'react-router-dom';
 import ChatMessage from "../../components/ChatMessage";
 import {withAuth} from "../../context/AuthContext";
+import io from 'socket.io-client';
 
+let socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`);
 class Chat extends Component {
 
   state = {
@@ -24,14 +26,32 @@ class Chat extends Component {
     })
   };
 
-  handleSendMessage = (e) => {
-    const {writedMessage, messages} = this.state;
+  handleSendMessage = () => {
+    const {writedMessage} = this.state;
+    if (!writedMessage) return;
     const {user} = this.props;
+    const message = {sender: user._id ,type: 'text', content: writedMessage, date: new Date()};
+   this.addMessage(message);
+    this.emitMessage(message);
+  };
+
+  addMessage = (message) => {
+    const {messages} = this.state;
     this.setState({
       writedMessage: '',
-      messages: [...messages, {sender: user._id ,type: 'text', content: writedMessage, date: new Date()}],
+      messages: [...messages, message],
     });
   };
+
+  emitMessage({sender, type, content}) {
+    socket.emit('chat:message', {
+      content,
+      sender,
+      chatId: this.state.chat._id,
+      type,
+      date: new Date(),
+    });
+  }
 
   printMessages = () => {
     const {messages} = this.state;
@@ -44,12 +64,30 @@ class Chat extends Component {
 
     try {
       const {data: {chat}} = await chatApiClient.getChat(params.id);
+      this.joinSocketRoom(chat._id);
+      this.setSocketEvents();
       this.setState({
         chat,
       });
     } catch (e) {
       history.push(REDIRECT[404]);
     }
+  }
+
+  joinSocketRoom(id) {
+    socket.emit('room:join', id);
+  }
+  setSocketEvents = () => {
+    socket.on('chat:message', (data) => {
+      data.date = new Date();
+      this.addMessage(data);
+    });
+  };
+
+  componentWillUnmount() {
+    const {chat} = this.state;
+    if (chat)
+       socket.emit('room:leave', chat._id);
   }
 
   render() {

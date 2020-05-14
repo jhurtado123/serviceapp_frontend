@@ -5,6 +5,7 @@ import '../assets/css/components/chatMessage.scss';
 class ChatMessage extends Component {
   render() {
     const {message, user} = this.props;
+    console.log(message);
     return (
       <div className={'chat-message ' + (message.sender === user._id ? 'mine' : '')}>
         <div className={'content'}>
