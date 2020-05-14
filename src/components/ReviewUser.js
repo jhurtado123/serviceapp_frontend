@@ -4,17 +4,17 @@ import '../assets/css/views/profile/Profile.scss';
 class ReviewUser extends Component{
 
   render(){
-    const { content } = this.props;
+    const { category, title, content } = this.props;
     return(
-      <div className="ReviewUser" >
-        <img className="Avatar" src={require('../assets/images/icons/avatar.png')} alt="avatar" />
+      <div className="review-user" >
+        <img className="avatar" src={require('../assets/images/icons/avatar.png')} alt="avatar" />
         <div>
-          <div className="ReviewHeader">
-            <span>Test para el anuncio</span>
-            <img  className="ReviewStar" src={require('../assets/images/icons/stars.png')} alt="stars" />
+          <div className="review-header">
+            <span>{category}</span>
+            <img  className="review-star" src={require('../assets/images/icons/stars.png')} alt="stars" />
           </div>
-          <p className="ReviewTitle" >Titulo Anuncio</p>
-          <p className="ReviewContent" >{content}</p>
+          <p className="review-title" >{title}</p>
+          <p className="review-content" >{content}</p>
         </div>
       </div>
     )
