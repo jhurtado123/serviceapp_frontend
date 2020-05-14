@@ -34,12 +34,12 @@ class SearchBarWithFilters extends Component {
 
   render() {
     const {showFilters} = this.state;
-    const {searchValue, handleChange, placeholder, orderBy, maxPrice, category, maxRadius} = this.props;
+    const {search, handleChange, placeholder, orderBy, maxPrice, category, maxRadius} = this.props;
     return (
       <React.Fragment>
         <div className={'search-bar'}>
           <img src={Lupa} alt=""/>
-          <input type="text" name={'search'} value={searchValue} onChange={handleChange} placeholder={placeholder}/>
+          <input type="text" name={'search'} autoFocus={true} value={search} onChange={handleChange} placeholder={placeholder}/>
           <div className={'toggle-filters'} onClick={this.toggleFiltersBox}>Filtros</div>
         </div>
         <div className={'filters-box ' + (showFilters ? 'open' : '')}>
@@ -50,7 +50,7 @@ class SearchBarWithFilters extends Component {
               <input type="number" name={'maxPrice'} value={maxPrice} onChange={handleChange} min={'1'}/>
             </div>
             <div className={'form-group'}>
-              <label htmlFor="">Distancia máxima</label>
+              <label htmlFor="">Distancia máxima (Km)</label>
               <input type="number" name={'maxRadius'} value={maxRadius} onChange={handleChange} min={'1'} max={'100'}/>
             </div>
           </div>

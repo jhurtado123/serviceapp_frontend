@@ -43,7 +43,10 @@ class Profile extends Component {
     try{
       const {data} = await profileApiClient
       .getProfile()
+<<<<<<< HEAD
       console.log(data)
+=======
+>>>>>>> 40905a38db6af7d4b8f93976cefdab469c8e3c72
         this.setState({
           _id: data._id,
           name: data.name,
@@ -62,6 +65,7 @@ class Profile extends Component {
             })
         
       }
+<<<<<<< HEAD
     catch(error) {
       if (error.response) {
         this.props.history.push(REDIRECT[error.response.status]);
@@ -70,6 +74,30 @@ class Profile extends Component {
       this.props.history.push(REDIRECT[500]);
     };
   }
+=======
+      catch(error) {
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
+      };
+    adApiClient
+      .getAdsFromUser()
+      .then(({ data }) => {
+        this.setState({
+          ads: data,
+        })
+      })
+      .catch((error) => {
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
+      })
+    }
+>>>>>>> 40905a38db6af7d4b8f93976cefdab469c8e3c72
 
   getLevel = () => {
     const { points } = this.state;

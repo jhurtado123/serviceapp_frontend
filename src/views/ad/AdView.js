@@ -11,6 +11,7 @@ import ProfileImage from "../../components/ProfileImage";
 import SmallAd from "../../components/SmallAd";
 import {Sticky, StickyContainer} from 'react-sticky';
 import REDIRECT from "../../errorRedirects";
+import AdImages from "../../components/AdImages";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -46,6 +47,10 @@ class AdView extends Component {
   };
 
   async componentDidMount() {
+    this.getAdData();
+  }
+
+  getAdData = async () => {
     try {
       const {match: {params: {id}}} = this.props;
       const {data: {ad, relatedAds}} = await adApiClient.getAdWithRelated(id);
@@ -74,6 +79,15 @@ class AdView extends Component {
       }
       this.props.history.push(REDIRECT[500]);
     }
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.setState({
+        isLoading: true,
+      });
+      this.getAdData();
+    }
   }
 
   componentWillUnmount() {
@@ -86,7 +100,9 @@ class AdView extends Component {
       <React.Fragment>
         {isLoading ? <Loading/> :
           <div className={'ad'}>
-            <div className={'ad-images'}>imges</div>
+            <div className={'ad-images'}>
+              <AdImages ad={ad}/>
+            </div>
             <StickyContainer>
               <Sticky>
                 {({
