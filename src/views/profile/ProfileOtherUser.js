@@ -35,7 +35,7 @@ class ProfileOtherUser extends Component {
 
   componentDidMount = () => {
     this.loadProfile()
-    // this.getLevel()
+    this.getLevel()
   }
 
   async loadProfile() {
@@ -45,7 +45,6 @@ class ProfileOtherUser extends Component {
       const { data: { user } } = await profileApiClient
         .getProfileOtherUser(username)
       let theUser = user[0];
-      console.log(theUser)
       this.setState({
         _id: theUser._id,
         name: theUser.name,
@@ -59,43 +58,40 @@ class ProfileOtherUser extends Component {
     }
     catch (error) {
       if (error.response) {
-        // this.props.history.push(REDIRECT[error.response.status]);
+        this.props.history.push(REDIRECT[error.response.status]);
         return;
       }
-      // this.props.history.push(REDIRECT[500]);
+      this.props.history.push(REDIRECT[500]);
     };
   }
 
-  // getLevel = () => {
-  //   profileApiClient
-  //     .getLevel()
-  //     .then(({ data }) => {
-  //       this.setState({
-  //         level: data[0].level,
-  //         totalpoints: data[0].maxpoints
-  //       })
-  //       this.getMissingPoints()
-  //     })
-  //     .catch((error) => {
-  //       if (error.response) {
-  //         this.props.history.push(REDIRECT[error.response.status]);
-  //         return;
-  //       }
-  //       this.props.history.push(REDIRECT[500]);
-  //     })
-  // }
+  getLevel = () => {
+    profileApiClient
+      .getLevel()
+      .then(({ data }) => {
+        this.setState({
+          level: data[0].level,
+          totalpoints: data[0].maxpoints
+        })
+      })
+      .catch((error) => {
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
+      })
+  }
 
-  // getOneImage(image, id) {
-  //   const url = `${process.env.REACT_APP_BACKEND_URI}/uploads/adImages/${id}/${image}`;
-  //   return url;
-  // }
+  getOneImage(image, id) {
+    const url = `${process.env.REACT_APP_BACKEND_URI}/uploads/adImages/${id}/${image}`;
+    return url;
+  }
 
   async getAdsOtherUser () {
     const { _id } = this.state
-    console.log("El ID es", _id)
     const adsUser = await adApiClient
       .getAdsOtherUser(_id)
-    console.log("Los Ads son", adsUser)
     this.setState({
       ads: adsUser.data,
       status: STATUS.LOADED,

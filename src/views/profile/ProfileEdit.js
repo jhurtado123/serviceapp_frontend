@@ -35,7 +35,6 @@ class ProfileEdit extends Component {
   }
 
   async getImage(image, id) {
-    console.log("La imagen", image)
     const url = `${process.env.REACT_APP_BACKEND_URI}/uploads/profile/${id}/${image}`;
     this.setState({
       url: url,
