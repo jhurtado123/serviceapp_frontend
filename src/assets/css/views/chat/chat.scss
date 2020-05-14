@@ -1,0 +1,56 @@
+@import '../../variables';
+
+.chat-view {
+  .box-messages {
+    width: 100vw;
+    height: calc(100vh - 50px - 80px);
+    .no-messages-box {
+      position: absolute;
+      top:50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color:#C4C4C4;
+      width: 80%;
+      text-align: center;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      a {
+        .profile-image {
+          width: 60px;
+          height: 60px;
+        }
+      }
+      span {
+        color:$purple-color;
+      }
+    }
+  }
+  .box-send-message {
+    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.19);
+    height: 50px;
+    width: 100vw;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      width: 28px;
+      cursor: pointer;
+      &.upload-image {
+        width: 23px;
+      }
+    }
+    input {
+      flex:1;
+      margin: 0 15px;
+      margin-right: 20px;
+      border: 1px solid #C4C4C4;
+      border-radius: 8px;
+      padding: 5px 10px;
+    }
+  }
+}

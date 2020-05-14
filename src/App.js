@@ -21,6 +21,7 @@ import BaseLayout from "./views/layouts/BaseLayout";
 import SidebarProvider from "./context/SidebarContext";
 import Home from "./views/Home";
 import Search from "./views/Search";
+import Chat from "./views/chat/Chat";
 
 function App() {
   return (
@@ -37,7 +38,9 @@ function App() {
             <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
             <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
             <PrivateRoute exact path={'/profile'} component={Profile}/>
-            <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>            
+            <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
+
+            <PrivateRoute exact path={'/chats/:id'} component={Chat} />
 
             <Route exact path={'/401'} component={Error401}/>
             <Route exact path={'/404'} component={Error404}/>

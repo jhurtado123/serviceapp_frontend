@@ -1,0 +1,32 @@
+@import '../variables';
+.chat-message {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  &.mine {
+    justify-content: flex-end;
+    .content {
+      .time {
+        left: -35px;
+        max-width: 50px;
+      }
+    }
+  }
+  .content {
+    padding: 10px 0;
+    font-size: 16px;
+    max-width: 50%;
+    width: auto;
+    position: relative;
+    .time {
+      position: absolute;
+      bottom:10px;
+      right: -35px;
+      font-size: 12px;
+      color:$purple-color;
+      font-family: $font-montserrat;
+    }
+  }
+}
