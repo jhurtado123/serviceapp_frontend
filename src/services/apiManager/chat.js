@@ -8,13 +8,18 @@ class ChatApiClient {
     });
   }
 
-  createAd(adId) {
+  createChat(adId) {
     return this.apiClient.post('/chats', {adId});
   }
 
   getChat(id) {
     return this.apiClient.get(`/chats/${id}`);
   }
+
+  getChatMessages(id) {
+    return this.apiClient.get(`/chats/${id}/messages`);
+  }
+
 
 }
 

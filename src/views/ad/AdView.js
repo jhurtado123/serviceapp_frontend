@@ -40,7 +40,7 @@ class AdView extends Component {
     if (!ad) return;
 
     try {
-      const {data} = await chatApiClient.createAd(ad._id);
+      const {data} = await chatApiClient.createChat(ad._id);
       this.props.history.push(`/chats/${data.data}`);
     } catch (e) {
       return;

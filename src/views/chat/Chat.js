@@ -30,7 +30,8 @@ class Chat extends Component {
     const {writedMessage} = this.state;
     if (!writedMessage) return;
     const {user} = this.props;
-    const message = {sender: user._id ,type: 'text', content: writedMessage, date: new Date()};
+    const date = new Date();
+    const message = {sender: user._id ,type: 'text', content: writedMessage, date: new Date(date.setHours(date.getHours() + 2))};
    this.addMessage(message);
     this.emitMessage(message);
   };
@@ -44,18 +45,19 @@ class Chat extends Component {
   };
 
   emitMessage({sender, type, content}) {
+    const date = new Date();
     socket.emit('chat:message', {
       content,
       sender,
       chatId: this.state.chat._id,
       type,
-      date: new Date(),
+      date: date.setHours(date.getHours() + 2),
     });
   }
 
   printMessages = () => {
     const {messages} = this.state;
-    return messages.map(message => <ChatMessage message={message}/>);
+    return messages.map((message,index) => <ChatMessage key={index} message={message}/>);
   };
 
   async componentDidMount() {
@@ -68,6 +70,10 @@ class Chat extends Component {
       this.setSocketEvents();
       this.setState({
         chat,
+      });
+      const {data: {messages}} = await chatApiClient.getChatMessages(params.id);
+      this.setState({
+        messages,
       });
     } catch (e) {
       history.push(REDIRECT[404]);
