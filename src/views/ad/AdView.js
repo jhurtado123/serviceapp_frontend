@@ -12,6 +12,7 @@ import SmallAd from "../../components/SmallAd";
 import {Sticky, StickyContainer} from 'react-sticky';
 import REDIRECT from "../../errorRedirects";
 import AdImages from "../../components/AdImages";
+import chatApiClient from "../../services/apiManager/chat";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -31,6 +32,19 @@ class AdView extends Component {
     this.setState({
       isMapOpened: !this.state.isMapOpened,
     })
+  };
+
+  handleChatInit = async () => {
+    const {ad} = this.state;
+
+    if (!ad) return;
+
+    try {
+      const {data} = await chatApiClient.createChat(ad._id);
+      this.props.history.push(`/chats/${data.data}`);
+    } catch (e) {
+      return;
+    }
   };
 
   printAdTags = () => {
@@ -116,7 +130,7 @@ class AdView extends Component {
                         <p>Level: 5 <span>★★★★</span></p>
                       </div>
                     </div>
-                    <div className={'ad-chat-button'}>
+                    <div className={'ad-chat-button'} onClick={this.handleChatInit}>
                       Iniciar chat
                     </div>
                   </div>
