@@ -41,18 +41,29 @@
   color: $gold-color;
 }
 
-.ImgProfile {
+.img-profile {
   border-radius: 50%;
   background-color: $gold-color;
-  width: 76px;
-  height: 76px;
+  width: 70px;
+  height: 70px;
 }
-.Avatar {
-  width: 50px;
-  height: 50px;
-  margin: 13px;
+
+.profile-image-container{
+  display:flex;
+  justify-content: center;
+}
+.img-profile-edit{
+  position: absolute;
+}
+
+.avatar {
+  width: 55px;
+  height: 55px;
+  margin: 7px;
   border-radius: 50%;
+  position:relative;
 }
+
 
 .ButtonUser {
   color: $purple-color;
@@ -71,7 +82,7 @@
   color: #fff;
 }
 
-.ReviewUser {
+.review-user {
   display: flex;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -79,37 +90,39 @@
   width: 87.5%
 }
 
-.ReviewHeader{
+.review-header{
   display: flex;
   justify-content: space-between;
 }
 
-.ReviewStar {
+.review-star {
   width: 80px;
   height: 15px;
 }
 
-.ReviewTitle{
+.review-title{
   font-family: $font-montserrat;
   font-weight: 600;
   margin-block-start: 0.2em;
 
 }
 
-.ReviewContent {
+.review-content {
   border: 1px solid #E5E5E5;
   border-radius: 15px;
   padding: 10px;
 }
 
-.HeaderEdit {
+.header-edit {
   background-image: url('/src/assets/images/viewsofile/header-edit.png');
   height: 143px;
   width: 100%;
   top:0px;
   left: 0px;
-  position: absolute;
-  
+}
+
+.hidden {
+  display: none; 
 }
 
 .profile-form {
@@ -122,8 +135,10 @@
   position: absolute;
   right: 20px;
 }
-/**.profile-image{
-  position: absolute;
-  right: 150px;
-  top: 60px;
-}**/
+.profile-image{
+display:flex;
+}
+
+.not-info {
+  margin-left: 15px;
+}

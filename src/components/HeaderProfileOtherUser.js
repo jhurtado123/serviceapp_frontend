@@ -3,8 +3,8 @@ import '../assets/css/views/profile/Profile.scss';
 
 class HeaderProfile extends Component {
 
-  render(){
-    const { name, level, url, missingpoints, tokens } = this.props;
+  render() {
+    const { name, level, url, description } = this.props;
     return (
       <div className="HeaderProfile">
         <div className="HeaderColumns">
@@ -14,24 +14,20 @@ class HeaderProfile extends Component {
         </div>
         <div className="HeaderColumns SecondLevel">
           <div className="Gold">
-          <span>{level} </span>
-          <span>nivel</span>
+            <span>{level} </span>
+            <span>nivel</span>
           </div>
           <div className="img-profile">
-          <img className="avatar" src={url !=='' ? url : require('../assets/images/icons/avatar.png')} alt="avatar"/>
+            <img className="avatar" src={url !== '' ? url : require('../assets/images/icons/avatar.png')} alt="avatar" />
           </div>
           <div className="Gold">
-            <span>{tokens} </span>
-            <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin" />
+            <span></span>
           </div>
         </div>
         <div className="CenterColumns Gold">
-          <div></div>
           <div>
-            Próxima recompensa: 50
-            <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin" />
+            {description}
           </div>
-          <div>Faltan {missingpoints} puntos para subir al {level + 1} nivel</div>
         </div>
       </div>
     )
