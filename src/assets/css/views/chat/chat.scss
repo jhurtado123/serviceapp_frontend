@@ -1,9 +1,12 @@
 @import '../../variables';
 
 .chat-view {
+  overflow: hidden;
   .box-messages {
     width: 100vw;
-    height: calc(100vh - 50px - 80px);
+    height: calc(100vh - 50px - 80px - 15px);
+    overflow-y: scroll;
+    margin-bottom: 15px;
     .no-messages-box {
       position: absolute;
       top:50%;
@@ -32,11 +35,68 @@
     height: 50px;
     width: 100vw;
     padding-top: 2px;
+    transition: all 0.2s ease-in-out;
+    * {
+      transition: all 0.2s ease-in-out;
+    }
     padding-bottom: 2px;
     display: flex;
+    z-index: 150;
+    background: white;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
+    &.content-image {
+      transition: all 0.2s ease-in-out;
+      position: fixed;
+      bottom: 0;
+      height: 300px;
+      img {
+        width: 30px;
+        cursor: pointer;
+        &.upload-image {
+          width: 25px;
+        }
+      }
+      .imageToSend {
+        height: 100%;
+        text-align: center;
+        position: relative;
+        padding: 10px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .remove {
+          position: absolute;
+          top:20px;
+          left: 50%;
+          font-weight: bold;
+          font-size: 20px;
+          transform: translateX(-50%);
+          font-family: $font-montserrat;
+          background: $purple-color;
+          color:$gold-color;
+          width: 40px;
+          height:40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          border-radius: 50%;
+          img {
+            width: 15px;
+            margin: 0;
+          }
+        }
+        img {
+          margin-top: 60px;
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          max-height: 180px;
+        }
+      }
+    }
     img {
       width: 28px;
       cursor: pointer;
@@ -51,6 +111,10 @@
       border: 1px solid #C4C4C4;
       border-radius: 8px;
       padding: 5px 10px;
+    }
+    .imageToSend {
+      flex: 1;
+      height: 150px;
     }
   }
 }

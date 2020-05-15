@@ -9,7 +9,10 @@ class ChatMessage extends Component {
     return (
       <div className={'chat-message ' + (message.sender === user._id ? 'mine' : '')}>
         <div className={'content'}>
-          {message.content}
+          {message.type === 'text' ?
+            message.content :
+            <img className={'image-message'} src={message.content} alt=""/>
+          }
           <div className={'time'}>
             {message.date.getUTCHours()}:{message.date.getUTCMinutes()}
           </div>
