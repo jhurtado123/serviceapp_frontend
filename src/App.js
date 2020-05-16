@@ -11,6 +11,7 @@ import AdCreate from "./views/ad/AdCreate";
 import AdEdit from "./views/ad/AdEdit";
 import Profile from "./views/profile/Profile";
 import ProfileEdit from "./views/profile/ProfileEdit";
+import ProfileOtherUser from "./views/profile/ProfileOtherUser";
 import ProfileAds from "./views/profile/ProfileAds";
 import RecoverAds from "./views/profile/RecoverAds";
 import AdView from "./views/ad/AdView";
@@ -39,7 +40,9 @@ function App() {
             <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
             <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
             <PrivateRoute exact path={'/profile'} component={Profile}/>
+
             <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
+            <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>
 
             <PrivateRoute exact path={'/chats'} component={Chats} />
             <PrivateRoute exact path={'/chats/:id'} component={Chat} />

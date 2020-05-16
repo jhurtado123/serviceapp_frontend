@@ -69,6 +69,10 @@ class AdApiClient {
     return this.apiClient.get('/ad/user');
   }
 
+  getAdsOtherUser(username)  {
+    return this.apiClient.get(`/ad/user/${username}`)
+  }
+
 }
 
 const adApiClient = new AdApiClient();

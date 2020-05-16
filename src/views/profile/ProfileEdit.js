@@ -1,79 +1,31 @@
 import React, {Component} from 'react';
 import profileApiClient from "../../services/apiManager/profile";
+import { withAuth } from "../../context/AuthContext";
 import Loading from "../Loading";
-import ProfileForm from "../../components/ProfileFrom";
+import ProfileForm from "../../components/ProfileForm";
+import HeaderWithTitle from "../../components/HeaderWithTitle";
 import '../../assets/css/views/profile/Profile.scss';
 
-
+const STATUS = {
+  LOADING: "LOADING",
+  LOADED: "LOADED",
+};
 
 class ProfileEdit extends Component {
   state = {
     id: '',
-    name: '',
-    description: '',
-    address: '',
-    images: [],
-    usePersonalAddress: true,
-    mapCoords: {
-      lat: 2.17694,
-      lng: 41.3825,
-    },
+    profile_image:'',
     error: undefined,
-    isLoading: false,
+    status: STATUS.LOADING,
   }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      error: undefined,
-    });
-  };
-  handleCheckboxChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.checked,
-    })
-  };
-  handleNewFile = (files) => {
-    this.setState({
-      images: this.state.images.concat(files),
-    })
-  };
-  handleRemoveFile = (file) => {
-    this.setState({
-      images: this.state.images.filter(image => image !== file),
-    })
-  };
-
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await profileApiClient.updateProfile(this.state);
-      this.props.history.push('/profile')
-    } catch ({ response: { data: { data: errorMessage } } }) {
-      this.setState({
-        error: errorMessage,
-      })
-    }
-    
-  };
 
   async componentDidMount() {
     try {
       const { data } = await profileApiClient.getProfile()
           this.setState({
             id: data._id,
-            name: data.name,
-            address: data.address,
-            description: data.description,
-            postalcode: data.postalcode,
-            number: data.number,
-            images: await this.getImages([data.profile_image], data._id),
-            url: '',
-            mapCoords: {
-              lat: data.location.coordinates[0],
-              lng: data.location.coordinates[1],
-            },
-            isLoading: false,
+            profile_image: await this.getImage(data.profile_image, data._id),
+            status: STATUS.LOADED,
             error: undefined,
           })
 
@@ -82,48 +34,44 @@ class ProfileEdit extends Component {
     }
   }
 
-  async getImages(images, id) {
-    let responseFiles = [];
-    images.map(async (image) => {
-      const url = `${process.env.REACT_APP_BACKEND_URI}/uploads/profile/${id}/${image}`;
-      let response = await fetch(url);
-      let data = await response.blob();
-      let metadata = {
-        type: 'image/*'
-      };
-      this.setState({
-        url: url,
-      })
-      responseFiles.push(new File([data], image, metadata));
-    });
-    return responseFiles;
+  async getImage(image, id) {
+    const url = `${process.env.REACT_APP_BACKEND_URI}/uploads/profile/${id}/${image}`;
+    this.setState({
+      url: url,
+    })
+
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { status } = this.state;
     const { url } = this.state;
-    return (
-      <div>
-        {
-          isLoading ? <Loading /> :
+    // eslint-disable-next-line default-case
+    switch (status) {
+      case STATUS.LOADED:
+        return (
+          <div>
+            <HeaderWithTitle title="Editar perfil" />
             <div className={'container'}>
-              <div className="HeaderEdit">
-                <img className="HeaderEdit" src={require('../../assets/images/views/profile/header-edit.png')} alt="header-edit-profile" />
+              {/* <div className="header-edit">
+                <img className="header-edit" src={require('../../assets/images/views/profile/header-edit.png')} alt="header-edit-profile" />
+              </div> */}
+              <div className="profile-image-container">
+                <div className="img-profile img-profile-edit">
+                </div>
+                <img className="avatar avatar-edit" src={url} alt="profile" />
               </div>
-              <div className="ImgProfile profile-image">
-                <img className="Avatar" src={url} alt="profile" />
-              </div>
-              <div className="text-edit"> Editar Perfil</div>
-              <form onSubmit={this.handleSubmit}>
-                <ProfileForm  {...this.state} handleRemoveFile={this.handleRemoveFile} handleNewFile={this.handleNewFile}
-                  onChangeEvent={this.handleChange}
-                  />
-              </form>
+                <ProfileForm />
             </div>
-        }
-      </div>
-    );
+          </div>
+        )
+      case STATUS.LOADING:
+        return(
+          <div>
+            <Loading />
+          </div>
+        )
+    }
   }
 }
 
-export default ProfileEdit;
+export default withAuth(ProfileEdit);

@@ -9,9 +9,13 @@ class ProfileApiClient {
   }
 
   getProfile() { 
-    return this.apiClient.get("/profile");
+    return this.apiClient.get("/whoami");
   }
   
+  getProfileOtherUser(username){
+    return this.apiClient.get(`/profile/user/${username}`)
+  }
+
   getLevel() {
     return this.apiClient.get("/profile/level");
   }

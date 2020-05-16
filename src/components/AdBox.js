@@ -16,7 +16,7 @@ class AdBox extends Component {
           <div className={'info'}>
             <ProfileImage user={ad.owner}/>
             <div className={'price'}>
-              {ad.price} <img src={Token}/>
+              {ad.price} <img src={Token} alt="token" />
             </div>
           </div>
         </div>
