@@ -4,6 +4,8 @@
   box-sizing: border-box;
   font-family: $font-muli;
   color:#444444;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 a {
   color:inherit;
