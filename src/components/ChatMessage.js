@@ -52,7 +52,7 @@ class ChatMessage extends Component {
         <div className={'content'}>
           {this.printMessage(message)}
           <div className={'time'}>
-            {message.date.getUTCHours()}:{message.date.getUTCMinutes()}
+            {message.date.getUTCHours()}:{message.date.getUTCMinutes() < 10 ? `0${message.date.getUTCMinutes()}` : message.date.getUTCMinutes()}
           </div>
         </div>
       </div>

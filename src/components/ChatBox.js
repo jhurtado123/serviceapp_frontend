@@ -7,7 +7,7 @@ import '../assets/css/components/chatBox.scss';
 class ChatBox extends Component {
   render() {
     const {chatWrap: {chat, unReadMessages}, user} = this.props;
-    const otherUser = chat.seller === user ? chat.buyer : chat.seller;
+    const otherUser = chat.seller._id === user._id ? chat.buyer : chat.seller;
     return (
       <Link className={'chat-box'} to={`/chats/${chat._id}`}>
         <ProfileImage user={otherUser}/>
