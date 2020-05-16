@@ -55,7 +55,7 @@ class Footer extends Component {
           <Link to={''}>
             <img src={notificationsIcon} alt=""/>
           </Link>
-          <Link to={''}>
+          <Link to={'/chats'}>
             <img src={chatIcon} alt=""/>
           </Link>
         </div>

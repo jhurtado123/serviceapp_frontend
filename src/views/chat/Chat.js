@@ -92,7 +92,7 @@ class Chat extends Component {
       imageMessage: undefined,
       encodedImage: '',
     }, () => {
-      this.messagesBoxRef.current.scrollTo(0,100000);
+      this.messagesBoxRef.current.scrollTo(0, 999999999);
     });
   };
 
@@ -127,7 +127,7 @@ class Chat extends Component {
       this.setState({
         messages,
       }, () => {
-        this.messagesBoxRef.current.scrollTo(0,100000);
+        this.messagesBoxRef.current.scrollTo(0, 999999999);
       });
     } catch (e) {
       history.push(REDIRECT[404]);
@@ -153,6 +153,7 @@ class Chat extends Component {
 
   render() {
     const {messages, chat, writedMessage, encodedImage} = this.state;
+    const {user} = this.props;
     return (
       <div className={'chat-view'}>
         <ChatHeader chat={chat}/>
@@ -161,10 +162,10 @@ class Chat extends Component {
             <React.Fragment>
               {!messages.length ?
                 <div className={'no-messages-box'}>
-                  <Link to={`/profile/${chat.seller.username}`}>
-                    <ProfileImage user={chat.seller}/>
+                  <Link to={`/profile/${chat.seller._id === user._id ? chat.buyer.username : chat.seller.username}`}>
+                    <ProfileImage user={chat.seller._id === user._id ? chat.buyer : chat.seller}/>
                   </Link>
-                  <p>Tu conversación con <span>{chat.seller.name}</span> aún no ha comenzado.
+                  <p>Tu conversación con <span>{chat.seller._id === user._id ? chat.buyer.name : chat.seller.name}</span> aún no ha comenzado.
                     Escríbele para llegar a un acuerdo sobre el servicio.</p>
                 </div> :
                 this.printMessages()}
