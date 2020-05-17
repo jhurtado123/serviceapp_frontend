@@ -121,6 +121,20 @@
           font-size: 20px;
         }
       }
+      .sidebar-links {
+        display: flex;
+        margin-top: 25px;
+        flex-flow: column;
+        a {
+          font-size: 18px;
+          color:#444444;
+          font-family: $font-montserrat;
+          margin-bottom: 20px;
+          &:hover {
+            color:$purple-color;
+          }
+        }
+      }
     }
   }
 
