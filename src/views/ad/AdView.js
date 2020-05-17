@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import adApiClient from "../../services/apiManager/ad";
+import profileApiClient from "../../services/apiManager/profile";
 import Loading from "../Loading";
 import '../../assets/css/views/ad/view.scss'
 import Token from '../../assets/images/icons/coin.png';
@@ -48,6 +49,7 @@ class AdView extends Component {
 
   async componentDidMount() {
     this.getAdData();
+    this.addRecentlyViewed();
   }
 
   getAdData = async () => {
@@ -80,6 +82,11 @@ class AdView extends Component {
       this.props.history.push(REDIRECT[500]);
     }
   };
+
+  addRecentlyViewed = () => {
+    const { match: { params: { id } } } = this.props;
+    profileApiClient.addToRecentlyViewed(id);
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.location.key !== this.props.location.key) {
