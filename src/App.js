@@ -25,6 +25,7 @@ import Search from "./views/Search";
 import Chat from "./views/chat/Chat";
 import Chats from "./views/chat/Chats";
 import Appointments from "./views/appointments/Appointments";
+import Appointment from "./views/appointments/Appointment";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>
 
             <PrivateRoute exact path={'/appointments'} component={Appointments}/>
+            <PrivateRoute exact path={'/appointments/:id'} component={Appointment}/>
 
             <PrivateRoute exact path={'/chats'} component={Chats} />
             <PrivateRoute exact path={'/chats/:id'} component={Chat} />
