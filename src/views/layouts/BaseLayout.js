@@ -27,7 +27,7 @@ class BaseLayout extends Component {
             <div className={'close-sidebar'}>
               <img src={closeIcon} onClick={closeMenu}/>
               {isLoggedIn && <div className={'tokens'}>
-                10<img src={Token}/>
+                {user.wallet.tokens}<img src={Token}/>
               </div>}
             </div>
             {isLoggedIn &&

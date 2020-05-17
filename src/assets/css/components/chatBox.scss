@@ -1,0 +1,58 @@
+@import '../variables';
+.chat-box {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid #C4C4C4;
+  width: 100%;
+  position: relative;
+  margin-bottom: 15px;
+  padding: 25px 0;
+  .profile-image {
+    width: 50px;
+    height: 50px;
+    border: none;
+    margin-right: 20px;
+  }
+  .data {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    h2 {
+      margin: 0;
+      font-family: $font-montserrat;
+      font-weight: bold;
+      color:#444;
+      margin-bottom: 5px;
+    }
+    p {
+      margin: 0;
+      color:#C4C4C4;
+      font-size: 14px;
+      span {
+        color:$purple-color;
+      }
+    }
+  }
+  .unRead-messages {
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #C4C4C4;
+    border-radius: 50%;
+    padding:3px 7px;
+    font-weight: bold;
+    font-size: 12px;
+    color:#444;
+    &.hasUnread {
+      background: $purple-color;
+      color:white;
+      font-weight: bold;
+    }
+  }
+}

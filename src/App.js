@@ -23,6 +23,8 @@ import SidebarProvider from "./context/SidebarContext";
 import Home from "./views/Home";
 import Search from "./views/Search";
 import Chat from "./views/chat/Chat";
+import Chats from "./views/chat/Chats";
+import Appointments from "./views/appointments/Appointments";
 
 function App() {
   return (
@@ -41,8 +43,11 @@ function App() {
             <PrivateRoute exact path={'/profile'} component={Profile}/>
 
             <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
-            <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>     
-    
+            <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>
+
+            <PrivateRoute exact path={'/appointments'} component={Appointments}/>
+
+            <PrivateRoute exact path={'/chats'} component={Chats} />
             <PrivateRoute exact path={'/chats/:id'} component={Chat} />
 
             <Route exact path={'/401'} component={Error401}/>

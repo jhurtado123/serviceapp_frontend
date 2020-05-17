@@ -19,6 +19,7 @@
     box-sizing: border-box;
     height: 100%;
     display: flex;
+    flex: 1;
     flex-flow: column;
     justify-content: space-between;
     a {
@@ -37,6 +38,23 @@
       img {
         width: 15px;
         margin-left: 5px;
+      }
+    }
+  }
+  .chat-actions {
+    display: flex;
+    flex-flow: row nowrap;
+    .action {
+      margin-left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      border-radius: 50%;
+      box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.29);
+      cursor: pointer;
+      img {
+        width: 34px;
       }
     }
   }

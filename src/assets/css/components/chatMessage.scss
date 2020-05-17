@@ -24,6 +24,43 @@
       max-width: 100%;
       max-height: 100%;
     }
+    .info-message {
+      font-size: 14px;
+      color:#C4C4C4;
+      a {
+        color:$purple-color;
+      }
+    }
+    .renegotiation-message, .new-deal-message {
+      p {
+        font-size: 14px;
+      }
+      .error-message {
+        font-size: 14px;
+        color:lightcoral;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div {
+          font-size: 14px;
+          border-radius: 10px;
+          padding: 5px 12px;
+          cursor: pointer;
+          &.cancel {
+            border: 1px solid $purple-color;
+            color:$purple-color;
+          }
+          &.accept {
+            background: $purple-color;
+            border: 1px solid $purple-color;
+            color:white;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
     .time {
       position: absolute;
       bottom:10px;
