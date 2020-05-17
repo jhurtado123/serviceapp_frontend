@@ -26,6 +26,7 @@ import Chat from "./views/chat/Chat";
 import Chats from "./views/chat/Chats";
 import Appointments from "./views/appointments/Appointments";
 import Appointment from "./views/appointments/Appointment";
+import BuyTokens from "./views/BuyTokens";
 
 function App() {
   return (
@@ -51,6 +52,8 @@ function App() {
 
             <PrivateRoute exact path={'/chats'} component={Chats} />
             <PrivateRoute exact path={'/chats/:id'} component={Chat} />
+
+            <PrivateRoute exact path={'/buySerkens'} component={BuyTokens} />
 
             <Route exact path={'/401'} component={Error401}/>
             <Route exact path={'/404'} component={Error404}/>
