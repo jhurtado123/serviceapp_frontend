@@ -3,6 +3,23 @@
   .ad-images {
     height: 230px;
     width: 100%;
+    position: relative;
+    .back {
+      position: absolute;
+      top:20px;
+      left: 0;
+      background: $purple-color;
+      border-radius: 0 50% 50% 0;
+      padding: 10px 10px;
+      display: flex;
+      justify-content: center;
+      img {
+        margin-right: 5px;
+      }
+
+      z-index: 200;
+      cursor: pointer;
+    }
     .image-slider {
       * {
         background-position: center;
