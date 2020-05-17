@@ -4,6 +4,7 @@ import profileApiClient from "../../services/apiManager/profile";
 import Loading from "../Loading";
 import '../../assets/css/views/ad/view.scss'
 import Token from '../../assets/images/icons/coin.png';
+import Back from '../../assets/images/icons/back-white.png';
 import Location from '../../assets/images/icons/location.png';
 import Tags from '../../assets/images/icons/tags.png';
 import Category from '../../assets/images/icons/category.png';
@@ -98,7 +99,7 @@ class AdView extends Component {
   };
 
   addRecentlyViewed = () => {
-    const { match: { params: { id } } } = this.props;
+    const {match: {params: {id}}} = this.props;
     profileApiClient.addToRecentlyViewed(id);
   }
 
@@ -116,12 +117,16 @@ class AdView extends Component {
   }
 
   render() {
+    const {history} = this.props;
     const {ad, isLoading, isMapOpened} = this.state;
     return (
       <React.Fragment>
         {isLoading ? <Loading/> :
           <div className={'ad'}>
             <div className={'ad-images'}>
+              <div className={'back'}>
+                <img src={Back} alt="" onClick={history.goBack}/>
+              </div>
               <AdImages ad={ad}/>
             </div>
             <StickyContainer>
