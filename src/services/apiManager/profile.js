@@ -49,6 +49,10 @@ class ProfileApiClient {
   addToRecentlyViewed(id) {
     return this.apiClient.put(`/profile/ad/${id}`)
   }
+
+  buyTokens(quantity) {
+    return this.apiClient.put('/profile/buyTokens', {quantity});
+  }
 }
 
 
