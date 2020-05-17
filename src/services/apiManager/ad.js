@@ -73,6 +73,9 @@ class AdApiClient {
     return this.apiClient.get(`/ad/user/${username}`)
   }
 
+  getAllAds() {
+    return this.apiClient.get('/ad/getallads')
+  }
 }
 
 const adApiClient = new AdApiClient();

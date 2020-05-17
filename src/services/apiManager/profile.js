@@ -11,7 +11,7 @@ class ProfileApiClient {
   getProfile() { 
     return this.apiClient.get("/whoami");
   }
-  
+
   getProfileOtherUser(username){
     return this.apiClient.get(`/profile/user/${username}`)
   }
@@ -46,6 +46,9 @@ class ProfileApiClient {
     return this.apiClient.put('/profile/edit', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
   }
 
+  addToRecentlyViewed(id) {
+    return this.apiClient.put(`/profile/ad/${id}`)
+  }
 }
 
 
