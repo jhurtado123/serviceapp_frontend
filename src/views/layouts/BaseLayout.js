@@ -50,7 +50,17 @@ class BaseLayout extends Component {
               <p>o</p>
               <Link to={'/register'}>Registrate</Link>
             </div> }
-            {isLoggedIn && <div>Logged  bro</div>}
+            {isLoggedIn &&
+            <div className={'sidebar-links'}>
+              <Link to={'/ads'}>Mis anuncios</Link>
+              <Link to={'/appointments'}>Mis citas</Link>
+              <Link to={'/chats'}>Mis chats</Link>
+              <Link to={'/rewards'}>Progreso y premios</Link>
+              <Link to={'/favorites'}>Mis favoritos</Link>
+              <Link to={'/notifications'}>Notificaciones</Link>
+              <Link to={'/ads/recover'}>Recuperar anuncios eliminados</Link>
+              <Link to={'/buySerkens'}>Comprar Serkens</Link>
+            </div>}
           </div>
         </div>
         {children}
