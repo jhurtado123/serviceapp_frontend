@@ -27,8 +27,11 @@
     .info-message {
       font-size: 14px;
       color:#C4C4C4;
+      a {
+        color:$purple-color;
+      }
     }
-    .renegotiation-message {
+    .renegotiation-message, .new-deal-message {
       p {
         font-size: 14px;
       }

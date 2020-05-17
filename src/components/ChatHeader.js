@@ -11,7 +11,7 @@ import CloseDealIcon from '../assets/images/icons/close-deal.png';
 
 class ChatHeader extends Component {
   render() {
-    const {history, chat, openRenegotiaton} = this.props;
+    const {history, chat, openRenegotiaton, openDealModal} = this.props;
     return (
       <div className={'chat-header container'}>
         <img src={backIcon} className={'back'} alt="" onClick={history.goBack}/>
@@ -25,7 +25,7 @@ class ChatHeader extends Component {
               <div className={'action negotiate'} onClick={openRenegotiaton}>
                 <img src={RenegotiateIcon} alt=""/>
               </div>
-              <div className={'action close-deal'}>
+              <div className={'action close-deal'} onClick={openDealModal}>
                 <img src={CloseDealIcon} alt=""/>
               </div>
             </div>

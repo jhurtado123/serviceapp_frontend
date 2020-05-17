@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {withAuth} from "../context/AuthContext";
 import '../assets/css/components/chatMessage.scss';
+import {Link} from "react-router-dom";
 
 class ChatMessage extends Component {
 
   printMessage(message) {
-    const {user, resolveNegotiation} = this.props;
+    const {user, resolveNegotiation, price, seller, buyer, resolveNewDeal} = this.props;
+    const otherUser = user._id === seller._id ? buyer : seller;
     switch (message.type) {
       case 'text':
         return message.data.content;
@@ -15,13 +17,13 @@ class ChatMessage extends Component {
         break;
       case 'renegotiation':
         if (message.sender === user._id) {
-          return <div className={'info-message'}>Has solicitado un cambio de precio a {message.data.content} serkens. A la espera de que el otro usuario lo acepte...</div>
+          return <div className={'info-message'}>Has solicitado un cambio de precio a {message.data.content} serkens. A la espera de que {otherUser.name} lo acepte...</div>
         }
         return <div className={'renegotiation-message'}>
-          <p>Se ha solicitado un cambio de precio a {message.data.content} serkens</p>
-          {user.wallet.tokens < message.data.content ? <p className={'error-message'}>No tienes tokens suficientes</p> : ''}
+          <p>{otherUser.name} ha solicitado un cambio de precio a {message.data.content} serkens</p>
+          {user._id === buyer._id && user.wallet.tokens < message.data.content ? <p className={'error-message'}>No tienes serkens suficientes</p> : ''}
           <div className={'actions'}>
-            {user.wallet.tokens >= message.data.content && <div className={'accept'} onClick={() => resolveNegotiation(true, message.data.content)}>Aceptar</div>}
+            {!(user._id === buyer._id && user.wallet.tokens < message.data.content) && <div className={'accept'} onClick={() => resolveNegotiation(true, message.data.content)}>Aceptar</div>}
             <div className={'cancel'} onClick={() => resolveNegotiation(false, message.data.content)}>Declinar</div>
           </div>
         </div>;
@@ -31,18 +33,57 @@ class ChatMessage extends Component {
           if (message.sender === user._id) {
             return <div className={'info-message'}>Has aceptado la oferta de {message.data.content} serkens.</div>
           } else {
-            return <div className={'info-message'}>Se ha aceptado la oferta de {message.data.content} serkens.</div>
+            return <div className={'info-message'}>{otherUser.name} ha aceptado la oferta de {message.data.content} serkens.</div>
           }
         } else {
           if (message.sender === user._id) {
             return <div className={'info-message'}>Has rechazado la oferta de {message.data.content} serkens.</div>
           } else {
-            return <div className={'info-message'}>Se ha rechazado la oferta de {message.data.content} serkens.</div>
+            return <div className={'info-message'}>{otherUser.name} ha rechazado la oferta de {message.data.content} serkens.</div>
+          }
+        }
+        break;
+      case 'new-deal':
+        if (message.sender === user._id) {
+          return <div className={'info-message'}>Has solicitado una cita para {this.getYYYMMDDHHMMDate(message.data.content)} . A la espera de que {otherUser.name} la acepte...</div>
+        }
+        return <div className={'new-deal-message'}>
+          <p>{otherUser.name} ha propuesto acordar una cita para el {this.getYYYMMDDHHMMDate(message.data.content)}</p>
+          {user._id === buyer._id && user.wallet.tokens < price ? <p className={'error-message'}>No tienes serkens suficientes</p> : ''}
+          <div className={'actions'}>
+            {!(user._id === buyer._id && user.wallet.tokens < price) && <div className={'accept'} onClick={() => resolveNewDeal(true, message.data.content)}>Aceptar</div>}
+            <div className={'cancel'} onClick={() => resolveNewDeal(false, message.data.content)}>Declinar</div>
+          </div>
+        </div>;
+        break;
+
+      case 'deal-resolve':
+        if (message.data.status) {
+          if (message.sender === user._id) {
+            return <div className={'info-message'}>Has aceptado el acuerdo para el día {this.getYYYMMDDHHMMDate(message.data.content)}. Puedes ver la información del acuerdo en <Link to={'/appointments'}>Mis citas</Link></div>
+          } else {
+            return <div className={'info-message'}>{otherUser.name} ha aceptado el acuerdo para el día {this.getYYYMMDDHHMMDate(message.data.content)}. Puedes ver la información del acuerdo en <Link to={'/appointments'}>Mis citas</Link></div>
+          }
+        } else {
+          if (message.sender === user._id) {
+            return <div className={'info-message'}>Has rechazado el acuerdo para el día {this.getYYYMMDDHHMMDate(message.data.content)}.</div>
+          } else {
+            return <div className={'info-message'}>{otherUser.name} ha rechazado el acuerdo para el día {this.getYYYMMDDHHMMDate(message.data.content)}.</div>
           }
         }
         break;
     }
   };
+
+  getYYYMMDDHHMMDate(date) {
+    if (typeof date === 'string') date = new Date(date);
+    return `${
+      (date.getMonth()+1).toString().padStart(2, '0')}/${
+      date.getDate().toString().padStart(2, '0')}/${
+      date.getFullYear().toString().padStart(4, '0')} ${
+      date.getHours().toString().padStart(2, '0')}:${
+      date.getMinutes().toString().padStart(2, '0')}`
+  }
 
   render() {
     const {message, user} = this.props;

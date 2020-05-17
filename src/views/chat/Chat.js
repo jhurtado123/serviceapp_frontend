@@ -12,6 +12,7 @@ import {withAuth} from "../../context/AuthContext";
 import io from 'socket.io-client';
 import CloseGoldIcon from '../../assets/images/icons/close-gold.png';
 import RenegotiateModal from "../../components/RenegotiateModal";
+import DealModal from "../../components/DealModal";
 
 
 let socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`);
@@ -25,6 +26,7 @@ class Chat extends Component {
     imageMessage: undefined,
     encodedImage: '',
     showRenegotiateModal: false,
+    showDealModal: false,
   };
 
   fileRef = React.createRef();
@@ -90,6 +92,18 @@ class Chat extends Component {
     });
   };
 
+  handleCloseDealModal = () => {
+    this.setState({
+      showDealModal: false,
+    });
+  };
+
+  handleOpenDealModal = () => {
+    this.setState({
+      showDealModal: true,
+    });
+  };
+
   handleResolveRenegotiation = (status, newPrice) => {
     const {user} = this.props;
     const {messages, chat} = this.state;
@@ -124,6 +138,33 @@ class Chat extends Component {
 
   };
 
+  handleResolveNewDeal = (status, date) => {
+    const {user} = this.props;
+    const {messages, chat} = this.state;
+    const currentDate = new Date();
+    const message = {
+      sender: user._id,
+      type: 'deal-resolve',
+      data: {
+        content: date, status: status
+      },
+      date: new Date(currentDate.setHours(currentDate.getHours() + 2))
+    };
+    this.setState({
+      messages: [...messages.filter(message => message.type !== 'new-deal'), message],
+    });
+    socket.emit('chat:message', {
+      data: {
+        content: date, status: status,
+      },
+      sender: message.sender,
+      chatId: this.state.chat._id,
+      type: message.type,
+      date: currentDate,
+    });
+
+  };
+
   handleNewPriceNegotiation = (newPrice) => {
     const {chat, messages} = this.state;
     this.setState({
@@ -147,6 +188,40 @@ class Chat extends Component {
         date: date.setHours(date.getHours() + 2),
       });
     }
+  };
+
+  handleNewDeal = (date) => {
+    this.handleCloseDealModal();
+    const {chat, messages} = this.state;
+    const message = this.getNewDealMessage(date);
+    this.setState({
+      messages: [...messages, message],
+    }, () => {
+      this.messagesBoxRef.current.scrollTo(0, 999999999);
+    });
+    const currentDate = new Date();
+    socket.emit('chat:message', {
+      data: {
+        content: date
+      },
+      sender: message.sender,
+      chatId: this.state.chat._id,
+      type: message.type,
+      date: currentDate.setHours(currentDate.getHours() + 2),
+    });
+  };
+
+  getNewDealMessage = (date) => {
+    const {user} = this.props;
+    const currentDate = new Date();
+    return {
+      sender: user._id,
+      type: 'new-deal',
+      data: {
+        content: date
+      },
+      date: new Date(currentDate.setHours(currentDate.getHours() + 2))
+    };
   };
 
   getNegotiateMessage = (newPrice) => {
@@ -199,8 +274,8 @@ class Chat extends Component {
   }
 
   printMessages = () => {
-    const {messages} = this.state;
-    return messages.map((message, index) => <ChatMessage key={index} message={message} resolveNegotiation={this.handleResolveRenegotiation}/>);
+    const {messages, chat} = this.state;
+    return messages.map((message, index) => <ChatMessage key={index} price={chat.price} message={message} seller={chat.seller} buyer={chat.buyer} resolveNegotiation={this.handleResolveRenegotiation} resolveNewDeal={this.handleResolveNewDeal}/>);
   };
 
   async componentDidMount() {
@@ -233,18 +308,34 @@ class Chat extends Component {
     socket.on('chat:message', (data) => {
       const newDate = new Date(data.date);
       data.date = newDate;
-      console.log(data);
       this.addMessage(data);
       if (data.type === 'renegotiation-resolve') {
         if (data.data.status) this.setChatPrice(data.data.content);
         this.removeNegotiationMessages();
       }
+      if (data.type === 'deal-resolve') {
+        if (data.data.status) this.deleteTokensFromBuyerUser();
+        this.removeNewDealMessages();
+      }
     });
+  };
+
+  deleteTokensFromBuyerUser = () => {
+    const {chat: {price, buyer}} = this.state;
+    const {user} = this.props;
+    if (user._id === buyer._id)  {
+      user.wallet.tokens -= price;
+    }
   };
 
   removeNegotiationMessages = () => {
     this.setState({
       messages: [...this.state.messages.filter(message => message.type !== 'renegotiation')]
+    })
+  };
+  removeNewDealMessages = () => {
+    this.setState({
+      messages: [...this.state.messages.filter(message => message.type !== 'new-deal')]
     })
   };
 
@@ -266,6 +357,16 @@ class Chat extends Component {
     });
     return response;
   };
+  existDealPending = () => {
+    const {messages} = this.state;
+    let response = false;
+    messages.forEach(message => {
+      if (message.type === 'new-deal') {
+        response = true;
+      }
+    });
+    return response;
+  };
 
   componentWillUnmount() {
     const {chat} = this.state;
@@ -274,11 +375,11 @@ class Chat extends Component {
   }
 
   render() {
-    const {messages, chat, writedMessage, encodedImage, showRenegotiateModal} = this.state;
+    const {messages, chat, writedMessage, encodedImage, showRenegotiateModal, showDealModal} = this.state;
     const {user} = this.props;
     return (
       <div className={'chat-view'}>
-        <ChatHeader chat={chat} openRenegotiaton={this.handleOpenRenegotiation}/>
+        <ChatHeader chat={chat} openRenegotiaton={this.handleOpenRenegotiation} openDealModal={this.handleOpenDealModal}/>
         <div className={'box-messages container'} ref={this.messagesBoxRef}>
           {chat ?
             <React.Fragment>
@@ -293,9 +394,12 @@ class Chat extends Component {
                     Escríbele para llegar a un acuerdo sobre el servicio.</p>
                 </div> :
                 this.printMessages()}
-              <RenegotiateModal isThereAnyNegotiation={this.existAnyNegotioation()} newNegotiation={this.handleNewPriceNegotiation} show={showRenegotiateModal}
+              <RenegotiateModal isThereAnyNegotiation={this.existAnyNegotioation()} isThereAnyDealPending={this.existDealPending()} newNegotiation={this.handleNewPriceNegotiation} show={showRenegotiateModal}
                                 value={chat.price} availableTokens={user.wallet.tokens}
-                                handleClose={this.handleCloseRenegotiateModal}/>
+                                handleClose={this.handleCloseRenegotiateModal} seller={chat.seller}/>
+              <DealModal show={showDealModal} price={chat.price} isThereAnyDealPending={this.existDealPending()}
+                                value={chat.price} availableTokens={user.wallet.tokens}
+                                handleClose={this.handleCloseDealModal} newDeal={this.handleNewDeal} buyerHasNoTokens={user._id === chat.buyer._id && user.wallet.tokens < chat.price}/>
             </React.Fragment>
             :
             <div>Loading</div>}
