@@ -11,9 +11,15 @@ class AppointmentApiClient {
   getAppointments() {
     return this.apiClient.get('/appointments');
   }
+
   getAppointment(id) {
     return this.apiClient.get(`/appointments/${id}`);
   }
+
+  cancelAppointment(id) {
+    return this.apiClient.delete(`/appointments/${id}`);
+  }
+
 
 }
 
