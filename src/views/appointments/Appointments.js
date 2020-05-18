@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import '../../assets/css/views/appointment/appointments.scss';
 import AppointmentBox from "../../components/AppointmentBox";
 import {withAuth} from "../../context/AuthContext";
+import LoadingBars from "../../components/LoadingBars";
 
 
 class Appointments extends Component {
@@ -14,6 +15,7 @@ class Appointments extends Component {
   state = {
     search: '',
     appointments: [],
+    isLoading:true,
   };
 
   async componentDidMount() {
@@ -21,7 +23,8 @@ class Appointments extends Component {
     try {
       const {data: {appointments}} = await appointmentApiClient.getAppointments();
       this.setState({
-        appointments
+        appointments,
+        isLoading: false,
       })
     } catch (e) {
       history.push(REDIRECT[500]);
@@ -49,21 +52,21 @@ class Appointments extends Component {
   };
 
   render() {
-    const {search, appointments} = this.state;
+    const {search, appointments, isLoading} = this.state;
     return (
       <BaseLayout>
         <SearchBar placeholder={'Buscar por anuncio'} searchValue={search} handleChange={this.handleChange} />
         <div className={'appointments-list'}>
-          {appointments.length ?
-            <div className={'appointments-list-container container'}>
+          {isLoading ? <LoadingBars/> : (
+          appointments.length ?
+            <div className={'appointments-list-container container ' }>
               {this.printAppointments()}
             </div>:
             <div className={'page-message'}>
               <p>¡No tienes citas activas!</p>
               <Link to={'/'} className={'button-bck-purple'}>Volver a la home</Link>
             </div>
-
-          }
+          )}
         </div>
       </BaseLayout>
     );

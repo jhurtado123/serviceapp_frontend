@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import ProfileForm from "../../components/ProfileForm";
 import HeaderWithTitle from "../../components/HeaderWithTitle";
 import '../../assets/css/views/profile/Profile.scss';
+import LoadingBars from "../../components/LoadingBars";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -67,7 +68,7 @@ class ProfileEdit extends Component {
       case STATUS.LOADING:
         return(
           <div>
-            <Loading />
+            <LoadingBars />
           </div>
         )
     }

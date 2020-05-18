@@ -5,6 +5,7 @@ import chatApiClient from "../../services/apiManager/chat";
 import ChatBox from "../../components/ChatBox";
 import {Link} from "react-router-dom";
 import '../../assets/css/views/chat/chats.scss';
+import LoadingBars from "../../components/LoadingBars";
 
 class Chats extends Component {
   state = {
@@ -24,8 +25,10 @@ class Chats extends Component {
       const {data: {response}} = await chatApiClient.getChats();
       this.setState({
         chats: response,
+        isLoading: false,
       })
-    } catch (e) {}
+    } catch (e) {
+    }
   }
 
   printChats = () => {
@@ -38,18 +41,20 @@ class Chats extends Component {
   };
 
   render() {
-    const {search, chats} = this.state;
+    const {search, chats, isLoading} = this.state;
     return (
       <BaseLayout>
         <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar mensajes'}/>
-        {chats.length ?
-          <div className={'chats-list-container container'}>
-            {this.printChats()}
-          </div>:
-          <div className={'page-message'}>
-            <p>¡No tienes chats activos!</p>
-            <Link to={'/'} className={'button-bck-purple'}>Volver a la home</Link>
-          </div>
+        {
+          isLoading ? <LoadingBars/> :
+            chats.length ?
+              <div className={'chats-list-container container'}>
+                {this.printChats()}
+              </div> :
+              <div className={'page-message'}>
+                <p>¡No tienes chats activos!</p>
+                <Link to={'/'} className={'button-bck-purple'}>Volver a la home</Link>
+              </div>
         }
       </BaseLayout>
     );

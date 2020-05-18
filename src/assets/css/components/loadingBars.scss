@@ -1,0 +1,128 @@
+#loadFacebookG{
+  width:130px;
+  height: 150px;
+  display: block;
+  position: relative;
+  margin: 30px auto;
+}
+
+.facebook_blockG{
+  background-color:rgb(71,40,137);
+  border:8px solid rgb(71,40,137);
+  float:left;
+  height:90px;
+  margin-left:18px;
+  width:22px;
+  opacity:0.1;
+  animation-name:bounceG;
+  -o-animation-name:bounceG;
+  -ms-animation-name:bounceG;
+  -webkit-animation-name:bounceG;
+  -moz-animation-name:bounceG;
+  animation-duration:0.905s;
+  -o-animation-duration:0.905s;
+  -ms-animation-duration:0.905s;
+  -webkit-animation-duration:0.905s;
+  -moz-animation-duration:0.905s;
+  animation-iteration-count:infinite;
+  -o-animation-iteration-count:infinite;
+  -ms-animation-iteration-count:infinite;
+  -webkit-animation-iteration-count:infinite;
+  -moz-animation-iteration-count:infinite;
+  animation-direction:normal;
+  -o-animation-direction:normal;
+  -ms-animation-direction:normal;
+  -webkit-animation-direction:normal;
+  -moz-animation-direction:normal;
+  transform:scale(0.7);
+  -o-transform:scale(0.7);
+  -ms-transform:scale(0.7);
+  -webkit-transform:scale(0.7);
+  -moz-transform:scale(0.7);
+}
+
+#blockG_1{
+  animation-delay:0.2695s;
+  -o-animation-delay:0.2695s;
+  -ms-animation-delay:0.2695s;
+  -webkit-animation-delay:0.2695s;
+  -moz-animation-delay:0.2695s;
+}
+
+#blockG_2{
+  animation-delay:0.366s;
+  -o-animation-delay:0.366s;
+  -ms-animation-delay:0.366s;
+  -webkit-animation-delay:0.366s;
+  -moz-animation-delay:0.366s;
+}
+
+#blockG_3{
+  animation-delay:0.4525s;
+  -o-animation-delay:0.4525s;
+  -ms-animation-delay:0.4525s;
+  -webkit-animation-delay:0.4525s;
+  -moz-animation-delay:0.4525s;
+}
+
+
+
+@keyframes bounceG{
+  0%{
+    transform:scale(1.2);
+    opacity:1;
+  }
+
+  100%{
+    transform:scale(0.7);
+    opacity:0.1;
+  }
+}
+
+@-o-keyframes bounceG{
+  0%{
+    -o-transform:scale(1.2);
+    opacity:1;
+  }
+
+  100%{
+    -o-transform:scale(0.7);
+    opacity:0.1;
+  }
+}
+
+@-ms-keyframes bounceG{
+  0%{
+    -ms-transform:scale(1.2);
+    opacity:1;
+  }
+
+  100%{
+    -ms-transform:scale(0.7);
+    opacity:0.1;
+  }
+}
+
+@-webkit-keyframes bounceG{
+  0%{
+    -webkit-transform:scale(1.2);
+    opacity:1;
+  }
+
+  100%{
+    -webkit-transform:scale(0.7);
+    opacity:0.1;
+  }
+}
+
+@-moz-keyframes bounceG{
+  0%{
+    -moz-transform:scale(1.2);
+    opacity:1;
+  }
+
+  100%{
+    -moz-transform:scale(0.7);
+    opacity:0.1;
+  }
+}

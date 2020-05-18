@@ -13,6 +13,7 @@ import io from 'socket.io-client';
 import CloseGoldIcon from '../../assets/images/icons/close-gold.png';
 import RenegotiateModal from "../../components/RenegotiateModal";
 import DealModal from "../../components/DealModal";
+import LoadingBars from "../../components/LoadingBars";
 
 
 let socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`);
@@ -27,6 +28,7 @@ class Chat extends Component {
     encodedImage: '',
     showRenegotiateModal: false,
     showDealModal: false,
+    isLoading: true,
   };
 
   fileRef = React.createRef();
@@ -292,6 +294,7 @@ class Chat extends Component {
       const {data: {messages}} = await chatApiClient.getChatMessages(params.id);
       this.setState({
         messages,
+        isLoading:false,
       }, () => {
         this.messagesBoxRef.current.scrollTo(0, 999999999);
       });
@@ -375,13 +378,14 @@ class Chat extends Component {
   }
 
   render() {
-    const {messages, chat, writedMessage, encodedImage, showRenegotiateModal, showDealModal} = this.state;
+    const {messages, chat, writedMessage, encodedImage, showRenegotiateModal, showDealModal, isLoading} = this.state;
     const {user} = this.props;
     return (
       <div className={'chat-view'}>
         <ChatHeader chat={chat} openRenegotiaton={this.handleOpenRenegotiation} openDealModal={this.handleOpenDealModal}/>
         <div className={'box-messages container'} ref={this.messagesBoxRef}>
-          {chat ?
+          {isLoading ? <LoadingBars/> :
+            chat ?
             <React.Fragment>
               {!messages.length ?
                 <div className={'no-messages-box'}>

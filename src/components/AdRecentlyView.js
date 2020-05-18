@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import profileApiClient from "../services/apiManager/profile";
 import SmallAd from "../components/SmallAd";
-import SmallLoading from "../components/SmallLoading"; 
+import SmallLoading from "../components/SmallLoading";
+import LoadingBars from "./LoadingBars";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -48,7 +49,7 @@ class AdRecentlyView extends Component {
 
     switch (status) {
       case STATUS.LOADING:
-        return <SmallLoading />;
+        return <LoadingBars />;
       case STATUS.LOADED:
         return (
           <div className="ads-container recently-viewed">
