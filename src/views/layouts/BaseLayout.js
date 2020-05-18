@@ -56,8 +56,8 @@ class BaseLayout extends Component {
             </div> }
             {isLoggedIn &&
             <div className={'sidebar-links'}>
-              <Link to={'/ads'}>Mis anuncios</Link>
               <Link to={'/appointments'}>Mis citas</Link>
+              <Link to={'/ads'}>Mis anuncios</Link>
               <Link to={'/chats'}>Mis chats</Link>
               <Link to={'/rewards'}>Progreso y premios</Link>
               <Link to={'/favorites'}>Mis favoritos</Link>

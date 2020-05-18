@@ -1,0 +1,11 @@
+@import "../variables";
+.favorites-icon {
+  width: 24px;
+  height: 24px;
+  fill: white;
+  cursor: pointer;
+  margin-left: 5px;
+  &.is-favorite {
+    fill:$gold-color;
+  }
+}
