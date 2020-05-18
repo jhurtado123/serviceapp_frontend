@@ -3,6 +3,7 @@ import searchApiClient from "../services/apiManager/search";
 import SmallAd from "../components/SmallAd";
 import SmallLoading from "../components/SmallLoading"; 
 import '../assets/css/views/home.scss';
+import LoadingBars from "./LoadingBars";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -73,7 +74,7 @@ class BestAds extends Component {
       case STATUS.LOADING:
         return (
           <div>
-            <SmallLoading />
+           <LoadingBars/>
           </div>
         )
       case STATUS.LOADED:

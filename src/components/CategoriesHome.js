@@ -3,6 +3,7 @@ import adApiClient from "../services/apiManager/ad";
 import CategoryPreview from "../components/CategoryPreview";
 import SmallLoading from "../components/SmallLoading";
 import '../assets/css/views/home.scss';
+import LoadingBars from "./LoadingBars";
 
 
 const STATUS = {
@@ -55,8 +56,8 @@ class CategoriesHome extends Component {
     switch (status) {
       case STATUS.LOADING:
         return (
-          <div>
-            <SmallLoading/>
+          <div className={'loading'}>
+           <LoadingBars/>
           </div>
         )
       case STATUS.LOADED:

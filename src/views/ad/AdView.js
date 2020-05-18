@@ -18,6 +18,7 @@ import chatApiClient from "../../services/apiManager/chat";
 import {withAuth} from "../../context/AuthContext";
 import Modal from "../../components/Modal";
 import {Link} from "react-router-dom";
+import LoadingBars from "../../components/LoadingBars";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -138,7 +139,7 @@ class AdView extends Component {
     const {ad, isLoading, isMapOpened, showModaNoTokens} = this.state;
     return (
       <React.Fragment>
-        {isLoading ? <Loading/> :
+        {isLoading ? <LoadingBars/> :
           <div className={'ad'}>
             <div className={'ad-images'}>
               <div className={'back'}>
