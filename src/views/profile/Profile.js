@@ -156,12 +156,12 @@ class Profile extends Component {
         <div>
           <HeaderProfile name={name} level={level} url={url} points={points} missingpoints={missingpoints} tokens={tokens} />
           {showReviews ?
-            <div>
+            <div className={'container'}>
               <button className="ButtonUser ButtonUserNot" onClick={this.handleServices}>Services</button>
               <button className="ButtonUser" onClick={this.handleReviews}>Reviews</button>
               {this.getReviewsFromUser()}
             </div> :
-            <div>
+            <div className={'container'}>
               <button className="ButtonUser" onClick={this.handleServices}>Services</button>
               <button className="ButtonUser ButtonUserNot" onClick={this.handleReviews}>Reviews</button>
               {this.getAdsFromUser()}
