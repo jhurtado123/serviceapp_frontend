@@ -14,6 +14,10 @@ import Footer from "../../components/Footer";
 
 class BaseLayout extends Component {
 
+  componentWillUnmount() {
+    this.props.closeMenu();
+  }
+
   render() {
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
     return (
@@ -36,7 +40,7 @@ class BaseLayout extends Component {
               <div className={'data'}>
                 <p>{user.name}</p>
                 <div className={'actions'}>
-                  <Link to={''}>Editar perfil</Link>·
+                  <Link to={'/profile/edit'}>Editar perfil</Link>·
                   <Link to={'/logout'}>Logout</Link>
                 </div>
               </div>

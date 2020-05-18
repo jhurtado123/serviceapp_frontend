@@ -12,8 +12,8 @@
   .profile-image {
     width: 50px;
     height: 50px;
-    border: none;
     margin-right: 20px;
+    border: 1px solid $purple-color;
   }
   .data {
     display: flex;
@@ -24,6 +24,7 @@
       font-family: $font-montserrat;
       font-weight: bold;
       color:#444;
+      font-size: 18px;
       margin-bottom: 5px;
     }
     p {
