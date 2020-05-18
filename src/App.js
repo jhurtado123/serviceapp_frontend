@@ -27,6 +27,7 @@ import Chats from "./views/chat/Chats";
 import Appointments from "./views/appointments/Appointments";
 import Appointment from "./views/appointments/Appointment";
 import BuyTokens from "./views/BuyTokens";
+import Favorites from "./views/profile/Favorites";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
             <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
             <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
             <PrivateRoute exact path={'/profile'} component={Profile}/>
+
+            <PrivateRoute exact path={'/favorites'} component={Favorites}/>
 
             <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
             <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>

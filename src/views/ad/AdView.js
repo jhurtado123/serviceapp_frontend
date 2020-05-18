@@ -19,6 +19,7 @@ import {withAuth} from "../../context/AuthContext";
 import Modal from "../../components/Modal";
 import {Link} from "react-router-dom";
 import LoadingBars from "../../components/LoadingBars";
+import HandleFavorites from "../../components/HandleFavorites";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -144,6 +145,9 @@ class AdView extends Component {
             <div className={'ad-images'}>
               <div className={'back'}>
                 <img src={Back} alt="" onClick={history.goBack}/>
+              </div>
+              <div className={'add-favorites'}>
+                <HandleFavorites adId={ad._id} isFavorite={user.favorites.includes(ad._id)}/>
               </div>
               <AdImages ad={ad}/>
             </div>
