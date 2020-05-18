@@ -32,15 +32,26 @@ class Home extends Component {
         });
     });
   };
+  handleCategoryClick = (id) => {
+    const {history} = this.props;
+    this.setState({
+      category: id,
+    }, () => {
+      history.push(
+        {
+          pathname: "/search",
+          state: {...this.state}
+        });
+    });
+  };
 
   render() {
-    console.log(this.props.history)
     return (
       <BaseLayout>
         <SearchBarWithFilters placeholder={'Buscar'} handleChange={this.handleChange} {...this.state}/>
         <div className={'container home'}>
           <p className="section-title-home">Categorías más populares</p>
-          <CategoriesHome title="Categorías más populares" />
+          <CategoriesHome title="Categorías más populares" handleCategoryClick={this.handleCategoryClick}/>
           <p className="section-title-home">Los mejor valorados</p>
           <BestAds stateFromHome={this.props.location.state}/>
           <p className="section-title-home">Últimamente has visto</p>
