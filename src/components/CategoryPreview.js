@@ -10,9 +10,9 @@ class CategoryPreview extends Component{
   }
 
   render(){
-    const {name} = this.props; 
+    const {name, handleCategoryClick, id} = this.props;
     return(
-      <div className="category-preview">
+      <div className="category-preview"  onClick={() => handleCategoryClick(id)}>
         <div className={'category-preview-img small'} style={{
           backgroundImage: "url(" + this.getImageUrl() + ")",
           backgroundPosition: 'center',

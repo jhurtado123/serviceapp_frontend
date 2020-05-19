@@ -8,6 +8,7 @@ import adApiClient from "../../services/apiManager/ad";
 import REDIRECT from "../../errorRedirects";
 import BaseLayout from "../layouts/BaseLayout";
 import '../../assets/css/views/profile/ads.scss';
+import LoadingBars from "../../components/LoadingBars";
 
 class ProfileAds extends Component {
 
@@ -72,7 +73,7 @@ class ProfileAds extends Component {
     const {search, ads, isLoading} = this.state;
     return (
       <BaseLayout>
-        {isLoading ? <Loading/> : (
+        {isLoading ? <LoadingBars/> : (
           <div>
             <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar anuncios'}/>
             <div className={'ads-list container'}>

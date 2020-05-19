@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import profileApiClient from "../services/apiManager/profile";
 import SmallAd from "../components/SmallAd";
-import SmallLoading from "../components/SmallLoading"; 
+import SmallLoading from "../components/SmallLoading";
+import LoadingBars from "./LoadingBars";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -22,7 +23,7 @@ class AdRecentlyView extends Component {
   async getAdsViewed () {
     try{
       const { data: {recently_viewed} }  = await profileApiClient
-        .getProfile()
+        .getProfile();
       this.setState({
         recently_viewed,
         status: STATUS.LOADED, 
@@ -44,11 +45,11 @@ class AdRecentlyView extends Component {
   }
 
   render(){
-    const { status } = this.state
-    // eslint-disable-next-line default-case
+    const { status } = this.state;
+
     switch (status) {
       case STATUS.LOADING:
-        return <SmallLoading />
+        return <LoadingBars />;
       case STATUS.LOADED:
         return (
           <div className="ads-container recently-viewed">

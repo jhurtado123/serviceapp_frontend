@@ -66,17 +66,12 @@ class SearchBarWithFilters extends Component {
             <div>
               <input type={'radio'} id={'distance'} name={'orderBy'} value={'distance'} defaultChecked onChange={handleChange}/>
               <label htmlFor={'distance'} className={'checkbox-pretty'}/>
-              <label htmlFor={'distance'}>Distancia</label>
+              <label htmlFor={'distance'}>Distancia (menor a mayor)</label>
             </div>
             <div>
               <input type={'radio'} id={'price'} name={'orderBy'} value={'price'} onChange={handleChange}/>
               <label htmlFor={'price'} className={'checkbox-pretty'}/>
-              <label htmlFor={'price'}>Precio</label>
-            </div>
-            <div>
-              <input type={'radio'} id={'valorations'} name={'orderBy'} value={'valorations'} onChange={handleChange}/>
-              <label htmlFor={'valorations'} className={'checkbox-pretty'}/>
-              <label htmlFor={'valorations'}>Mejores valoraciones</label>
+              <label htmlFor={'price'}>Precio (menor a mayor)</label>
             </div>
           </div>
         </div>

@@ -3,6 +3,13 @@
 .search-view {
   margin-top: -10px;
   display: block;
+  &.show.loading {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    max-height: 80vh;
+  }
   &.hide {
     display: none;
   }
@@ -94,7 +101,9 @@
       transition: background-color 0.2s ease-in-out;
 
       &:hover {
-        color: white;
+        * {
+          color: white ;
+        }
         background: $purple-color;
 
         .mapboxgl-popup-close-button {

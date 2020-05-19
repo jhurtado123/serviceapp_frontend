@@ -4,6 +4,7 @@ import profileApiClient from "../../services/apiManager/profile";
 import Loading from "../Loading";
 import '../../assets/css/views/ad/view.scss'
 import Token from '../../assets/images/icons/coin.png';
+import Back from '../../assets/images/icons/back-white.png';
 import Location from '../../assets/images/icons/location.png';
 import Tags from '../../assets/images/icons/tags.png';
 import Category from '../../assets/images/icons/category.png';
@@ -14,6 +15,11 @@ import {Sticky, StickyContainer} from 'react-sticky';
 import REDIRECT from "../../errorRedirects";
 import AdImages from "../../components/AdImages";
 import chatApiClient from "../../services/apiManager/chat";
+import {withAuth} from "../../context/AuthContext";
+import Modal from "../../components/Modal";
+import {Link} from "react-router-dom";
+import LoadingBars from "../../components/LoadingBars";
+import HandleFavorites from "../../components/HandleFavorites";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -27,6 +33,7 @@ class AdView extends Component {
     ad: undefined,
     isMapOpened: false,
     relatedAds: [],
+    showModaNoTokens:false,
   };
 
   handleOpenMap = () => {
@@ -37,8 +44,15 @@ class AdView extends Component {
 
   handleChatInit = async () => {
     const {ad} = this.state;
+    const {user} = this.props;
 
     if (!ad) return;
+    if (!user.wallet.tokens) {
+      this.setState({
+        showModaNoTokens: true,
+      });
+      return;
+    }
 
     try {
       const {data} = await chatApiClient.createChat(ad._id);
@@ -65,6 +79,12 @@ class AdView extends Component {
     this.getAdData();
     this.addRecentlyViewed();
   }
+
+  handleModalClose = () => {
+    this.setState({
+      showModaNoTokens: false,
+    });
+  };
 
   getAdData = async () => {
     try {
@@ -98,9 +118,9 @@ class AdView extends Component {
   };
 
   addRecentlyViewed = () => {
-    const { match: { params: { id } } } = this.props;
+    const {match: {params: {id}}} = this.props;
     profileApiClient.addToRecentlyViewed(id);
-  }
+  };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.location.key !== this.props.location.key) {
@@ -116,12 +136,19 @@ class AdView extends Component {
   }
 
   render() {
-    const {ad, isLoading, isMapOpened} = this.state;
+    const {history, user} = this.props;
+    const {ad, isLoading, isMapOpened, showModaNoTokens} = this.state;
     return (
       <React.Fragment>
-        {isLoading ? <Loading/> :
+        {isLoading ? <LoadingBars/> :
           <div className={'ad'}>
             <div className={'ad-images'}>
+              <div className={'back'}>
+                <img src={Back} alt="" onClick={history.goBack}/>
+              </div>
+              <div className={'add-favorites'}>
+                <HandleFavorites adId={ad._id} isFavorite={user.favorites.includes(ad._id)}/>
+              </div>
               <AdImages ad={ad}/>
             </div>
             <StickyContainer>
@@ -137,9 +164,16 @@ class AdView extends Component {
                         <p>Level: 5 <span>★★★★</span></p>
                       </div>
                     </div>
-                    <div className={'ad-chat-button'} onClick={this.handleChatInit}>
-                      Iniciar chat
-                    </div>
+                    {
+                      user._id == ad.owner._id ?
+                        <Link className={'ad-chat-button'} to={`/ad/${ad._id}/edit`}>
+                          Editar anuncio
+                        </Link>
+                        :
+                        <div className={'ad-chat-button'} onClick={this.handleChatInit}>
+                          Iniciar chat
+                        </div>
+                    }
                   </div>
                 )}
               </Sticky>
@@ -180,6 +214,12 @@ class AdView extends Component {
                 </div>
               </div>
             </StickyContainer>
+            <Modal show={showModaNoTokens} title={'No puedes iniciar el chat'} handleClose={this.handleModalClose}>
+              <div className={'info-message'}>
+                Para iniciar el chat debes tener al menos 1 serken en tu cartera.
+                <p>Puedes ofrecer tus servicios para conseguir serkens o puedes comprarlos <Link to={'/buySerkens'}>aquí</Link></p>
+              </div>
+            </Modal>
           </div>
         }
       </React.Fragment>
@@ -187,4 +227,4 @@ class AdView extends Component {
   }
 }
 
-export default AdView;
+export default withAuth(AdView);

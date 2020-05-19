@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import adApiClient from "../services/apiManager/ad";
 import CategoryPreview from "../components/CategoryPreview";
-import SmallLoading from "../components/SmallLoading"; 
+import SmallLoading from "../components/SmallLoading";
 import '../assets/css/views/home.scss';
-import { Link } from 'react-router-dom';
+import LoadingBars from "./LoadingBars";
 
 
 const STATUS = {
@@ -17,45 +17,47 @@ class CategoriesHome extends Component {
     status: STATUS.LOADING,
   }
 
-  componentDidMount = ()=> {
+  componentDidMount = () => {
     this.getAllAds()
   }
 
   async getAllAds() {
-    const {data: categories}  = await adApiClient.getAllAds()
+    const {data: categories} = await adApiClient.getAllAds()
     let bestCategories = []
     for (let i = 0; i < 6; i++) {
       const category = categories[i];
-      bestCategories.push(category) 
+      bestCategories.push(category)
     }
     this.setState({
-      categories: bestCategories, 
+      categories: bestCategories,
       status: STATUS.LOADED,
-    })    
+    })
   }
 
 
   displayBestCategories = () => {
-    const { categories } = this.state; 
+    const {categories} = this.state;
+    const {handleCategoryClick} = this.props;
     if (typeof categories !== 'undefined' && categories.length > 0) {
-    return categories.map((category, i)=> {
-      return (
-        <Link to={`/category/${category._id[0]._id}`} key={i} >
-          <CategoryPreview  name={category._id[0].name} img={category._id[0].default_image} />
-        </Link>
-      )
-    })
+      return categories.map((category, i) => {
+        return (
+          <div>
+          <CategoryPreview handleCategoryClick={handleCategoryClick} key={i} id={category._id[0]._id} name={category._id[0].name}
+                           img={category._id[0].default_image}/>
+          </div>
+        )
+      })
     }
-  }
+  };
 
-  render(){
-    const { status } = this.state;
+  render() {
+    const {status} = this.state;
     // eslint-disable-next-line default-case
     switch (status) {
       case STATUS.LOADING:
         return (
-          <div>
-            <SmallLoading />
+          <div className={'loading'}>
+           <LoadingBars/>
           </div>
         )
       case STATUS.LOADED:

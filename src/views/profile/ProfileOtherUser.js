@@ -9,6 +9,7 @@ import ReviewUser from "../../components/ReviewUser";
 import Loading from "../Loading";
 import '../../assets/css/views/profile/Profile.scss';
 import REDIRECT from "../../errorRedirects";
+import LoadingBars from "../../components/LoadingBars";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -163,7 +164,7 @@ class ProfileOtherUser extends Component {
       case STATUS.LOADING:
         return (
           <div>
-            <Loading />
+            <LoadingBars />
           </div>
         )
     }

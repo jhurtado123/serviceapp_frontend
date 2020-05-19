@@ -20,6 +20,9 @@ class ChatApiClient {
     return this.apiClient.get(`/chats/${id}/messages`);
   }
 
+  getChats() {
+    return this.apiClient.get(`/chats`);
+  }
 
 }
 
