@@ -33,7 +33,7 @@ class ProfileForm extends Component {
     error: undefined,
     encodedFile: undefined,
     status: STATUS.LOADING,
-  }
+  };
 
   inputImage = React.createRef();
 
@@ -61,6 +61,7 @@ class ProfileForm extends Component {
         interactive: false,
         scrollZoom: false,
       });
+
       marker = new mapboxgl.Marker()
         .setLngLat([lat, lng])
         .addTo(map);
@@ -90,7 +91,12 @@ class ProfileForm extends Component {
       try {
         lat = data.data.features[0].geometry.coordinates[0];
         lng = data.data.features[0].geometry.coordinates[1];
-        changeCoords({lat, lng});
+        this.setState({
+          mapCoords: {
+            lat: lat,
+            lng: lng,
+          },
+        });
       } catch (e) {
       }
     }
@@ -129,8 +135,14 @@ class ProfileForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    const {user} = this.props;
     try {
-      await profileApiClient.updateProfile(this.state);
+      const {data: {image}} = await profileApiClient.updateProfile(this.state);
+      user.location.coordinates = [this.state.mapCoords.lat, this.state.mapCoords.lng];
+      user.name = this.state.name;
+      user.description = this.state.description;
+      user.profile_image = image;
+
       this.props.history.push('/profile')
     } catch ({response: {data: {data: errorMessage}}}) {
       this.setState({
@@ -192,11 +204,7 @@ class ProfileForm extends Component {
           <div className={'map'}>
             <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
           </div>
-          <div className={'form-group'}>
-            <label>Imagen de perfil</label>
-            <p className={'info-text'}>*Si no subes ninguna imágen se pondrá una imagen de perfil por defecto </p>
 
-          </div>
           <button className={'button-bck-purple'} onClick={this.handleSubmit}>Guardar cambios</button>
           {error && <div className={'error-form'}>{error}</div>}
         </div>
