@@ -1,0 +1,15 @@
+.edit-profile-form {
+  .profile-form {
+    margin-top: 20px;
+  }
+  .profile-image, .profile-image-container {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  .profile-image {
+    margin-top: 0;
+  }
+}
