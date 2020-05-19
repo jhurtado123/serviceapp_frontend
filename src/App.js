@@ -11,6 +11,7 @@ import AdCreate from "./views/ad/AdCreate";
 import AdEdit from "./views/ad/AdEdit";
 import Profile from "./views/profile/Profile";
 import ProfileEdit from "./views/profile/ProfileEdit";
+import ProfileNotifications from "./views/profile/ProfileNotifications";
 import ProfileOtherUser from "./views/profile/ProfileOtherUser";
 import ProfileAds from "./views/profile/ProfileAds";
 import RecoverAds from "./views/profile/RecoverAds";
@@ -42,6 +43,7 @@ function App() {
 
             <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
             <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>     
+            <PrivateRoute exact path={'/profile/notifications'} component={ProfileNotifications}/>     
     
             <PrivateRoute exact path={'/chats/:id'} component={Chat} />
 

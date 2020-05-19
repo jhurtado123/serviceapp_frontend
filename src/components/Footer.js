@@ -48,12 +48,13 @@ class Footer extends Component {
           </Link>
         </div>
         <Link to={'/ad/create'} className={'footer-add-new'}>
-          <img src={addNewFooter}/>
-          <img src={plusIcon} className={'plus-icon'}/>
+          <img src={addNewFooter} alt="new-footer" />
+          <img src={plusIcon} className={'plus-icon'} alt="plus-icon" />
         </Link>
         <div className={'group-icons'}>
-          <Link to={''}>
+          <Link to={'/profile/notifications'} className={'notification-link'}>
             <img src={notificationsIcon} alt=""/>
+            <div className={'notification-number'}> 1</div>
           </Link>
           <Link to={''}>
             <img src={chatIcon} alt=""/>
