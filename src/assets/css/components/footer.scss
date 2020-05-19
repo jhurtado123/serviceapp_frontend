@@ -1,3 +1,4 @@
+@import '../variables.scss';
 footer {
   max-height: 0;
   overflow: hidden;
@@ -60,4 +61,19 @@ footer {
       width: 30px;
     }
   }
+  .notification-link {
+    position: relative;
+    .notification-number{
+      position: absolute;
+      top: 16px;
+      left: 19px;
+      background-color: $gold-color;
+      color: $purple-color;
+      border-radius: 50%;
+      padding: 0px 5px;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
 }
+

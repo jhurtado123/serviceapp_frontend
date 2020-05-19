@@ -11,15 +11,39 @@ import ProfileImage from "../../components/ProfileImage";
 import {withSidebar} from "../../context/SidebarContext";
 import {withAuth} from "../../context/AuthContext";
 import Footer from "../../components/Footer";
+import io from 'socket.io-client';
+
+let socket = undefined;
+
 
 class BaseLayout extends Component {
+  state = {
+    notification: 0,
+  }
+  componentDidMount = () => {
+    const { user } = this.props;
+    if(user) {
+      socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`, {query: `id=${user._id}`});
+      this.setSocketEvents()
+    }
+  }
+
+  setSocketEvents = () => {
+    socket.on('notification:count', (data) => {
+      this.setState({
+        notification: data.value
+      })
+    });
+  };
 
   componentWillUnmount() {
     this.props.closeMenu();
   }
 
   render() {
+    const { notification} = this.state;
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
+    console.log("Las notificationes", notification)
     return (
       <div className={'base-layout'}>
         <header>
@@ -29,7 +53,7 @@ class BaseLayout extends Component {
         <div className={'sidebar ' + (isOpened && ' open')}>
           <div className={'sidebar-header'}>
             <div className={'close-sidebar'}>
-              <img src={closeIcon} onClick={closeMenu}/>
+              <img src={closeIcon} onClick={closeMenu} alt="close" />
               {isLoggedIn && <div className={'tokens'}>
                 {user.wallet.tokens}<img src={Token}/>
               </div>}
@@ -69,7 +93,7 @@ class BaseLayout extends Component {
         </div>
         {children}
 
-        {isLoggedIn && <Footer/>}
+        {isLoggedIn && <Footer notification={notification} />}
         {isOpened && <div className={'backdrop'}/>}
       </div>
     );
