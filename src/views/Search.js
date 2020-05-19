@@ -40,10 +40,11 @@ class Search extends Component {
     const {user} = this.props;
     this.searchFromState();
     const pulsingDot = this.getPulsingDot(100);
+    const coordinates = user ? [user.location.coordinates[0], user.location.coordinates[1]] : [2.1648800, 41.3922500];
     map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/light-v10',
-      center: [user.location.coordinates[0], user.location.coordinates[1]],
+      center: coordinates,
       zoom: 13,
       interactive: true,
       scrollZoom: true,
@@ -61,7 +62,7 @@ class Search extends Component {
               'type': 'Feature',
               'geometry': {
                 'type': 'Point',
-                'coordinates': [user.location.coordinates[0], user.location.coordinates[1]],
+                'coordinates': coordinates,
               }
             }
           ]
