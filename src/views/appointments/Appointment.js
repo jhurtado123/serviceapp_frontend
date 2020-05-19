@@ -10,6 +10,7 @@ import {withAuth} from "../../context/AuthContext";
 import ProfileIcon from '../../assets/images/icons/profile-purple.png';
 import ClockIcon from '../../assets/images/icons/clock-purple.png';
 import LocationIcon from '../../assets/images/icons/location-purple.png';
+import LoadingBars from "../../components/LoadingBars";
 
 
 
@@ -86,7 +87,7 @@ class Appointment extends Component {
       <React.Fragment>
         <HeaderWithTitle history={history} title={'Cita'}/>
         {
-          isLoading ? <Loading/> :
+          isLoading ? <LoadingBars/> :
             <React.Fragment>
               <div className={'map-appointment-location'}>
                 <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
