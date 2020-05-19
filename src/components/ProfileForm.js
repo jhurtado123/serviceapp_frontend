@@ -147,9 +147,6 @@ class ProfileForm extends Component {
         encodedFile: reader.result,
       })
     };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
   }
 
    render() {
@@ -159,8 +156,8 @@ class ProfileForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <div className={'edit-profile-form'}>
           <div className={'profile-image-container'} onClick={this.handleOpenFileInput}>
-            <ProfileImage user={user} otherImage={encodedFile}/>
-            <input type="file" onChange={this.handleNewImage} hidden ref={this.inputImage}/>
+            <ProfileImage user={user} otherImage={encodedFile} />
+            <input type="file" onChange={this.handleNewImage} accept="image/*" hidden ref={this.inputImage}/>
           </div>
           <div className={'form-group profile-form'}>
             <label>Nombre</label>
