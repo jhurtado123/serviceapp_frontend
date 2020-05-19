@@ -41,7 +41,7 @@ class CategoriesHome extends Component {
     if (typeof categories !== 'undefined' && categories.length > 0) {
       return categories.map((category, i) => {
         return (
-          <div>
+          <div key={i}>
           <CategoryPreview handleCategoryClick={handleCategoryClick} key={i} id={category._id[0]._id} name={category._id[0].name}
                            img={category._id[0].default_image}/>
           </div>

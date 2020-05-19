@@ -35,7 +35,6 @@ class Appointment extends Component {
         isLoading: false,
       }, () => {
 
-        console.log(appointment);
         map = new mapboxgl.Map({
           container: this.mapContainer,
           style: 'mapbox://styles/mapbox/light-v10',

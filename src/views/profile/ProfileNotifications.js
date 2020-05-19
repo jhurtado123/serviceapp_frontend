@@ -20,7 +20,6 @@ class ProfileNotifications extends Component {
     try {
       const { data } = await profileApiClient
         .getProfile()
-        console.log("La información", data)
       this.setState({
         notifications: data.notifications, 
       })  
@@ -37,7 +36,6 @@ class ProfileNotifications extends Component {
   displayNotifications = () => {
     const { notifications } = this.state;
     return notifications.map((notification, i) => {
-      console.log("La fecha", notification.createdAt)
       return <Notification key={i} title={notification.title} href={notification.href} date={notification.createdAt} />
     })
   }

@@ -6,7 +6,6 @@ class AdImages extends Component {
   getImages() {
     const {ad} = this.props;
     if (ad.images.length) {
-      console.log(ad.images);
       return ad.images.map(image => {
         return {
           url: `${process.env.REACT_APP_BACKEND_URI}/uploads/adImages/${ad._id}/${image}`

@@ -5,7 +5,6 @@ class AdImagePreview extends Component {
 
   getImageUrl() {
     const {ad} = this.props;
-    console.log(ad);
     const baseURL = `${process.env.REACT_APP_BACKEND_URI}/uploads/adImages`;
     if (ad.images.length) {
       return `${baseURL}/${ad._id}/${ad.images[0]}`;
