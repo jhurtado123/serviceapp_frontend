@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
 import '../assets/css/views/profile/Profile.scss';
+import {withAuth} from "../context/AuthContext";
+import ProfileImage from "./ProfileImage";
 
 class HeaderProfile extends Component {
 
   render(){
-    const { name, level, url, missingpoints, tokens } = this.props;
+    const { name, level, url, missingpoints, tokens, user } = this.props;
     return (
       <div className="HeaderProfile">
-        <div className="HeaderColumns">
-          <img className="ImgHeader" src={require('../assets/images/icons/menu.png')} alt="menu" />
-          <span className="UserName">{name}</span>
-          <img className="ImgHeader" src={require('../assets/images/icons/notifications.png')} alt="notifications"></img>
-        </div>
         <div className="HeaderColumns SecondLevel">
           <div className="Gold">
-          <span>{level} </span>
-          <span>nivel</span>
+            <span>Nivel </span>
+          <span>{level}</span>
           </div>
           <div className="img-profile">
-          <img className="avatar" src={url !=='' ? url : require('../assets/images/icons/avatar.png')} alt="avatar"/>
+          <ProfileImage user={user}/>
           </div>
           <div className="Gold">
             <span>{tokens} </span>
@@ -26,16 +23,15 @@ class HeaderProfile extends Component {
           </div>
         </div>
         <div className="CenterColumns Gold">
-          <div></div>
           <div>
             Próxima recompensa: 50
             <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin" />
           </div>
-          <div>Faltan {missingpoints} puntos para subir al {level + 1} nivel</div>
+          <div>Faltan {missingpoints} puntos para subir al nivel {level + 1}</div>
         </div>
       </div>
     )
   }
 }
 
-export default HeaderProfile;
+export default withAuth(HeaderProfile);

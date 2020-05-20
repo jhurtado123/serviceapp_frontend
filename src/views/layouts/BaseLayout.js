@@ -13,12 +13,12 @@ import {withAuth} from "../../context/AuthContext";
 import Footer from "../../components/Footer";
 import io from 'socket.io-client';
 
-let socket = undefined; 
+let socket = undefined;
 
 
 class BaseLayout extends Component {
   state = {
-    notification: 0, 
+    notification: 0,
   }
   componentDidMount = () => {
     const { user } = this.props;
@@ -36,8 +36,12 @@ class BaseLayout extends Component {
     });
   };
 
+  componentWillUnmount() {
+    this.props.closeMenu();
+  }
+
   render() {
-    const { notification} = this.state; 
+    const { notification} = this.state;
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
     console.log("Las notificationes", notification)
     return (
@@ -51,7 +55,7 @@ class BaseLayout extends Component {
             <div className={'close-sidebar'}>
               <img src={closeIcon} onClick={closeMenu} alt="close" />
               {isLoggedIn && <div className={'tokens'}>
-                10<img src={Token} alt="serken"/>
+                {user.wallet.tokens}<img src={Token}/>
               </div>}
             </div>
             {isLoggedIn &&
@@ -60,7 +64,7 @@ class BaseLayout extends Component {
               <div className={'data'}>
                 <p>{user.name}</p>
                 <div className={'actions'}>
-                  <Link to={''}>Editar perfil</Link>·
+                  <Link to={'/profile/edit'}>Editar perfil</Link>·
                   <Link to={'/logout'}>Logout</Link>
                 </div>
               </div>
@@ -74,7 +78,17 @@ class BaseLayout extends Component {
               <p>o</p>
               <Link to={'/register'}>Registrate</Link>
             </div> }
-            {isLoggedIn && <div>Logged  bro</div>}
+            {isLoggedIn &&
+            <div className={'sidebar-links'}>
+              <Link to={'/appointments'}>Mis citas</Link>
+              <Link to={'/ads'}>Mis anuncios</Link>
+              <Link to={'/chats'}>Mis chats</Link>
+              <Link to={'/rewards'}>Progreso y premios</Link>
+              <Link to={'/favorites'}>Mis favoritos</Link>
+              <Link to={'/notifications'}>Notificaciones</Link>
+              <Link to={'/ads/recover'}>Recuperar anuncios eliminados</Link>
+              <Link to={'/buySerkens'}>Comprar Serkens</Link>
+            </div>}
           </div>
         </div>
         {children}

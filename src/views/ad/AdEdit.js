@@ -4,6 +4,7 @@ import AdForm from "../../components/AdForm";
 import Loading from "../Loading";
 import REDIRECT from "../../errorRedirects";
 import HeaderWithTitle from "../../components/HeaderWithTitle";
+import LoadingBars from "../../components/LoadingBars";
 
 
 class AdEdit extends Component {
@@ -100,7 +101,7 @@ class AdEdit extends Component {
       <React.Fragment>
         <HeaderWithTitle title={'Editar anuncio'}/>
         {
-          isLoading ? <Loading/> :
+          isLoading ? <LoadingBars/> :
             <div className={'container'}>
               <AdForm onSubmit={this.handleSubmit} {...this.state}/>
             </div>

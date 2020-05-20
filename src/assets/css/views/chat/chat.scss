@@ -7,6 +7,10 @@
     height: calc(100vh - 50px - 80px - 15px);
     overflow-y: scroll;
     margin-bottom: 15px;
+    .loading {
+      height: 100%;
+      margin-left: -20px;
+    }
     .no-messages-box {
       position: absolute;
       top:50%;

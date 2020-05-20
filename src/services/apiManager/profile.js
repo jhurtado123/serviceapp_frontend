@@ -53,6 +53,9 @@ class ProfileApiClient {
   notificationsReaded() {
     return this.apiClient.put(`/profile/notifications/`)
   }
+  buyTokens(quantity) {
+    return this.apiClient.put('/profile/buyTokens', {quantity});
+  }
 }
 
 

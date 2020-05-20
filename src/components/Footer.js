@@ -43,7 +43,7 @@ class Footer extends Component {
           <Link to={''}>
             <img src={homeIcon} alt=""/>
           </Link>
-          <Link to={''}>
+          <Link to={'/appointments'}>
             <img src={appointmentsIcon} alt=""/>
           </Link>
         </div>
@@ -56,7 +56,7 @@ class Footer extends Component {
             <img src={notificationsIcon} alt=""/>
             <div className={'notification-number'}> 1</div>
           </Link>
-          <Link to={''}>
+          <Link to={'/chats'}>
             <img src={chatIcon} alt=""/>
           </Link>
         </div>
