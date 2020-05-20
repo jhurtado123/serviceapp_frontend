@@ -43,6 +43,7 @@ class BestAds extends Component {
   async getData () {
     try {
       const ads = await searchApiClient.search(this.state);
+      console.log(ads.data)
       this.setState({
         ads: ads.data,
           status: STATUS.LOADED,
