@@ -20,10 +20,10 @@ class ProfileNotifications extends Component {
     try {
       const { data } = await profileApiClient
         .getProfile()
-        console.log("La información", data)
       this.setState({
         notifications: data.notifications, 
       })  
+      profileApiClient.notificationsReaded()
       }
     catch (error) {
       if (error.response) {
@@ -36,10 +36,20 @@ class ProfileNotifications extends Component {
 
   displayNotifications = () => {
     const { notifications } = this.state;
+    notifications.reverse()
     return notifications.map((notification, i) => {
       console.log("La fecha", notification.createdAt)
-      return <Notification key={i} title={notification.title} href={notification.href} date={notification.createdAt} />
-    })
+      return ( 
+      <Notification 
+        key={i}
+        title={notification.title}
+        isReaded={notification.isReaded}
+        href={notification.href}
+        date={notification.createdAt}
+        type={notification.type}
+      />
+    )
+  })
   }
   render () {
     return (

@@ -49,6 +49,10 @@ class ProfileApiClient {
   addToRecentlyViewed(id) {
     return this.apiClient.put(`/profile/ad/${id}`)
   }
+
+  notificationsReaded() {
+    return this.apiClient.put(`/profile/notifications/`)
+  }
 }
 
 
