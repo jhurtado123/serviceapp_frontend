@@ -1,7 +1,7 @@
 .notification {
   display: flex;
   align-items: center;
-  border: 1px solid grey; 
+  border: 0.5px solid #ececec; 
   .notification-img {
     width: 40px;
     height: 40px;
@@ -29,4 +29,7 @@
 }
 .notifications-container {
   margin-top: 40px;
+}
+.notification-text-container.notification-readed .notification-title {
+  color: #7F7F7F;
 }

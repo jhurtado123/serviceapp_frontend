@@ -43,7 +43,6 @@ class BaseLayout extends Component {
   render() {
     const { notification} = this.state;
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
-    console.log("Las notificationes", notification)
     return (
       <div className={'base-layout'}>
         <header>
@@ -55,7 +54,7 @@ class BaseLayout extends Component {
             <div className={'close-sidebar'}>
               <img src={closeIcon} onClick={closeMenu} alt="close" />
               {isLoggedIn && <div className={'tokens'}>
-                {user.wallet.tokens}<img src={Token}/>
+                {user.wallet.tokens}<img src={Token} alt="serken"/>
               </div>}
             </div>
             {isLoggedIn &&

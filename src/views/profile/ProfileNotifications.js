@@ -23,6 +23,7 @@ class ProfileNotifications extends Component {
       this.setState({
         notifications: data.notifications, 
       })  
+      profileApiClient.notificationsReaded()
       }
     catch (error) {
       if (error.response) {
@@ -35,9 +36,19 @@ class ProfileNotifications extends Component {
 
   displayNotifications = () => {
     const { notifications } = this.state;
+    notifications.reverse()
     return notifications.map((notification, i) => {
-      return <Notification key={i} title={notification.title} href={notification.href} date={notification.createdAt} />
-    })
+      return ( 
+      <Notification 
+        key={i}
+        title={notification.title}
+        isReaded={notification.isReaded}
+        href={notification.href}
+        date={notification.createdAt}
+        type={notification.type}
+      />
+    )
+  })
   }
   render () {
     return (
