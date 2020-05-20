@@ -38,7 +38,6 @@ class ProfileNotifications extends Component {
     const { notifications } = this.state;
     notifications.reverse()
     return notifications.map((notification, i) => {
-      console.log("La fecha", notification.createdAt)
       return ( 
       <Notification 
         key={i}

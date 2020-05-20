@@ -17,7 +17,6 @@ class Notification extends Component {
 
   displayImage = () => {
     const { type } = this.props;
-    console.log(type)
     switch (type) {
       case 'chat':
         return <img className={'notification-img'} src={chatIcon} alt="notification" />
