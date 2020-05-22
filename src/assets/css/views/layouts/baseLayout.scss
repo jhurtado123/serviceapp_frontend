@@ -135,6 +135,21 @@
             color:$purple-color;
           }
         }
+        .backoffice-link {
+          position: fixed;
+          bottom: 15px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 50%;
+          text-align: center;
+          border-radius: 15px;
+          font-size: 14px;
+          display: block;
+          padding: 10px;
+          background: $gold-color;
+          color:$purple-color;
+          font-weight: bold;
+        }
       }
     }
   }
