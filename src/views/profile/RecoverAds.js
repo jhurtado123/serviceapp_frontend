@@ -7,6 +7,8 @@ import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
 import REDIRECT from "../../errorRedirects";
 import HeaderWithTitle from "../../components/HeaderWithTitle";
+import '../../assets/css/views/profile/ads.scss';
+import LoadingBars from "../../components/LoadingBars";
 
 class RecoverAds extends Component {
 
@@ -72,7 +74,7 @@ class RecoverAds extends Component {
     return (
       <React.Fragment>
         <HeaderWithTitle title={'Recuperar anuncios'}/>
-        {isLoading ? <Loading/> : (
+        {isLoading ? <LoadingBars/> : (
           <div>
             <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar anuncios'}/>
             <div className={'ads-list container'}>

@@ -11,10 +11,37 @@ import ProfileImage from "../../components/ProfileImage";
 import {withSidebar} from "../../context/SidebarContext";
 import {withAuth} from "../../context/AuthContext";
 import Footer from "../../components/Footer";
+import io from 'socket.io-client';
+
+let socket = undefined;
+
 
 class BaseLayout extends Component {
+  state = {
+    notification: 0,
+  }
+  componentDidMount = () => {
+    const { user } = this.props;
+    if(user) {
+      socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`, {query: `id=${user._id}`});
+      this.setSocketEvents()
+    }
+  }
+
+  setSocketEvents = () => {
+    socket.on('notification:count', (data) => {
+      this.setState({
+        notification: data.value
+      })
+    });
+  };
+
+  componentWillUnmount() {
+    this.props.closeMenu();
+  }
 
   render() {
+    const { notification} = this.state;
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
     return (
       <div className={'base-layout'}>
@@ -25,18 +52,18 @@ class BaseLayout extends Component {
         <div className={'sidebar ' + (isOpened && ' open')}>
           <div className={'sidebar-header'}>
             <div className={'close-sidebar'}>
-              <img src={closeIcon} onClick={closeMenu}/>
+              <img src={closeIcon} onClick={closeMenu} alt="close" />
               {isLoggedIn && <div className={'tokens'}>
-                10<img src={Token}/>
+                {user.wallet.tokens}<img src={Token} alt="serken"/>
               </div>}
             </div>
             {isLoggedIn &&
             <div className={'user-data'}>
-              <ProfileImage/>
+              <ProfileImage user={user}/>
               <div className={'data'}>
                 <p>{user.name}</p>
                 <div className={'actions'}>
-                  <Link to={''}>Editar perfil</Link>·
+                  <Link to={'/profile/edit'}>Editar perfil</Link>·
                   <Link to={'/logout'}>Logout</Link>
                 </div>
               </div>
@@ -50,12 +77,23 @@ class BaseLayout extends Component {
               <p>o</p>
               <Link to={'/register'}>Registrate</Link>
             </div> }
-            {isLoggedIn && <div>Logged  bro</div>}
+            {isLoggedIn &&
+            <div className={'sidebar-links'}>
+              <Link to={'/appointments'}>Mis citas</Link>
+              <Link to={'/ads'}>Mis anuncios</Link>
+              <Link to={'/chats'}>Mis chats</Link>
+              <Link to={'/rewards'}>Progreso y premios</Link>
+              <Link to={'/favorites'}>Mis favoritos</Link>
+              <Link to={'/notifications'}>Notificaciones</Link>
+              <Link to={'/ads/recover'}>Recuperar anuncios eliminados</Link>
+              <Link to={'/buySerkens'}>Comprar Serkens</Link>
+              {user.role.includes('ROLE_ADMIN') && <a className={'backoffice-link'} target={'_blank'} href={`${process.env.REACT_APP_BACKEND_URI}/admin`}>Backoffice</a>}
+            </div>}
           </div>
         </div>
         {children}
 
-        {isLoggedIn && <Footer/>}
+        {isLoggedIn && <Footer notification={notification} />}
         {isOpened && <div className={'backdrop'}/>}
       </div>
     );

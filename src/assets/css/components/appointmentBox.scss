@@ -1,0 +1,33 @@
+@import '../variables';
+.appointment-row {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 20px 0;
+  border-bottom: 1px solid #C4C4C4;
+  .profile-image {
+    margin-right: 15px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid $purple-color;
+  }
+  .data {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    .ad-title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .appointment-date {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      img {
+        width: 15px;
+        margin-right: 5px;
+      }
+      font-size: 14px;
+      color:#C4C4C4;
+    }
+  }
+}

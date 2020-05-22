@@ -1,14 +1,20 @@
 @import '../../variables';
+
 .HeaderProfile{
   background-color: $purple-color;
   color: #fff;
   padding: 40px 15px 20px;
   font-family: $font-montserrat;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
+  border-radius: 15px;
   width: 100%;
   position: absolute;
   top: -20px;
+  padding-top: 70px;
+  * {
+    color:white;
+  }
+
 }
 
 .HeaderColumns {
@@ -18,7 +24,8 @@
 }
 
 .SecondLevel {
-  margin: 25px 10px ;
+  margin: 25px 10px;
+  padding: 30px 0;
 }
 
 .CenterColumns {
@@ -27,6 +34,9 @@
   align-items: center;
   font-size: 12px;
   font-family: $font-muli;
+  div {
+    margin-bottom: 10px;
+  }
 }
 
 .ImgHeader {
@@ -41,22 +51,43 @@
   color: $gold-color;
 }
 
-.ImgProfile {
+.img-profile {
   border-radius: 50%;
   background-color: $gold-color;
-  width: 76px;
-  height: 76px;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+  .profile-image {
+    width: 86px;
+    height: 86px;
+  }
 }
-.Avatar {
-  width: 50px;
-  height: 50px;
-  margin: 13px;
+
+.profile-image-container{
+  display:flex;
+  justify-content: center;
+}
+.img-profile-edit{
+  position: absolute;
+}
+
+.avatar {
+  width: 55px;
+  height: 55px;
+  margin: 7px;
   border-radius: 50%;
+  position:relative;
 }
+
 
 .ButtonUser {
   color: $purple-color;
-  margin: 250px 0px 15px 5px;
+  margin: 230px 0px 15px 5px;
   font-size: 16px;
   font-family: $font-montserrat;
   font-weight: 600;
@@ -71,7 +102,7 @@
   color: #fff;
 }
 
-.ReviewUser {
+.review-user {
   display: flex;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -79,37 +110,39 @@
   width: 87.5%
 }
 
-.ReviewHeader{
+.review-header{
   display: flex;
   justify-content: space-between;
 }
 
-.ReviewStar {
+.review-star {
   width: 80px;
   height: 15px;
 }
 
-.ReviewTitle{
+.review-title{
   font-family: $font-montserrat;
   font-weight: 600;
   margin-block-start: 0.2em;
 
 }
 
-.ReviewContent {
+.review-content {
   border: 1px solid #E5E5E5;
   border-radius: 15px;
   padding: 10px;
 }
 
-.HeaderEdit {
+.header-edit {
   background-image: url('/src/assets/images/viewsofile/header-edit.png');
   height: 143px;
   width: 100%;
   top:0px;
   left: 0px;
-  position: absolute;
-  
+}
+
+.hidden {
+  display: none; 
 }
 
 .profile-form {
@@ -123,7 +156,11 @@
   right: 20px;
 }
 .profile-image{
-  position: absolute;
-  right: 150px;
-  top: 60px;
+display:flex;
+}
+.button-bck-purple {
+  cursor: pointer;
+}
+.not-info {
+  margin-left: 15px;
 }

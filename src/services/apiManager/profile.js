@@ -9,9 +9,13 @@ class ProfileApiClient {
   }
 
   getProfile() { 
-    return this.apiClient.get("/profile");
+    return this.apiClient.get("/whoami");
   }
-  
+
+  getProfileOtherUser(username){
+    return this.apiClient.get(`/profile/user/${username}`)
+  }
+
   getLevel() {
     return this.apiClient.get("/profile/level");
   }
@@ -42,6 +46,16 @@ class ProfileApiClient {
     return this.apiClient.put('/profile/edit', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
   }
 
+  addToRecentlyViewed(id) {
+    return this.apiClient.put(`/profile/ad/${id}`)
+  }
+
+  notificationsReaded() {
+    return this.apiClient.put(`/profile/notifications/`)
+  }
+  buyTokens(quantity) {
+    return this.apiClient.put('/profile/buyTokens', {quantity});
+  }
 }
 
 

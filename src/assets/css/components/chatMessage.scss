@@ -1,0 +1,73 @@
+@import '../variables';
+.chat-message {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  &.mine {
+    justify-content: flex-end;
+    .content {
+      .time {
+        left: -35px;
+        max-width: 50px;
+      }
+    }
+  }
+  .content {
+    padding: 10px 0;
+    font-size: 16px;
+    max-width: 50%;
+    width: auto;
+    position: relative;
+    .image-message {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .info-message {
+      font-size: 14px;
+      color:#C4C4C4;
+      a {
+        color:$purple-color;
+      }
+    }
+    .renegotiation-message, .new-deal-message {
+      p {
+        font-size: 14px;
+      }
+      .error-message {
+        font-size: 14px;
+        color:lightcoral;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div {
+          font-size: 14px;
+          border-radius: 10px;
+          padding: 5px 12px;
+          cursor: pointer;
+          &.cancel {
+            border: 1px solid $purple-color;
+            color:$purple-color;
+          }
+          &.accept {
+            background: $purple-color;
+            border: 1px solid $purple-color;
+            color:white;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    .time {
+      position: absolute;
+      bottom:10px;
+      right: -35px;
+      font-size: 12px;
+      color:$purple-color;
+      font-family: $font-montserrat;
+    }
+  }
+}

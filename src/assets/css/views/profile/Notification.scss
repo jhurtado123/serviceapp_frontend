@@ -1,0 +1,35 @@
+.notification {
+  display: flex;
+  align-items: center;
+  border: 0.5px solid #ececec; 
+  .notification-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 20px;
+  }
+  .notification-text-container {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    .notification-title{
+      font-size: 20px;
+      font-weight: 600;
+      margin-block-end: 0.2em;
+    }
+    .notification-extra-info{
+      display: flex;
+      width: 250px;
+      justify-content: space-between;
+      color:  #7F7F7F;
+    }
+    .notification-date {
+      font-size: 14px;
+    }
+  }
+}
+.notifications-container {
+  margin-top: 40px;
+}
+.notification-text-container.notification-readed .notification-title {
+  color: #7F7F7F;
+}

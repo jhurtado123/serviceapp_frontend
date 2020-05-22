@@ -1,9 +1,65 @@
 @import '../../variables';
+
 .ad {
   .ad-images {
     height: 230px;
     width: 100%;
+    position: relative;
+
+    .back {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      background: $purple-color;
+      border-radius: 0 50% 50% 0;
+      padding: 10px 10px;
+      display: flex;
+      justify-content: center;
+
+      img {
+        margin-right: 5px;
+      }
+
+      z-index: 200;
+      cursor: pointer;
+    }
+
+    .add-favorites {
+      position: absolute;
+      top: 20px;
+      right: 0;
+      background: $purple-color;
+      border-radius: 50% 0 0 50%;
+      padding: 10px 10px;
+      display: flex;
+      justify-content: center;
+
+      img {
+        margin-right: 5px;
+      }
+
+      z-index: 200;
+      cursor: pointer;
+    }
+
+    .image-slider {
+      * {
+        background-position: center;
+      }
+
+      .image-slider-bullets {
+        width: 10px !important;
+        height: 10px !important;
+      }
+
+      button {
+        img {
+          width: 30px;
+        }
+      }
+    }
   }
+
   .ad-owner {
     width: 100%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -11,10 +67,12 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    color:$purple-color;
+    color: $purple-color;
     background: white;
-    padding:10px 15px;
+    padding: 10px 15px;
+    z-index: 90;
     margin-bottom: 15px;
+
     .owner-profile {
       display: flex;
       flex-flow: row;
@@ -30,17 +88,20 @@
         display: flex;
         flex-flow: column;
         justify-content: space-between;
+
         h3 {
           margin: 0;
           text-transform: capitalize;
         }
+
         p {
           font-size: 14px;
-          margin:0;
-          color:#C4C4C4;
+          margin: 0;
+          color: #C4C4C4;
           margin-top: -4px;
+
           span {
-            color:$gold-color;
+            color: $gold-color;
             font-family: $font-muli;
             font-size: 18px;
           }
@@ -48,8 +109,9 @@
 
       }
     }
+
     .ad-chat-button {
-      border:2px solid $purple-color;
+      border: 2px solid $purple-color;
       height: 35px;
       display: flex;
       align-items: center;
@@ -60,72 +122,84 @@
       border-radius: 20px;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
+
       &:hover {
         background: $purple-color;
-        color:white;
+        color: white;
       }
     }
   }
+
   .ad-header {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
     padding-bottom: 0;
+
     h1 {
       margin: 0;
       font-family: $font-montserrat;
-      color:$purple-color;
+      color: $purple-color;
       font-size: 30px;
       text-transform: capitalize;
     }
+
     .ad-price {
       display: flex;
       align-items: center;
-      color:$gold-color;
+      color: $gold-color;
       font-size: 26px;
       font-weight: bold;
+
       img {
         margin-left: 5px;
         width: 34px;
       }
     }
   }
+
   .ad-location {
-    padding-top:0;
+    padding-top: 0;
     margin-top: 8px;
     padding-bottom: 0;
     font-weight: bold;
     font-size: 14px;
     display: flex;
     align-items: center;
+
     img {
       margin-right: 5px;
       width: 16px;
     }
+
     span {
       margin-left: 3px;
       font-weight: normal;
     }
   }
+
   .ad-description {
 
   }
+
   .ad-see-map-button {
     width: 100%;
     text-align: center;
     margin-top: 20px;
+
     .see-map-button {
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 20px;
       background: $gold-color;
-      color:$purple-color;
+      color: $purple-color;
       font-weight: bold;
       display: inline-block;
       padding: 10px 18px;
       cursor: pointer;
     }
   }
+
   .map {
     position: relative;
     width: 100% !important;
@@ -135,6 +209,7 @@
     max-height: 0;
     overflow: hidden;
     transition: all 0.4s ease-in-out;
+
     &.open {
       height: 300px !important;
       max-height: 300px;
@@ -169,19 +244,22 @@
       }
     }
   }
+
   .ad-category {
-    margin-bottom:25px;
+    margin-bottom: 25px;
   }
+
   .ad-tags {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
     margin-top: 15px;
-    margin-bottom:25px;
+    margin-bottom: 25px;
+
     .tag {
-      border:1px solid #C4C4C4;
-      color:#C4C4C4;
+      border: 1px solid #C4C4C4;
+      color: #C4C4C4;
       font-size: 12px;
       padding: 5px 8px;
       border-radius: 5px;
@@ -190,12 +268,14 @@
       margin-bottom: 10px;
     }
   }
+
   .form-title {
     border: 0;
     margin-bottom: 10px;
     font-size: 18px;
     margin-top: 10px;
   }
+
   .ad-related {
     display: flex;
     flex-flow: row nowrap;
@@ -207,9 +287,18 @@
     overflow: auto;
     padding-bottom: 20px;
     justify-content: flex-start;
+
     .no-related-ads {
       font-size: 14px;
-      color:#C4C4C4;
+      color: #C4C4C4;
+    }
+  }
+}
+
+.modal {
+  .info-message {
+    a {
+      color: $purple-color;
     }
   }
 }

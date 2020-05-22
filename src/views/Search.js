@@ -7,6 +7,7 @@ import AdBox from "../components/AdBox";
 import mapboxgl from "mapbox-gl";
 import {withAuth} from "../context/AuthContext";
 import {withRouter} from 'react-router-dom';
+import LoadingBars from "../components/LoadingBars";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -14,14 +15,17 @@ let markers = [];
 
 class Search extends Component {
 
+  stateFromHome = this.props.location.state;
+
   state = {
-    search: '',
-    maxRadius: 10,
-    maxPrice: '',
+    search: this.stateFromHome ? this.stateFromHome.search : '',
+    maxRadius: this.stateFromHome ? this.stateFromHome.maxRadius : 10,
+    maxPrice: this.stateFromHome ? this.stateFromHome.maxPrice : '',
     ads: [],
-    orderBy: 'distance',
-    category: '',
+    orderBy: this.stateFromHome ? this.stateFromHome.orderBy : 'distance',
+    category: this.stateFromHome ? this.stateFromHome.category : '',
     isMapShown: false,
+    isLoading: true,
   };
 
   handleChange = (e) => {
@@ -36,16 +40,17 @@ class Search extends Component {
     const {user} = this.props;
     this.searchFromState();
     const pulsingDot = this.getPulsingDot(100);
+    const coordinates = user ? [user.location.coordinates[0], user.location.coordinates[1]] : [2.1648800, 41.3922500];
     map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/light-v10',
-      center: [user.location.coordinates[0], user.location.coordinates[1]],
+      center: coordinates,
       zoom: 13,
       interactive: true,
       scrollZoom: true,
+      isLoading: false,
     });
     map.on('load', function () {
-      map.resize();
       map.addImage('pulsing-dot', pulsingDot, {pixelRatio: 2});
 
       map.addSource('points', {
@@ -57,7 +62,7 @@ class Search extends Component {
               'type': 'Feature',
               'geometry': {
                 'type': 'Point',
-                'coordinates': [user.location.coordinates[0], user.location.coordinates[1]],
+                'coordinates': coordinates,
               }
             }
           ]
@@ -72,6 +77,7 @@ class Search extends Component {
         }
       });
     });
+    map.resize();
   }
 
   getPulsingDot(size) {
@@ -135,10 +141,14 @@ class Search extends Component {
   }
 
   searchFromState = async () => {
+    this.setState({
+      isLoading:true,
+    });
     try {
       const ads = await searchApiClient.search(this.state);
       this.setState({
         ads: ads.data,
+        isLoading:false,
       });
       this.addMarkers(ads.data);
 
@@ -148,7 +158,6 @@ class Search extends Component {
   };
 
   addMarkers = (ads) => {
-    console.log(this.props);
     this.removeMarkers();
     ads.forEach(ad => {
       const popup = new mapboxgl.Popup({offset: 15})
@@ -167,6 +176,7 @@ class Search extends Component {
         });
       });
     });
+    map.resize();
   };
 
   removeMarkers() {
@@ -183,6 +193,8 @@ class Search extends Component {
   handleViewMap = () => {
     this.setState({
       isMapShown: true
+    }, () => {
+      map.resize();
     });
   };
   handleViewList = () => {
@@ -200,20 +212,19 @@ class Search extends Component {
   };
 
   render() {
-    const {isMapShown} = this.state;
+    const {isMapShown, isLoading} = this.state;
     return (
       <BaseLayout>
-
         <SearchBarWithFilters placeholder={'Buscar'} handleChange={this.handleChange} {...this.state}/>
         <div className={'view-options container'}>
           <div className={'view-option ' + (!isMapShown ? 'active' : '')} onClick={this.handleViewList}>Lista</div>
           <div className={'view-option ' + (isMapShown ? 'active' : '')} onClick={this.handleViewMap}>Mapa</div>
         </div>
-        <div className={'search-view container search-container ' + (!isMapShown ? 'show' : 'hide')}>
-          {this.printAds()}
+        <div className={'search-view container search-container ' + (!isMapShown ? 'show ' : 'hide ') + (isLoading ? ' loading' : '')}>
+          {isLoading ? <LoadingBars/> : this.printAds()}
         </div>
         <div className={'search-view search-container-map map ' + (isMapShown ? 'show' : 'hide')}>
-          <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
+          <div ref={el => this.mapContainer = el} className={'mapContainer'} style={{width:'100vw', height:'100vh'}}/>
         </div>
       </BaseLayout>
     );

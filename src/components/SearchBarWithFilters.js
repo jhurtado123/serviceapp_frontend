@@ -34,12 +34,12 @@ class SearchBarWithFilters extends Component {
 
   render() {
     const {showFilters} = this.state;
-    const {searchValue, handleChange, placeholder, orderBy, maxPrice, category, maxRadius} = this.props;
+    const {search, handleChange, placeholder, orderBy, maxPrice, category, maxRadius} = this.props;
     return (
       <React.Fragment>
         <div className={'search-bar'}>
           <img src={Lupa} alt=""/>
-          <input type="text" name={'search'} value={searchValue} onChange={handleChange} placeholder={placeholder}/>
+          <input type="text" name={'search'} autoFocus={true} value={search} onChange={handleChange} placeholder={placeholder}/>
           <div className={'toggle-filters'} onClick={this.toggleFiltersBox}>Filtros</div>
         </div>
         <div className={'filters-box ' + (showFilters ? 'open' : '')}>
@@ -66,17 +66,12 @@ class SearchBarWithFilters extends Component {
             <div>
               <input type={'radio'} id={'distance'} name={'orderBy'} value={'distance'} defaultChecked onChange={handleChange}/>
               <label htmlFor={'distance'} className={'checkbox-pretty'}/>
-              <label htmlFor={'distance'}>Distancia</label>
+              <label htmlFor={'distance'}>Distancia (menor a mayor)</label>
             </div>
             <div>
               <input type={'radio'} id={'price'} name={'orderBy'} value={'price'} onChange={handleChange}/>
               <label htmlFor={'price'} className={'checkbox-pretty'}/>
-              <label htmlFor={'price'}>Precio</label>
-            </div>
-            <div>
-              <input type={'radio'} id={'valorations'} name={'orderBy'} value={'valorations'} onChange={handleChange}/>
-              <label htmlFor={'valorations'} className={'checkbox-pretty'}/>
-              <label htmlFor={'valorations'}>Mejores valoraciones</label>
+              <label htmlFor={'price'}>Precio (menor a mayor)</label>
             </div>
           </div>
         </div>

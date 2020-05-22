@@ -37,25 +37,27 @@ class Footer extends Component {
 
   render() {
     const {visible} = this.state;
+    const { notification } = this.props; 
     return (
       <footer className={visible ? 'visible' : ''}>
         <div className={'group-icons'}>
           <Link to={''}>
             <img src={homeIcon} alt=""/>
           </Link>
-          <Link to={''}>
+          <Link to={'/appointments'}>
             <img src={appointmentsIcon} alt=""/>
           </Link>
         </div>
         <Link to={'/ad/create'} className={'footer-add-new'}>
-          <img src={addNewFooter}/>
-          <img src={plusIcon} className={'plus-icon'}/>
+          <img src={addNewFooter} alt="new-footer" />
+          <img src={plusIcon} className={'plus-icon'} alt="plus-icon" />
         </Link>
         <div className={'group-icons'}>
-          <Link to={''}>
+          <Link to={'/profile/notifications'} className={'notification-link'}>
             <img src={notificationsIcon} alt=""/>
+            <div className={'notification-number'}> {notification}</div>
           </Link>
-          <Link to={''}>
+          <Link to={'/chats'}>
             <img src={chatIcon} alt=""/>
           </Link>
         </div>

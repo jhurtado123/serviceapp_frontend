@@ -10,11 +10,15 @@
     "mapbox-gl": "^1.10.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
+    "react-credit-cards": "^0.8.2",
+    "react-datetime-picker": "^3.0.2",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "react-sticky": "^6.0.3"
+    "react-simple-image-slider": "^1.0.3",
+    "react-sticky": "^6.0.3",
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",

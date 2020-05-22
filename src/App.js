@@ -11,6 +11,8 @@ import AdCreate from "./views/ad/AdCreate";
 import AdEdit from "./views/ad/AdEdit";
 import Profile from "./views/profile/Profile";
 import ProfileEdit from "./views/profile/ProfileEdit";
+import ProfileNotifications from "./views/profile/ProfileNotifications";
+import ProfileOtherUser from "./views/profile/ProfileOtherUser";
 import ProfileAds from "./views/profile/ProfileAds";
 import RecoverAds from "./views/profile/RecoverAds";
 import AdView from "./views/ad/AdView";
@@ -21,6 +23,12 @@ import BaseLayout from "./views/layouts/BaseLayout";
 import SidebarProvider from "./context/SidebarContext";
 import Home from "./views/Home";
 import Search from "./views/Search";
+import Chat from "./views/chat/Chat";
+import Chats from "./views/chat/Chats";
+import Appointments from "./views/appointments/Appointments";
+import Appointment from "./views/appointments/Appointment";
+import BuyTokens from "./views/BuyTokens";
+import Favorites from "./views/profile/Favorites";
 
 function App() {
   return (
@@ -37,7 +45,22 @@ function App() {
             <PrivateRoute exact path={'/ads'} component={ProfileAds}/>
             <PrivateRoute exact path={'/ads/recover'} component={RecoverAds}/>
             <PrivateRoute exact path={'/profile'} component={Profile}/>
-            <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>            
+
+            <PrivateRoute exact path={'/favorites'} component={Favorites}/>
+
+            <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
+            <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>     
+            <PrivateRoute exact path={'/profile/notifications'} component={ProfileNotifications}/>
+
+            <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>
+
+            <PrivateRoute exact path={'/appointments'} component={Appointments}/>
+            <PrivateRoute exact path={'/appointments/:id'} component={Appointment}/>
+
+            <PrivateRoute exact path={'/chats'} component={Chats} />
+            <PrivateRoute exact path={'/chats/:id'} component={Chat} />
+
+            <PrivateRoute exact path={'/buySerkens'} component={BuyTokens} />
 
             <Route exact path={'/401'} component={Error401}/>
             <Route exact path={'/404'} component={Error404}/>

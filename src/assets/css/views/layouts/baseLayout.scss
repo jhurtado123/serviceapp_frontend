@@ -20,7 +20,8 @@
     width: 100vw;
     height: 50px;
     top:0;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    //box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: none;
     padding: 0 20px;
     .open-menu {
       width: 25px;
@@ -119,6 +120,35 @@
         }
         p {
           font-size: 20px;
+        }
+      }
+      .sidebar-links {
+        display: flex;
+        margin-top: 25px;
+        flex-flow: column;
+        a {
+          font-size: 18px;
+          color:#444444;
+          font-family: $font-montserrat;
+          margin-bottom: 20px;
+          &:hover {
+            color:$purple-color;
+          }
+        }
+        .backoffice-link {
+          position: fixed;
+          bottom: 15px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 50%;
+          text-align: center;
+          border-radius: 15px;
+          font-size: 14px;
+          display: block;
+          padding: 10px;
+          background: $gold-color;
+          color:$purple-color;
+          font-weight: bold;
         }
       }
     }
