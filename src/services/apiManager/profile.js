@@ -56,6 +56,10 @@ class ProfileApiClient {
   buyTokens(quantity) {
     return this.apiClient.put('/profile/buyTokens', {quantity});
   }
+
+  getRewardsAds(){
+    return this.apiClient.get('/profile/rewards/ads');
+  }
 }
 
 

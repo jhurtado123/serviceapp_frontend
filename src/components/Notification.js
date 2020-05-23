@@ -1,6 +1,7 @@
 import React,  { Component } from 'react';
 import '../assets/css/views/profile/Notification.scss';
 import chatIcon from "../assets/images/views/layouts/baseLayout/chat-purple.png";
+import reward from "../assets/images/icons/reward.png";
 
 
 class Notification extends Component {
@@ -21,7 +22,7 @@ class Notification extends Component {
       case 'chat':
         return <img className={'notification-img'} src={chatIcon} alt="notification" />
         case 'reward':
-        return <img className={'notification-img'} src={'../assets/images/icons/coin.png'} alt="notification" />
+        return <img className={'notification-img'} src={reward} alt="notification" />
       default:
         break;
     }

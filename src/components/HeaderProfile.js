@@ -9,6 +9,9 @@ class HeaderProfile extends Component {
     const { name, level, url, missingpoints, tokens, user } = this.props;
     return (
       <div className="HeaderProfile">
+        <div className="HeaderColumns">
+          <span className="UserName">{name}</span>
+        </div>
         <div className="HeaderColumns SecondLevel">
           <div className="Gold">
             <span>Nivel </span>

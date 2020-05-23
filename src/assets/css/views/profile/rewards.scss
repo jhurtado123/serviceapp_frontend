@@ -1,0 +1,38 @@
+@import '../../variables';
+.rewards-container{
+  margin-top: 250px;
+  .reward-container{
+    margin: 5px 15px;
+    padding: 15px 25px 1px;
+    border-radius: 15px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  }
+  .reward-header{
+    display: flex;
+    justify-content: space-between;
+    .reward-title{
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .reward-pts{
+      color: $gold-color;
+      background-color: $purple-color;
+      padding: 3px 10px;
+      border-radius: 15px;
+      font-size: 14px;
+    }
+  }
+  .reward-progress-bar{
+    background-color: #d3d3d3;
+    height: 6px;
+    border-radius: 15px;
+    margin-top: 20px;
+    .bar-color{
+      background-color: $gold-color;
+    }
+  }
+  .next-reward {
+    font-size: 14px;
+    color: $purple-color;
+  }
+}
