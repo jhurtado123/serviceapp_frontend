@@ -34,9 +34,10 @@ class Profile extends Component {
     status: STATUS.LOADING,
   }
 
-  componentDidMount = () => {
-    this.loadProfile()
-    this.getLevel()
+  async componentDidMount () {
+    await this.loadProfile()
+    await this.getLevel()
+    await this.getMissingPoints()
   }
 
   async loadProfile() {
@@ -70,25 +71,24 @@ class Profile extends Component {
     ;
   }
 
-  getLevel = () => {
-    const {points} = this.state;
+  async getLevel() {
+    const { points } = this.state;
     if (points !== 0) {
-      profileApiClient
-        .getLevel()
-        .then(({data}) => {
-          this.setState({
-            level: data[0].level,
-            totalpoints: data[0].maxpoints
-          })
-          this.getMissingPoints()
+      try {
+        const { data } = await profileApiClient
+          .getLevel()
+        this.setState({
+          level: data[0].level,
+          totalpoints: data[0].maxpoints,
         })
-        .catch((error) => {
-          if (error.response) {
-            this.props.history.push(REDIRECT[error.response.status]);
-            return;
-          }
-          this.props.history.push(REDIRECT[500]);
-        })
+      }
+      catch (error) {
+        if (error.response) {
+          this.props.history.push(REDIRECT[error.response.status]);
+          return;
+        }
+        this.props.history.push(REDIRECT[500]);
+      }
     }
   }
 
@@ -115,6 +115,7 @@ class Profile extends Component {
 
   getMissingPoints = () => {
     const {points, totalpoints} = this.state;
+    console.log("POINTS", points, totalpoints)
     let result = totalpoints - points;
     this.setState({
       missingpoints: result,
@@ -141,7 +142,7 @@ class Profile extends Component {
         return <ReviewUser key={i} title={review.title} content={review.content} rating={review.rating}/>
       })
     } else {
-      return <p className="not-info">No tiene reviews</p>
+      return <p className="not-info">No tienes reviews</p>
     }
   }
 
@@ -149,7 +150,6 @@ class Profile extends Component {
   render() {
     const {name, level, url, points, missingpoints, tokens, showReviews, status} = this.state;
     // eslint-disable-next-line default-case
-
     switch (status) {
       case STATUS.LOADED:
         return (
