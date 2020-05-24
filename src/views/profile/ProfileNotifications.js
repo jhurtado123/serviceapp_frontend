@@ -53,7 +53,7 @@ class ProfileNotifications extends Component {
   render () {
     return (
       <div>
-        <HeaderWithTitle title="Notifications" />
+        <HeaderWithTitle title="Notificaciones" />
         <SearchBar />
         <div className={'notifications-container'}>
           {this.displayNotifications()}

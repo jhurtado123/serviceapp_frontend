@@ -159,12 +159,12 @@ class Profile extends Component {
                            tokens={tokens}/>
             {showReviews ?
               <div className={'container'}>
-                <button className="ButtonUser ButtonUserNot" onClick={this.handleServices}>Services</button>
+                <button className="ButtonUser ButtonUserNot" onClick={this.handleServices}>Servicios</button>
                 <button className="ButtonUser" onClick={this.handleReviews}>Reviews</button>
                 {this.getReviewsFromUser()}
               </div> :
               <div className={'container'}>
-                <button className="ButtonUser" onClick={this.handleServices}>Services</button>
+                  <button className="ButtonUser" onClick={this.handleServices}>Servicios</button>
                 <button className="ButtonUser ButtonUserNot" onClick={this.handleReviews}>Reviews</button>
                 {this.getAdsFromUser()}
               </div>
