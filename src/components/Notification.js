@@ -2,6 +2,8 @@ import React,  { Component } from 'react';
 import '../assets/css/views/profile/Notification.scss';
 import chatIcon from "../assets/images/views/layouts/baseLayout/chat-purple.png";
 import reward from "../assets/images/icons/reward.png";
+import { Link } from "react-router-dom";
+
 
 
 class Notification extends Component {
@@ -9,10 +11,10 @@ class Notification extends Component {
   getYYYMMDDHHMMDate(date) {
     if (typeof date === 'string') date = new Date(date);
     return `${
-      (date.getMonth() + 1).toString().padStart(2, '0')}/${
       date.getDate().toString().padStart(2, '0')}/${
+      (date.getMonth() + 1).toString().padStart(2, '0')}/${
       date.getFullYear().toString().padStart(4, '0')} ${
-      (date.getHours() - 2).toString().padStart(2, '0')}:${
+      (date.getHours()).toString().padStart(2, '0')}:${
       date.getMinutes().toString().padStart(2, '0')}`
   }
 
@@ -36,13 +38,13 @@ class Notification extends Component {
           <div className={'notification-text-container notification-readed'}>
             <p className={'notification-title'}>{title}</p>
             <div className={'notification-extra-info'}>
-              <a href={`/${href}`}>Click para verlo</a> <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
+              <Link to={`${href}`}>Click para verlo</Link> <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
             </div>
           </div> : 
           <div className={'notification-text-container'}>
             <p className={'notification-title'}>{title}</p>
             <div className={'notification-extra-info'}>
-              <a href={`/${href}`}>Click para verlo</a> <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
+              <Link to={`${href}`}>Click para verlo</Link> <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
             </div>
           </div>
         }
