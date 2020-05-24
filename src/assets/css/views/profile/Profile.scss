@@ -1,6 +1,6 @@
 @import '../../variables';
 
-.HeaderProfile{
+.header-profile{
   background-color: $purple-color;
   color: #fff;
   padding: 40px 15px 20px;
@@ -17,18 +17,18 @@
 
 }
 
-.HeaderColumns {
+.header-columns {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.SecondLevel {
+.second-level {
   margin: 25px 10px;
   padding: 30px 0;
 }
 
-.CenterColumns {
+.center-columns {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,18 +39,19 @@
   }
 }
 
-.ImgHeader {
+.img-header {
   width: 25px;
 }
-.UserName {
+.user-name {
   font-size: 18px;
   font-weight: bold;
   width: 100%;
   text-align: center;
 }
 
-.Gold {
-  color: $gold-color;
+.coins {
+  display: flex;
+  justify-content: center;
 }
 
 .img-profile {
@@ -87,7 +88,7 @@
 }
 
 
-.ButtonUser {
+.button-user {
   color: $purple-color;
   margin: 230px 0px 15px 5px;
   font-size: 16px;
@@ -99,7 +100,7 @@
   padding: 5px;
 }
 
-.ButtonUserNot {
+.button-user-not {
   background-color: $purple-color;
   color: #fff;
 }

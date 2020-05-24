@@ -149,13 +149,13 @@ class ProfileOtherUser extends Component {
             <HeaderProfileOtherUser name={name} level={level} url={url} points={points} description={description} tokens={tokens} />
             {showReviews ?
               <div>
-                <button className="ButtonUser ButtonUserNot" onClick={this.handleServices}>Servicios</button>
-                <button className="ButtonUser" onClick={this.handleReviews}>Reviews</button>
+                <button className={'button-user button-user-not'} onClick={this.handleServices}>Servicios</button>
+                <button className={'button-user'} onClick={this.handleReviews}>Reviews</button>
                 {this.getReviewsFromUser()}
               </div> :
               <div>
-                <button className="ButtonUser" onClick={this.handleServices}>Servicios</button>
-                <button className="ButtonUser ButtonUserNot" onClick={this.handleReviews}>Reviews</button>
+                <button className={'button-user'} onClick={this.handleServices}>Servicios</button>
+                <button className={'button-user button-user-not'} onClick={this.handleReviews}>Reviews</button>
                 {this.printAdsUser()}
               </div>
             }
