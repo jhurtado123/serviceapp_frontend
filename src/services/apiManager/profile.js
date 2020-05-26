@@ -53,8 +53,13 @@ class ProfileApiClient {
   notificationsReaded() {
     return this.apiClient.put(`/profile/notifications/`)
   }
+
   buyTokens(quantity) {
     return this.apiClient.put('/profile/buyTokens', {quantity});
+  }
+
+  putReview({appointment, valoration, stars, mediationText, showMediationForm}) {
+    return this.apiClient.put('/profile/setReview', {appointment, valoration, stars, mediationText, showMediationForm});
   }
 }
 

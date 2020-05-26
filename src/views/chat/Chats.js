@@ -44,7 +44,7 @@ class Chats extends Component {
     const {search, chats, isLoading} = this.state;
     return (
       <BaseLayout>
-        <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar mensajes'}/>
+        <SearchBar handleChange={this.handleChange} searchValue={search} placeholder={'Buscar chats'}/>
         {
           isLoading ? <LoadingBars/> :
             chats.length ?

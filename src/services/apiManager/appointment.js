@@ -20,6 +20,10 @@ class AppointmentApiClient {
     return this.apiClient.delete(`/appointments/${id}`);
   }
 
+  getAppointmentDataForReview(id) {
+    return this.apiClient.get(`/appointments/${id}/forReview`);
+  }
+
 
 }
 
