@@ -7,10 +7,13 @@ class HeaderWithTitle extends Component {
   render() {
     const {title, history} = this.props;
     return (
-      <header>
+      <React.Fragment>
+      <header className={'header-with-title'}>
         <img src={backIcon} alt="" onClick={history.goBack}/>
         <h2>{title}</h2>
       </header>
+        <div className={'separator'}/>
+      </React.Fragment>
     );
   }
 }

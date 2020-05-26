@@ -3,10 +3,10 @@
   align-items: center;
   border: 0.5px solid #ececec; 
   .notification-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 35px;
+    min-width: 35px;
     margin-left: 20px;
+
   }
   .notification-text-container {
     margin-left: 20px;
@@ -15,15 +15,17 @@
       font-size: 20px;
       font-weight: 600;
       margin-block-end: 0.2em;
+      margin-bottom: 10px;
     }
     .notification-extra-info{
       display: flex;
+      align-items: center;
       width: 250px;
       justify-content: space-between;
       color:  #7F7F7F;
     }
     .notification-date {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 }
