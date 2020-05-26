@@ -209,7 +209,7 @@ class AdForm extends Component {
 
           </div>
           <div className={'form-group'}>
-            <label>Tags</label>
+            <label>Etiquetas</label>
             <p className={'info-text'}>*Separadas por coma</p>
             <input type="text" name={'tags'} placeholder={'Etiquetas'} value={tags} onChange={this.handleChange}/>
           </div>

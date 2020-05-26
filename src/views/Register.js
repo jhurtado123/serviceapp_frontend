@@ -100,7 +100,7 @@ class Register extends Component {
     const {isInSecondStep, usernameValidated, postalCode, error, validatingUsername} = this.state;
     return (
       <div className={'register'}>
-        <img className={'wave-top'} src={TopWave}/>
+        <img className={'wave-top'} src={TopWave} alt={'wave-top'} />
         <div className={'wrapper'}>
           {!isInSecondStep ?
             <RegisterPartOne {...this.state} usernameValidated={usernameValidated}

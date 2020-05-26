@@ -44,7 +44,6 @@ class ProfileEdit extends Component {
 
   render() {
     const {status} = this.state;
-    const {url} = this.state;
     // eslint-disable-next-line default-case
     switch (status) {
       case STATUS.LOADED:

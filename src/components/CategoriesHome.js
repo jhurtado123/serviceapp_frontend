@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import adApiClient from "../services/apiManager/ad";
 import CategoryPreview from "../components/CategoryPreview";
-import SmallLoading from "../components/SmallLoading";
 import '../assets/css/views/home.scss';
-import LoadingBars from "./LoadingBars";
+import SmallLoadingBars from "./SmallLoadingBars";
 
 
 const STATUS = {
@@ -57,7 +56,7 @@ class CategoriesHome extends Component {
       case STATUS.LOADING:
         return (
           <div className={'loading'}>
-           <LoadingBars/>
+           <SmallLoadingBars/>
           </div>
         )
       case STATUS.LOADED:

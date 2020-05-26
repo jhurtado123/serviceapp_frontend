@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import profileApiClient from "../services/apiManager/profile";
 import SmallAd from "../components/SmallAd";
-import SmallLoading from "../components/SmallLoading";
-import LoadingBars from "./LoadingBars";
+import SmallLoadingBars from "./SmallLoadingBars";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -33,7 +32,7 @@ class AdRecentlyView extends Component {
     }
   }
 
-  displayAdsViwed = () => {
+  displayAdsViewed = () => {
     const { recently_viewed } = this.state;
     if (recently_viewed.length) {
       return recently_viewed.map((ad, i) => {
@@ -46,13 +45,14 @@ class AdRecentlyView extends Component {
   render(){
     const { status } = this.state;
 
+    // eslint-disable-next-line default-case
     switch (status) {
       case STATUS.LOADING:
-        return <LoadingBars />;
+        return <SmallLoadingBars />;
       case STATUS.LOADED:
         return (
           <div className="ads-container recently-viewed">
-          {this.displayAdsViwed()}
+          {this.displayAdsViewed()}
           </div>
         )
     }

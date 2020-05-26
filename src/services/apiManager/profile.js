@@ -61,6 +61,10 @@ class ProfileApiClient {
   putReview({appointment, valoration, stars, mediationText, showMediationForm}) {
     return this.apiClient.put('/profile/setReview', {appointment, valoration, stars, mediationText, showMediationForm});
   }
+  getRewardsAds(){
+    return this.apiClient.get('/profile/rewards/ads');
+  }
+  
 }
 
 

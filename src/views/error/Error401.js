@@ -11,7 +11,7 @@ class Error401 extends Component {
           <h1>No estás autorizado para hacer eso.</h1>
           <Link to={'/login'} className={'button-bck-purple'}>Ir al login</Link>
         </div>
-        <img className={'wave-bottom'} src={BottomWave}/>
+        <img className={'wave-bottom'} src={BottomWave} alt={'wave-bottom'} />
       </React.Fragment>
     );
   }

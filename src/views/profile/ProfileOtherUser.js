@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import { withAuth } from "../../context/AuthContext";
 import profileApiClient from "../../services/apiManager/profile";
 import adApiClient from "../../services/apiManager/ad";
 import HeaderProfileOtherUser from "../../components/HeaderProfileOtherUser";
 import AdBox from "../../components/AdBox";
 import ReviewUser from "../../components/ReviewUser";
-import Loading from "../Loading";
 import '../../assets/css/views/profile/Profile.scss';
 import REDIRECT from "../../errorRedirects";
 import LoadingBars from "../../components/LoadingBars";
@@ -149,13 +147,13 @@ class ProfileOtherUser extends Component {
             <HeaderProfileOtherUser name={name} level={level} url={url} points={points} description={description} tokens={tokens} />
             {showReviews ?
               <div>
-                <button className="ButtonUser ButtonUserNot" onClick={this.handleServices}>Services</button>
-                <button className="ButtonUser" onClick={this.handleReviews}>Reviews</button>
+                <button className={'button-user button-user-not'} onClick={this.handleServices}>Servicios</button>
+                <button className={'button-user'} onClick={this.handleReviews}>Reviews</button>
                 {this.getReviewsFromUser()}
               </div> :
               <div>
-                <button className="ButtonUser" onClick={this.handleServices}>Services</button>
-                <button className="ButtonUser ButtonUserNot" onClick={this.handleReviews}>Reviews</button>
+                <button className={'button-user'} onClick={this.handleServices}>Servicios</button>
+                <button className={'button-user button-user-not'} onClick={this.handleReviews}>Reviews</button>
                 {this.printAdsUser()}
               </div>
             }

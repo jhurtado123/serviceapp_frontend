@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import '../assets/css/views/profile/Notification.scss';
 import chatIcon from "../assets/images/views/layouts/baseLayout/chat-purple.png";
 import AppointmentIcon from "../assets/images/icons/appointment-icon.png"
-
 import {Link} from "react-router-dom";
+import reward from "../assets/images/icons/reward.png";
 
 
 class Notification extends Component {
@@ -11,10 +11,10 @@ class Notification extends Component {
   getYYYMMDDHHMMDate(date) {
     if (typeof date === 'string') date = new Date(date);
     return `${
-      (date.getMonth() + 1).toString().padStart(2, '0')}/${
       date.getDate().toString().padStart(2, '0')}/${
+      (date.getMonth() + 1).toString().padStart(2, '0')}/${
       date.getFullYear().toString().padStart(4, '0')} ${
-      (date.getHours() - 2).toString().padStart(2, '0')}:${
+      (date.getHours()).toString().padStart(2, '0')}:${
       date.getMinutes().toString().padStart(2, '0')}`
   }
 
@@ -27,6 +27,8 @@ class Notification extends Component {
         return <img className={'notification-img'} src={'../assets/images/icons/coin.png'} alt="notification"/>;
       case 'appointment-finished':
         return <img className={'notification-img'} src={AppointmentIcon} alt="notification"/>;
+      case 'reward':
+        return <img className={'notification-img'} src={reward} alt="notification" />
       default:
         break;
     }

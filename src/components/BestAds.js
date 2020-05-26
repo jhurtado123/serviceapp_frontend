@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import searchApiClient from "../services/apiManager/search";
 import SmallAd from "../components/SmallAd";
-import SmallLoading from "../components/SmallLoading"; 
 import '../assets/css/views/home.scss';
-import LoadingBars from "./LoadingBars";
+import SmallLoadingBars from "./SmallLoadingBars";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -43,7 +42,6 @@ class BestAds extends Component {
   async getData () {
     try {
       const ads = await searchApiClient.search(this.state);
-      console.log(ads.data)
       this.setState({
         ads: ads.data,
           status: STATUS.LOADED,
@@ -75,7 +73,7 @@ class BestAds extends Component {
       case STATUS.LOADING:
         return (
           <div>
-           <LoadingBars/>
+            <SmallLoadingBars/>
           </div>
         )
       case STATUS.LOADED:

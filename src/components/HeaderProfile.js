@@ -6,26 +6,28 @@ import ProfileImage from "./ProfileImage";
 class HeaderProfile extends Component {
 
   render(){
-    const { name, level, url, missingpoints, tokens, user } = this.props;
+    const { name, level, missingpoints, tokens, user } = this.props;
     return (
-      <div className="HeaderProfile">
-        <div className="HeaderColumns SecondLevel">
-          <div className="Gold">
-            <span>Nivel </span>
-          <span>{level}</span>
+      <div className={'header-profile'}>
+        <div className={'header-columns'}>
+          <span className={'user-name'}>{name}</span>
+        </div>
+        <div className={'header-columns second-level'}>
+          <div className={'coins'}>
+            <span>Nivel {level}</span>
           </div>
           <div className="img-profile">
           <ProfileImage user={user}/>
           </div>
-          <div className="Gold">
+          <div className={'coins'}>
             <span>{tokens} </span>
-            <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin" />
+            <img className={'img-coin'} src={require('../assets/images/icons/coin.png')} alt="coin" />
           </div>
         </div>
-        <div className="CenterColumns Gold">
-          <div>
+        <div className={'center-columns'}>
+          <div className={'coins'}>
             Próxima recompensa: 50
-            <img className="ImgCoin" src={require('../assets/images/icons/coin.png')} alt="coin" />
+            <img className={'img-coin'} src={require('../assets/images/icons/coin.png')} alt="coin" />
           </div>
           <div>Faltan {missingpoints} puntos para subir al nivel {level + 1}</div>
         </div>
