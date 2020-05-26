@@ -115,7 +115,6 @@ class Profile extends Component {
 
   getMissingPoints = () => {
     const {points, totalpoints} = this.state;
-    console.log("POINTS", points, totalpoints)
     let result = totalpoints - points;
     this.setState({
       missingpoints: result,

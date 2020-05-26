@@ -11,7 +11,7 @@ class Error500 extends Component {
           <h1>Error en el servidor, prueba de nuevo más tarde</h1>
           <Link to={'/'} className={'button-bck-purple'}>Ir a la home</Link>
         </div>
-        <img className={'wave-bottom'} src={BottomWave}/>
+        <img className={'wave-bottom'} src={BottomWave} alt={'wave-bottom'} />
       </React.Fragment>
     );
   }
