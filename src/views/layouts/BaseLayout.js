@@ -59,9 +59,13 @@ class BaseLayout extends Component {
             </div>
             {isLoggedIn &&
             <div className={'user-data'}>
-              <ProfileImage user={user}/>
+              <Link to={'/profile'}>
+                <ProfileImage user={user} />
+              </Link>
               <div className={'data'}>
-                <p>{user.name}</p>
+                <Link to={'/profile'}>
+                  <p>{user.name}</p>
+                </Link>
                 <div className={'actions'}>
                   <Link to={'/profile/edit'}>Editar perfil</Link>·
                   <Link to={'/logout'}>Logout</Link>
@@ -82,10 +86,9 @@ class BaseLayout extends Component {
               <Link to={'/appointments'}>Mis citas</Link>
               <Link to={'/ads'}>Mis anuncios</Link>
               <Link to={'/chats'}>Mis chats</Link>
-              <Link to={'/rewards'}>Progreso y premios</Link>
+              <Link to={'/profile/rewards'}>Progreso y premios</Link>
               <Link to={'/favorites'}>Mis favoritos</Link>
-              <Link to={'/notifications'}>Notificaciones</Link>
-              <Link to={'/ads/recover'}>Recuperar anuncios eliminados</Link>
+              <Link to={'/profile/notifications'}>Notificaciones</Link>
               <Link to={'/buySerkens'}>Comprar Serkens</Link>
               {user.role.includes('ROLE_ADMIN') && <a className={'backoffice-link'} target={'_blank'} href={`${process.env.REACT_APP_BACKEND_URI}/admin`}>Backoffice</a>}
             </div>}

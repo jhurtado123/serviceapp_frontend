@@ -1,4 +1,10 @@
 @import "../variables";
+.header-with-title {
+  position: fixed;
+  top:0;
+  width: 100vw;
+  z-index: 5;
+}
 header {
   padding:0 20px;
   color:white;
@@ -19,4 +25,8 @@ header {
     font-weight: normal;
     color:white;
   }
+}
+
+.separator {
+  margin-top: 85px;
 }

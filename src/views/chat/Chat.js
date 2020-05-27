@@ -155,6 +155,7 @@ class Chat extends Component {
     this.setState({
       messages: [...messages.filter(message => message.type !== 'new-deal'), message],
     });
+    this.deleteTokensFromBuyerUser();
     socket.emit('chat:message', {
       data: {
         content: date, status: status,
@@ -327,7 +328,7 @@ class Chat extends Component {
     const {chat: {price, buyer}} = this.state;
     const {user} = this.props;
     if (user._id === buyer._id)  {
-      user.wallet.tokens -= price;
+      user.wallet.tokens = parseInt(user.wallet.tokens) - parseInt(price);
     }
   };
 
@@ -389,7 +390,7 @@ class Chat extends Component {
             <React.Fragment>
               {!messages.length ?
                 <div className={'no-messages-box'}>
-                  <Link to={`/profile/${chat.seller._id === user._id ? chat.buyer.username : chat.seller.username}`}>
+                  <Link to={`/profile/user/${chat.seller._id === user._id ? chat.buyer.username : chat.seller.username}`}>
                     <ProfileImage user={chat.seller._id === user._id ? chat.buyer : chat.seller}/>
                   </Link>
                   <p>Tu conversación

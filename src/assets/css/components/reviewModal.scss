@@ -1,0 +1,93 @@
+@import '../variables';
+
+.review-modal-form {
+  max-height: 400px;
+  overflow-y: scroll;
+  .stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    margin-bottom: 20px;
+    font-size: 36px;
+
+    .star {
+      color: #C4C4C4;
+      cursor: pointer;
+
+      &.checked {
+        color: $gold-color;
+      }
+    }
+  }
+  .form-group {
+    textarea {
+      height: 70px;
+      box-shadow: none;
+      border: 1px solid #c4c4c4;
+      font-size: 16px;
+    }
+  }
+  .mediation-box {
+    max-height: 0;
+    height: 0;
+    transition: all 0.6s ease-in-out;
+    overflow-y: hidden;
+    &.open {
+      transition: all 0.6s ease-in-out;
+      max-height: 1500px;
+      height: auto;
+    }
+    .info-message {
+      font-size: 12px;
+      color:#c4c4c4;
+      margin-bottom: 10px;
+    }
+  }
+  .actions {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    div {
+      border-radius: 15px;
+      padding: 10px 15px;
+      min-width: 100px;
+      margin: 15px 0;
+      cursor: pointer;
+      text-align: center;
+      &.close {
+        color:$purple-color;
+        border: 1px solid $purple-color;
+        margin-right: 15px;
+      }
+      &.send {
+        background: $purple-color;
+        border: 1px solid $purple-color;
+        color:white;
+        font-weight: bold;
+
+      }
+    }
+  }
+}
+.actions.close-review-modal {
+  div {
+    border-radius: 15px;
+    padding: 10px 15px;
+    min-width: 100px;
+    margin: 15px 0;
+    cursor: pointer;
+    text-align: center;
+    &.close {
+      margin: 20px auto;
+      color:$purple-color;
+      border: 1px solid $purple-color;
+    }
+  }
+}
+
+.review-modal-message {
+  padding: 15px 0;
+  font-size: 18px;
+}

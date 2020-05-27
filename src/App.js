@@ -14,6 +14,7 @@ import ProfileEdit from "./views/profile/ProfileEdit";
 import ProfileNotifications from "./views/profile/ProfileNotifications";
 import ProfileOtherUser from "./views/profile/ProfileOtherUser";
 import ProfileAds from "./views/profile/ProfileAds";
+import Rewards from "./views/profile/Rewards";
 import RecoverAds from "./views/profile/RecoverAds";
 import AdView from "./views/ad/AdView";
 import Error401 from "./views/error/Error401";
@@ -52,6 +53,7 @@ function App() {
             <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>     
             <PrivateRoute exact path={'/profile/notifications'} component={ProfileNotifications}/>
 
+            <PrivateRoute exact path={'/profile/rewards'} component={Rewards}/>
             <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>
 
             <PrivateRoute exact path={'/appointments'} component={Appointments}/>

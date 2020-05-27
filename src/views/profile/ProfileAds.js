@@ -82,6 +82,7 @@ class ProfileAds extends Component {
                   <p>¡Aún no tienes anuncios publicados!</p>
                   <Link to={'/ad/create'} className={'button-bck-purple'}>Subir anuncio</Link>
                 </div>}
+              <Link className={'recover-ads-button'} to={'/ads/recover'}>Recuperar anuncios eliminados</Link>
             </div>
           </div>)}
       </BaseLayout>

@@ -95,7 +95,7 @@ class Appointment extends Component {
                 <h1>{appointment.ad.name}</h1>
                 <div className={'appointment-data'}>
                   <div className={'data-row'}>
-                    <img  src={ProfileIcon}/> {user._id === appointment.buyer._id ? appointment.seller.name : appointment.buyer.name}
+                    <Link to={`/profile/user/${user._id === appointment.buyer._id ? appointment.seller.username : appointment.buyer.username}`}><img  src={ProfileIcon}/> {user._id === appointment.buyer._id ? appointment.seller.name : appointment.buyer.name}</Link>
                   </div>
                   <div className={'data-row'}>
                     <img src={LocationIcon} alt=""/> {appointment.buyer.address}, {appointment.buyer.number} {appointment.buyer.postalcode}
