@@ -89,7 +89,6 @@ class BaseLayout extends Component {
               <Link to={'/profile/rewards'}>Progreso y premios</Link>
               <Link to={'/favorites'}>Mis favoritos</Link>
               <Link to={'/profile/notifications'}>Notificaciones</Link>
-              <Link to={'/ads/recover'}>Recuperar anuncios eliminados</Link>
               <Link to={'/buySerkens'}>Comprar Serkens</Link>
               {user.role.includes('ROLE_ADMIN') && <a className={'backoffice-link'} target={'_blank'} href={`${process.env.REACT_APP_BACKEND_URI}/admin`}>Backoffice</a>}
             </div>}
