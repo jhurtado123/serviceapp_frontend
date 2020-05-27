@@ -8,6 +8,8 @@ import profileApiClient from "../services/apiManager/profile";
 import {withAuth} from "../context/AuthContext";
 import REDIRECT from "../errorRedirects";
 import {Link} from "react-router-dom";
+import LoadingBars from "../components/LoadingBars";
+import settingsApiClient from "../services/apiManager/settings";
 
 class BuyTokens extends Component {
 
@@ -20,6 +22,8 @@ class BuyTokens extends Component {
     showStep2: false,
     tokens: 5,
     showSuccess: false,
+    serkenPriceEuros: 0,
+    isLoading: true,
   };
 
   step2 = React.createRef();
@@ -41,6 +45,21 @@ class BuyTokens extends Component {
     });
   };
 
+  async componentDidMount() {
+    const {history} = this.props;
+    try {
+      const {data: {settingValue}} = await settingsApiClient.getValueFromKey('serkens_price_euros');
+      console.log(settingValue);
+      this.setState({
+        isLoading: false,
+        serkenPriceEuros: parseFloat(settingValue.value),
+      });
+
+    } catch (e) {
+      history.push(REDIRECT[500]);
+    }
+  }
+
   handleBuy = async () => {
     const {user, history} = this.props;
     const {tokens} = this.state;
@@ -56,103 +75,105 @@ class BuyTokens extends Component {
   };
 
   render() {
-    const {showStep2, tokens, cvc, name, number, expiry, showSuccess} = this.state;
+    const {showStep2, tokens, cvc, name, number, expiry, showSuccess, serkenPriceEuros, isLoading} = this.state;
     const {history} = this.props;
     return (
       <React.Fragment>
         <HeaderWithTitle title={'Comprar Serkens'} history={history}/>
-        <div className={'buy-tokens-page container ' + (showSuccess ? 'hide' : '') }>
-          <form>
-            <div className={'step1'}>
-              <div>Puedes comprar Serkens para poder contratar servicios.</div>
-              <div>Si quieres evitar pagar por los Serkens puedes ofrecer tu servicios a la comunidad de vecinos
-                publicando
-                un anuncio
+        {isLoading ? <LoadingBars/> :
+        <div className={'buy-tokens-page container ' + (showSuccess ? 'hide' : '')}>
+            <form>
+              <div className={'step1'}>
+                <div>Puedes comprar Serkens para poder contratar servicios.</div>
+                <div>Si quieres evitar pagar por los Serkens puedes ofrecer tu servicios a la comunidad de vecinos
+                  publicando
+                  un anuncio
+                </div>
+                <div className={'current-tokens'}>
+                  <div className={'tokens'}>{tokens} <img src={Token}/></div>
+                  <div className={'euros'}>{(tokens * serkenPriceEuros).toFixed(2)} €</div>
+                </div>
+                <div className={'range'}>
+                  <input type="range" name={'tokens'} min={5} max={10000}
+                         value={tokens}
+                         onChange={this.handleInputChange}/>
+                </div>
+                <div className={'continue-button button-bck-purple ' + (showStep2 ? 'hide' : '')}
+                     onClick={this.handleStep2Show}>Continuar
+                </div>
               </div>
-              <div className={'current-tokens'}>
-                <div className={'tokens'}>{tokens} <img src={Token}/></div>
-                <div className={'euros'}>{(tokens * 0.3).toFixed(2)} €</div>
-              </div>
-              <div className={'range'}>
-                <input type="range" name={'tokens'} min={5} max={10000}
-                       value={tokens}
-                       onChange={this.handleInputChange}/>
-              </div>
-              <div className={'continue-button button-bck-purple ' + (showStep2 ? 'hide' : '')}
-                   onClick={this.handleStep2Show}>Continuar
-              </div>
-            </div>
-            <div className={'step2 ' + (showStep2 ? 'show' : '')} ref={this.step2}>
-              <ReactCreditCards
-                cvc={this.state.cvc}
-                expiry={this.state.expiry}
-                focused={this.state.focus}
-                name={this.state.name}
-                number={this.state.number}
-              />
-              <div className={'form-group'}>
-                <label>Número</label>
-                <input
-                  type="tel"
-                  name="number" value={number}
-                  placeholder="Número de la tarjeta"
-                  onChange={this.handleInputChange}
-                  onFocus={this.handleInputFocus}
+              <div className={'step2 ' + (showStep2 ? 'show' : '')} ref={this.step2}>
+                <ReactCreditCards
+                  cvc={this.state.cvc}
+                  expiry={this.state.expiry}
+                  focused={this.state.focus}
+                  name={this.state.name}
+                  number={this.state.number}
                 />
+                <div className={'form-group'}>
+                  <label>Número</label>
+                  <input
+                    type="tel"
+                    name="number" value={number}
+                    placeholder="Número de la tarjeta"
+                    onChange={this.handleInputChange}
+                    onFocus={this.handleInputFocus}
+                  />
+                </div>
+                <div className={'form-group'}>
+                  <label>Titular</label>
+                  <input
+                    type="tel"
+                    name="anme" value={name}
+                    placeholder="Titular"
+                    onChange={this.handleInputChange}
+                    onFocus={this.handleInputFocus}
+                  />
+                </div>
+                <div className={'form-group'}>
+                  <label>Fecha de expiración</label>
+                  <input
+                    type="tel" value={expiry}
+                    name="expiry"
+                    placeholder="Fecha de expiración"
+                    onChange={this.handleInputChange}
+                    onFocus={this.handleInputFocus}
+                  />
+                </div>
+                <div className={'form-group'}>
+                  <label>CVC</label>
+                  <input
+                    type="tel" value={cvc}
+                    name="cvc"
+                    placeholder="Card Number"
+                    onChange={this.handleInputChange}
+                    onFocus={this.handleInputFocus}
+                  />
+                </div>
+                <table>
+                  <thead>
+                  <tr>
+                    <th>Serkens</th>
+                    <th>Precio/Euros</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td className={'gold'}>{tokens}</td>
+                    <td className={'gold'}>{serkenPriceEuros}€</td>
+                  </tr>
+                  <tr>
+                    <td className={'bold'}>Total</td>
+                    <td rowSpan={2}>{(tokens * serkenPriceEuros).toFixed(2)}€</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div className={'button-bck-purple  buy-button'} onClick={this.handleBuy}>Comprar</div>
               </div>
-              <div className={'form-group'}>
-                <label>Titular</label>
-                <input
-                  type="tel"
-                  name="anme" value={name}
-                  placeholder="Titular"
-                  onChange={this.handleInputChange}
-                  onFocus={this.handleInputFocus}
-                />
-              </div>
-              <div className={'form-group'}>
-                <label>Fecha de expiración</label>
-                <input
-                  type="tel" value={expiry}
-                  name="expiry"
-                  placeholder="Fecha de expiración"
-                  onChange={this.handleInputChange}
-                  onFocus={this.handleInputFocus}
-                />
-              </div>
-              <div className={'form-group'}>
-                <label>CVC</label>
-                <input
-                  type="tel" value={cvc}
-                  name="cvc"
-                  placeholder="Card Number"
-                  onChange={this.handleInputChange}
-                  onFocus={this.handleInputFocus}
-                />
-              </div>
-              <table>
-                <thead>
-                <tr>
-                  <th>Serkens</th>
-                  <th>Precio/Euros</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td className={'gold'}>{tokens}</td>
-                  <td className={'gold'}>0,3€</td>
-                </tr>
-                <tr>
-                  <td className={'bold'}>Total</td>
-                  <td rowSpan={2}>{(tokens*0.3).toFixed(2)}€</td>
-                </tr>
-                </tbody>
-              </table>
-              <div className={'button-bck-purple  buy-button'} onClick={this.handleBuy}>Comprar</div>
-            </div>
-          </form>
+            </form>
         </div>
-        <div className={'success-page container '  + (showSuccess ? 'show' : '') }>
+        }
+        <div className={'success-page container ' + (showSuccess ? 'show' : '')}>
           <div className={'page-message'}>
             <p>¡Compra realizada con éxito! Ya puedes volver a revisar los servicios disponibles</p>
             <Link to={'/'} className={'button-bck-purple'}>Volver a la home</Link>
