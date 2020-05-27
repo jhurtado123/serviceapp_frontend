@@ -390,7 +390,7 @@ class Chat extends Component {
             <React.Fragment>
               {!messages.length ?
                 <div className={'no-messages-box'}>
-                  <Link to={`/profile/${chat.seller._id === user._id ? chat.buyer.username : chat.seller.username}`}>
+                  <Link to={`/profile/user/${chat.seller._id === user._id ? chat.buyer.username : chat.seller.username}`}>
                     <ProfileImage user={chat.seller._id === user._id ? chat.buyer : chat.seller}/>
                   </Link>
                   <p>Tu conversación

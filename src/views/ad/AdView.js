@@ -156,7 +156,7 @@ class AdView extends Component {
                 {({
                     style,
                   }) => (
-                  <div className={'ad-owner'} style={style}>
+                  <Link to={`/profile/user/${ad.owner.username}`} className={'ad-owner'} style={style}>
                     <div className={'owner-profile'}>
                       <ProfileImage user={ad.owner}/>
                       <div className={'owner-data'}>
@@ -174,7 +174,7 @@ class AdView extends Component {
                           Iniciar chat
                         </div>
                     }
-                  </div>
+                  </Link>
                 )}
               </Sticky>
               <div className={'container'}>
