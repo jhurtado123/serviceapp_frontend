@@ -1,3 +1,16 @@
+@import "../../variables";
 .ads-list {
   padding-top: 50px;
+}
+.recover-ads-button {
+  background: $purple-color;
+  color:white;
+  font-weight: bold;
+  font-family: $font-muli;
+  border-radius: 20px;
+  padding: 15px 20px;
+  margin: 50px auto;
+  margin-bottom: 15px;
+  text-align: center;
+  display: block;
 }
