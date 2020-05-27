@@ -155,6 +155,7 @@ class Chat extends Component {
     this.setState({
       messages: [...messages.filter(message => message.type !== 'new-deal'), message],
     });
+    this.deleteTokensFromBuyerUser();
     socket.emit('chat:message', {
       data: {
         content: date, status: status,
@@ -327,7 +328,7 @@ class Chat extends Component {
     const {chat: {price, buyer}} = this.state;
     const {user} = this.props;
     if (user._id === buyer._id)  {
-      user.wallet.tokens -= price;
+      user.wallet.tokens = parseInt(user.wallet.tokens) - parseInt(price);
     }
   };
 
