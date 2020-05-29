@@ -192,19 +192,19 @@ class AdView extends Component {
                 </div>
                 <div className={'ad-see-map-button'}>
                   <div className={'see-map-button'}
-                       onClick={this.handleOpenMap}>{isMapOpened ? 'Cerar mapa' : 'Ver mapa'}</div>
+                       onClick={this.handleOpenMap}>{isMapOpened ? 'Cerrar mapa' : 'Ver mapa'}</div>
                 </div>
               </div>
               <div className={'map ' + (isMapOpened ? ' open' : '')}>
                 <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
               </div>
               <div className={'container'}>
-                <div className={'form-title'}><img src={Category}/>Categoría</div>
+                <div className={'form-title'}><img src={Category} alt="category"/>Categoría</div>
                 <div className={'ad-category'}>
                   {ad.category.name}
                 </div>
 
-                <div className={'form-title'}><img src={Tags}/>Etiquetas</div>
+                <div className={'form-title'}><img src={Tags} alt="tags"/>Etiquetas</div>
                 <div className={'ad-tags'}>
                   {this.printAdTags()}
                 </div>

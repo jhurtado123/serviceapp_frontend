@@ -16,7 +16,7 @@ class HeaderProfile extends Component {
           <div className={'coins'}>
             <span>Nivel {level}</span>
           </div>
-          <div className="img-profile">
+          <div className={'img-profile'}>
           <ProfileImage user={user}/>
           </div>
           <div className={'coins'}>

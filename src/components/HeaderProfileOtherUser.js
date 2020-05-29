@@ -6,25 +6,23 @@ class HeaderProfile extends Component {
   render() {
     const { name, level, url, description } = this.props;
     return (
-      <div className="HeaderProfile">
-        <div className="HeaderColumns">
-          <img className="ImgHeader" src={require('../assets/images/icons/menu.png')} alt="menu" />
-          <span className="UserName">{name}</span>
-          <img className="ImgHeader" src={require('../assets/images/icons/notifications.png')} alt="notifications"></img>
+      <div className={'header-profile'}>
+        <div className={'header-columns'}>
+          <span className={'user-name'}>{name}</span>
         </div>
-        <div className="HeaderColumns SecondLevel">
-          <div className="Gold">
+        <div className={'header-columns second-level'}>
+          <div className={'coins'}>
             <span>{level} </span>
             <span>nivel</span>
           </div>
           <div className="img-profile">
             <img className="avatar" src={url !== '' ? url : require('../assets/images/icons/avatar.png')} alt="avatar" />
           </div>
-          <div className="Gold">
+          <div className={'coins'}>
             <span></span>
           </div>
         </div>
-        <div className="CenterColumns Gold">
+        <div className={'center-columns'}>
           <div>
             {description}
           </div>

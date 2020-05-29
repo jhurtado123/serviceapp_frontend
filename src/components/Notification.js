@@ -4,6 +4,9 @@ import chatIcon from "../assets/images/views/layouts/baseLayout/chat-purple.png"
 import AppointmentIcon from "../assets/images/icons/appointment-icon.png"
 import {Link} from "react-router-dom";
 import reward from "../assets/images/icons/reward.png";
+import mediationResolveIcon from "../assets/images/icons/resolveMediation.png";
+import lockIcon from "../assets/images/icons/lock-purple.png";
+
 
 
 class Notification extends Component {
@@ -22,13 +25,15 @@ class Notification extends Component {
     const {type} = this.props;
     switch (type) {
       case 'chat':
-        return <img className={'notification-img'} src={chatIcon} alt="notification"/>
-      case 'reward':
-        return <img className={'notification-img'} src={'../assets/images/icons/coin.png'} alt="notification"/>;
+        return <img className={'notification-img'} src={chatIcon} alt="notification"/>;
       case 'appointment-finished':
         return <img className={'notification-img'} src={AppointmentIcon} alt="notification"/>;
       case 'reward':
-        return <img className={'notification-img'} src={reward} alt="notification" />
+        return <img className={'notification-img'} src={reward} alt="notification" />;
+      case 'mediation-resolve':
+        return <img className={'notification-img'} src={mediationResolveIcon} alt="notification" />;
+      case 'mediation':
+        return <img className={'notification-img'} src={lockIcon} alt="notification" />;
       default:
         break;
     }
@@ -64,16 +69,15 @@ class Notification extends Component {
           <div className={'notification-extra-info'}>
             {type === 'appointment-finished' ?
               <React.Fragment>
-                <Link to={'#'} data-id={href} onClick={this.handleOpenModal}>{this.getlinkText()}</Link> <span
-                className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
+                <Link to={'#'} data-id={href} onClick={this.handleOpenModal}>{this.getlinkText()}</Link>
+                <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
               </React.Fragment>
               :
               <React.Fragment>
-                <Link to={`${href}`}>{this.getlinkText()}</Link> < span
-                className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
+                <Link to={`${href}`}>{this.getlinkText()}</Link>
+                <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
               </React.Fragment>
             }
-
           </div>
         </div>
       </div>

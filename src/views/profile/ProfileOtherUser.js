@@ -8,6 +8,8 @@ import ReviewUser from "../../components/ReviewUser";
 import '../../assets/css/views/profile/Profile.scss';
 import REDIRECT from "../../errorRedirects";
 import LoadingBars from "../../components/LoadingBars";
+import BaseLayout from "../layouts/BaseLayout";
+import { BrowserRouter } from 'react-router-dom';
 
 const STATUS = {
   LOADING: "LOADING",
@@ -143,6 +145,7 @@ class ProfileOtherUser extends Component {
     switch (status) {
       case STATUS.LOADED:
         return (
+          <BaseLayout>
           <div>
             <HeaderProfileOtherUser name={name} level={level} url={url} points={points} description={description} tokens={tokens} />
             {showReviews ?
@@ -158,6 +161,7 @@ class ProfileOtherUser extends Component {
               </div>
             }
           </div>
+          </BaseLayout>
         )
       case STATUS.LOADING:
         return (
