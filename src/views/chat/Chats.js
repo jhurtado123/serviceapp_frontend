@@ -34,6 +34,7 @@ class Chats extends Component {
   printChats = () => {
     const {chats, search} = this.state;
 
+    // eslint-disable-next-line array-callback-return
     return chats.map((chat, index) => {
       if (chat.chat.ad.name.toLowerCase().includes(search.toLowerCase()) || !search)
         return <ChatBox chatWrap={chat} key={index}/>

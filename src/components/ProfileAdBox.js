@@ -18,12 +18,12 @@ class ProfileAdBox extends Component {
             {!isRecover ?
               <React.Fragment>
                 <Link to={`/ad/${ad._id}/edit`}>
-                  <img src={Edit}/><span>Edit</span>
+                  <img src={Edit} alt="edit" /><span>Edit</span>
                 </Link>
                 <div onClick={(e) => {
                   handleDelete(e, ad._id)
                 }}>
-                  <img src={Trash}/>
+                  <img src={Trash} alt ="trash" />
                 </div>
               </React.Fragment> :
               <div className={'button-bck-purple recover'} onClick={() => handleRecover(ad._id)}>Recuperar</div>

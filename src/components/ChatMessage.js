@@ -8,13 +8,12 @@ class ChatMessage extends Component {
   printMessage(message) {
     const {user, resolveNegotiation, price, seller, buyer, resolveNewDeal} = this.props;
     const otherUser = user._id === seller._id ? buyer : seller;
+    // eslint-disable-next-line default-case
     switch (message.type) {
       case 'text':
         return message.data.content;
-        break;
       case 'image':
         return  <img className={'image-message'} src={message.data.content} alt=""/>;
-        break;
       case 'renegotiation':
         if (message.sender === user._id) {
           return <div className={'info-message'}>Has solicitado un cambio de precio a {message.data.content} serkens. A la espera de que {otherUser.name} lo acepte...</div>
@@ -27,7 +26,6 @@ class ChatMessage extends Component {
             <div className={'cancel'} onClick={() => resolveNegotiation(false, message.data.content)}>Declinar</div>
           </div>
         </div>;
-        break;
       case 'renegotiation-resolve':
         if (message.data.status) {
           if (message.sender === user._id) {
@@ -42,7 +40,6 @@ class ChatMessage extends Component {
             return <div className={'info-message'}>{otherUser.name} ha rechazado la oferta de {message.data.content} serkens.</div>
           }
         }
-        break;
       case 'new-deal':
         if (message.sender === user._id) {
           return <div className={'info-message'}>Has solicitado una cita para {this.getYYYMMDDHHMMDate(message.data.content)} . A la espera de que {otherUser.name} la acepte...</div>
@@ -55,7 +52,6 @@ class ChatMessage extends Component {
             <div className={'cancel'} onClick={() => resolveNewDeal(false, message.data.content)}>Declinar</div>
           </div>
         </div>;
-        break;
 
       case 'deal-resolve':
         if (message.data.status) {
@@ -71,7 +67,6 @@ class ChatMessage extends Component {
             return <div className={'info-message'}>{otherUser.name} ha rechazado el acuerdo para el día {this.getYYYMMDDHHMMDate(message.data.content)}.</div>
           }
         }
-        break;
     }
   };
 

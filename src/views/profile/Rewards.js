@@ -54,7 +54,6 @@ class Rewards extends Component {
     try {
       const { data } = await profileApiClient
         .getProfile()
-        console.log("PROFILE", data.points)
       this.setState({
         _id: data._id,
         name: data.name,

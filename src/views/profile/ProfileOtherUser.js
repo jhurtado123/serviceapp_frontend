@@ -9,7 +9,6 @@ import '../../assets/css/views/profile/Profile.scss';
 import REDIRECT from "../../errorRedirects";
 import LoadingBars from "../../components/LoadingBars";
 import BaseLayout from "../layouts/BaseLayout";
-import { BrowserRouter } from 'react-router-dom';
 
 const STATUS = {
   LOADING: "LOADING",

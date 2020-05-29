@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import adApiClient from "../../services/apiManager/ad";
 import AdForm from "../../components/AdForm";
-import Loading from "../Loading";
 import REDIRECT from "../../errorRedirects";
 import HeaderWithTitle from "../../components/HeaderWithTitle";
 import LoadingBars from "../../components/LoadingBars";

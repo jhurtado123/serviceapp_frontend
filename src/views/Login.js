@@ -39,7 +39,7 @@ class Login extends Component {
     const {hasError, errorMessage} = this.props;
     return (
       <div className={'login'}>
-        <img className={'wave-top'} src={TopWave}/>
+        <img className={'wave-top'} src={TopWave} alt="wave-top"/>
         <div>LOGO</div>
         <form method={'post'} onSubmit={this.handleSubmit}>
           <InputWithIcon icon={'user-purple'} name={'username'} placeholder={'Tu username'} value={username} type={'text'}
@@ -53,7 +53,7 @@ class Login extends Component {
         <Link to={'/register'} className={'button-bck-purple register-button'}>
           Registrarse
         </Link>
-        <img className={'wave-bottom'} src={BottomWave}/>
+        <img className={'wave-bottom'} src={BottomWave} alt="bottom-wave" />
       </div>
     );
   }

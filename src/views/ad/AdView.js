@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import adApiClient from "../../services/apiManager/ad";
 import profileApiClient from "../../services/apiManager/profile";
-import Loading from "../Loading";
 import '../../assets/css/views/ad/view.scss'
 import Token from '../../assets/images/icons/coin.png';
 import Back from '../../assets/images/icons/back-white.png';

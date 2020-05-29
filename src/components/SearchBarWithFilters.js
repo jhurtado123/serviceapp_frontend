@@ -34,7 +34,7 @@ class SearchBarWithFilters extends Component {
 
   render() {
     const {showFilters} = this.state;
-    const {search, handleChange, placeholder, orderBy, maxPrice, category, maxRadius} = this.props;
+    const {search, handleChange, placeholder, maxPrice, category, maxRadius} = this.props;
     return (
       <React.Fragment>
         <div className={'search-bar'}>

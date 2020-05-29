@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import authApiClient from "../services/apiManager/auth";
-import Loading from "../views/Loading";
 import LoadingBars from "../components/LoadingBars";
 
 export const AuthContext = React.createContext();

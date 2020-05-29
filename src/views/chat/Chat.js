@@ -142,7 +142,7 @@ class Chat extends Component {
 
   handleResolveNewDeal = (status, date) => {
     const {user} = this.props;
-    const {messages, chat} = this.state;
+    const {messages} = this.state;
     const currentDate = new Date();
     const message = {
       sender: user._id,
@@ -195,7 +195,7 @@ class Chat extends Component {
 
   handleNewDeal = (date) => {
     this.handleCloseDealModal();
-    const {chat, messages} = this.state;
+    const {messages} = this.state;
     const message = this.getNewDealMessage(date);
     this.setState({
       messages: [...messages, message],
@@ -410,7 +410,7 @@ class Chat extends Component {
             <div>Loading</div>}
         </div>
         <div className={'box-send-message container ' + (encodedImage ? 'content-image' : '')}>
-          <img src={UploadImageIcon} alt="Upload image" className={'upload-image'} onClick={this.handleImageUpload}/>
+          <img src={UploadImageIcon} alt="Upload" className={'upload-image'} onClick={this.handleImageUpload}/>
           <input hidden accept={'image/*'} type="file" name={'imageMessage'} ref={this.fileRef}
                  onChange={this.handleImageChange}/>
           {encodedImage ?
@@ -418,7 +418,7 @@ class Chat extends Component {
               <div className={'remove'} onClick={this.handleRemoveImage}>
                 <img src={CloseGoldIcon} alt=""/>
               </div>
-              <img src={encodedImage}/>
+              <img src={encodedImage} alt="encoded" />
             </div>
             :
             <input type={'text'} value={writedMessage} onChange={this.handleChange} name={'writedMessage'}/>

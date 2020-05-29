@@ -64,7 +64,6 @@ class ProfileNotifications extends Component {
     const {notifications, search} = this.state;
     return notifications.map((notification, i) => {
       if ((search && notification.title.toLowerCase().includes(search.toLowerCase())) || !search) {
-        console.log(notification)
         return (
           <Notification
             showModal={this.handleModalShow}
