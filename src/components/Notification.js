@@ -62,16 +62,15 @@ class Notification extends Component {
           <div className={'notification-extra-info'}>
             {type === 'appointment-finished' ?
               <React.Fragment>
-                <Link to={'#'} data-id={href} onClick={this.handleOpenModal}>{this.getlinkText()}</Link> <span
-                className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
+                <Link to={'#'} data-id={href} onClick={this.handleOpenModal}>{this.getlinkText()}</Link>
+                <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
               </React.Fragment>
               :
               <React.Fragment>
-                <Link to={`${href}`}>{this.getlinkText()}</Link> < span
-                className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
+                <Link to={`${href}`}>{this.getlinkText()}</Link>
+                <span className={'notification-date'}>{this.getYYYMMDDHHMMDate(date)}</span>
               </React.Fragment>
             }
-
           </div>
         </div>
       </div>
