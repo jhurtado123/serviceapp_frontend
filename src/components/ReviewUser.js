@@ -1,20 +1,41 @@
 import React, { Component } from 'react';
 import '../assets/css/views/profile/Profile.scss';
+import ProfileImage from "./ProfileImage";
 
 class ReviewUser extends Component{
 
+
+
+  displayStars = () => {
+    const { rating } = this.props;
+    console.log("El rating", rating)
+    // eslint-disable-next-line default-case
+    switch (rating) {
+      case 5:
+        return <div className={'stars'}> <span className={'stars-active'}>★★★★★</span></div>
+      case 4:
+        return <div className={'stars'}>★<span className={'stars-active'}>★★★★</span></div>
+      case 3:
+        return <div className={'stars'}>★★★<span className={'stars-active'} >★★</span></div>
+      case 2:
+        return <div className={'stars'}>★★★<span className={'stars-active'}>★★</span></div>
+      case 1:
+        return <div className={'stars'}>★<span className={'stars-active'}>★★★★</span></div>
+      case 0:
+        return <div className={'stars'}>★★★★★</div>
+    }
+  }
+
   render(){
-    const { category, title, content } = this.props;
+    const { content, user } = this.props;
     return(
       <div className="review-user" >
-        <img className="avatar" src={require('../assets/images/icons/avatar.png')} alt="avatar" />
-        <div>
-          <div className="review-header">
-            <span>{category}</span>
-            <img  className="review-star" src={require('../assets/images/icons/stars.png')} alt="stars" />
-          </div>
-          <p className="review-title" >{title}</p>
-          <p className="review-content" >{content}</p>
+        <div className={'review-image'}>
+          <ProfileImage user={user} />
+        </div>
+        <div className="review-container">
+            <p className="review-content" >{content}</p>
+            {this.displayStars()}
         </div>
       </div>
     )
