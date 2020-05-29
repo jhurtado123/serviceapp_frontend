@@ -23,8 +23,6 @@ class Notification extends Component {
     switch (type) {
       case 'chat':
         return <img className={'notification-img'} src={chatIcon} alt="notification"/>
-      case 'reward':
-        return <img className={'notification-img'} src={'../assets/images/icons/coin.png'} alt="notification"/>;
       case 'appointment-finished':
         return <img className={'notification-img'} src={AppointmentIcon} alt="notification"/>;
       case 'reward':
