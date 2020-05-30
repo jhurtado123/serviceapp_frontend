@@ -25,7 +25,6 @@ class HandleFavorites extends Component {
         isFavorite: true,
       })
     } catch (e) {
-      console.log(e);
     }
   };
 

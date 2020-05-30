@@ -40,6 +40,7 @@ class Favorites extends Component {
       if ((search && favoriteAd.name.includes(search)) || !search) {
         return <AdBox ad={favoriteAd} key={index}/>
       }
+      return false;
     });
   };
 

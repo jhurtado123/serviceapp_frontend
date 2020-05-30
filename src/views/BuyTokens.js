@@ -49,7 +49,6 @@ class BuyTokens extends Component {
     const {history} = this.props;
     try {
       const {data: {settingValue}} = await settingsApiClient.getValueFromKey('serkens_price_euros');
-      console.log(settingValue);
       this.setState({
         isLoading: false,
         serkenPriceEuros: parseFloat(settingValue.value),
@@ -64,7 +63,7 @@ class BuyTokens extends Component {
     const {user, history} = this.props;
     const {tokens} = this.state;
     try {
-      const {data: {response}} = await profileApiClient.buyTokens(tokens);
+      await profileApiClient.buyTokens(tokens);
       user.wallet.tokens = parseInt(user.wallet.tokens + tokens);
       this.setState({
         showSuccess: true,
@@ -90,7 +89,7 @@ class BuyTokens extends Component {
                   un anuncio
                 </div>
                 <div className={'current-tokens'}>
-                  <div className={'tokens'}>{tokens} <img src={Token}/></div>
+                  <div className={'tokens'}>{tokens} <img src={Token} alt={'serken'}/></div>
                   <div className={'euros'}>{(tokens * serkenPriceEuros).toFixed(2)} €</div>
                 </div>
                 <div className={'range'}>
