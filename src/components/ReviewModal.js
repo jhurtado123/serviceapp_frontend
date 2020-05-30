@@ -79,11 +79,11 @@ class ReviewModal extends Component {
     const starsHtml = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= stars) {
-        starsHtml.push(<div onClick={() => {
+        starsHtml.push(<div key={i} onClick={() => {
           this.handleStarsChange(i)
         }} className={'star checked'}>★</div>)
       } else {
-        starsHtml.push(<div onClick={() => {
+        starsHtml.push(<div key={i} onClick={() => {
           this.handleStarsChange(i)
         }} className={'star'}>★</div>);
       }

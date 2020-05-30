@@ -48,6 +48,7 @@ class Appointments extends Component {
         return <AppointmentBox key={index} appointment={appointment}
                                user={appointment.buyer._id === user._id ? appointment.seller : appointment.buyer}/>;
       }
+      return false;
     })
   };
 

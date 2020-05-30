@@ -1,6 +1,11 @@
+@import '../../variables';
+
 .edit-profile-form {
   .profile-form {
     margin-top: 20px;
+  }
+  .profile-image-container {
+    position: relative;
   }
   .profile-image, .profile-image-container {
     width: 100px;
@@ -8,6 +13,24 @@
     margin: 0 auto;
     margin-top: 20px;
     cursor: pointer;
+  }
+  .edit-image-info {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    position: absolute;
+    border:2px solid $purple-color;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    background: $gold-color;
+    justify-content: center;
+    img {
+      width: 13px;
+      height: 13px;
+    }
   }
   .profile-image {
     margin-top: 0;

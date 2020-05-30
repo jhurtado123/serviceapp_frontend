@@ -170,7 +170,7 @@ class AdView extends Component {
                       </div>
                     </div>
                     {
-                      user._id == ad.owner._id ?
+                      user._id === ad.owner._id ?
                         <Link className={'ad-chat-button'} to={`/ad/${ad._id}/edit`}>
                           Editar anuncio
                         </Link>

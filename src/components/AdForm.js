@@ -140,7 +140,7 @@ class AdForm extends Component {
 
 
   handleMapboxPosition = async () => {
-    const {address, postalCode, number, usePersonalAddress, changeCoords} = this.state;
+    const {address, postalCode, number, usePersonalAddress} = this.state;
     let data;
     let lat = undefined;
     let lng = undefined;
