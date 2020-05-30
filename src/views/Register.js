@@ -57,6 +57,10 @@ class Register extends Component {
       this.setState({
         error: 'El nombre de usuario ya existe',
       });
+    } else if(password.length < 6) {
+      this.setState({
+        error: 'La contraseña ha de ser de minímo 6 caracteres',
+      });
     } else {
       this.setState({
         isInSecondStep: true,
