@@ -19,7 +19,7 @@ class HandleFavorites extends Component {
   addTofavorites = async () => {
     const {adId, user} = this.props;
     try {
-      const {userNew} = await favoritesApiClient.addFavorite(adId);
+      await favoritesApiClient.addFavorite(adId);
       user.favorites.push(adId);
       this.setState({
         isFavorite: true,
@@ -32,7 +32,7 @@ class HandleFavorites extends Component {
   removeFromFavorites = async () => {
     const {adId, user} = this.props;
     try {
-      const {userNew} = await favoritesApiClient.removeFromFavorites(adId);
+      await favoritesApiClient.removeFromFavorites(adId);
       user.favorites = user.favorites.filter(favorite => favorite !== adId);
       this.setState({
         isFavorite: false,

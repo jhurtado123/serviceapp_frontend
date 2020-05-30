@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import adApiClient from "../../services/apiManager/ad";
 import profileApiClient from "../../services/apiManager/profile";
-import Loading from "../Loading";
 import '../../assets/css/views/ad/view.scss'
-import Token from '../../assets/images/icons/coin.png';
+import Token from '../../assets/images/icons/coin2.png';
 import Back from '../../assets/images/icons/back-white.png';
 import Location from '../../assets/images/icons/location.png';
 import Tags from '../../assets/images/icons/tags.png';
@@ -20,6 +19,7 @@ import Modal from "../../components/Modal";
 import {Link} from "react-router-dom";
 import LoadingBars from "../../components/LoadingBars";
 import HandleFavorites from "../../components/HandleFavorites";
+import ReviewUserAverage from "../../components/ReviewUserAverage";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -34,6 +34,7 @@ class AdView extends Component {
     isMapOpened: false,
     relatedAds: [],
     showModaNoTokens:false,
+    ownerLevel: 0,
   };
 
   handleOpenMap = () => {
@@ -94,8 +95,12 @@ class AdView extends Component {
         ad,
         relatedAds,
         isLoading: false,
-      }, () => {
+      }, async () => {
         const {ad: {location: {coordinates}}} = this.state;
+        const {data: {level}} = await profileApiClient.getUserLevel(this.state.ad.owner._id);
+        this.setState({
+          ownerLevel: level
+        });
         map = new mapboxgl.Map({
           container: this.mapContainer,
           style: 'mapbox://styles/mapbox/light-v10',
@@ -137,7 +142,7 @@ class AdView extends Component {
 
   render() {
     const {history, user} = this.props;
-    const {ad, isLoading, isMapOpened, showModaNoTokens} = this.state;
+    const {ad, isLoading, isMapOpened, showModaNoTokens, ownerLevel} = this.state;
     return (
       <React.Fragment>
         {isLoading ? <LoadingBars/> :
@@ -161,7 +166,7 @@ class AdView extends Component {
                       <ProfileImage user={ad.owner}/>
                       <div className={'owner-data'}>
                         <h3>{ad.owner.name}</h3>
-                        <p>Level: 5 <span>★★★★</span></p>
+                        <p>Level: {ownerLevel} <ReviewUserAverage user={ad.owner}/> </p>
                       </div>
                     </div>
                     {

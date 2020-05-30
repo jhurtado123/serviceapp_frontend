@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import profileApiClient from "../../services/apiManager/profile";
 import SearchBar from "../../components/SearchBar";
 import {Link} from "react-router-dom";
-import Loading from "../Loading";
 import ProfileAdBox from "../../components/ProfileAdBox";
 import adApiClient from "../../services/apiManager/ad";
 import REDIRECT from "../../errorRedirects";

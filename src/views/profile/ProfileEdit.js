@@ -50,7 +50,7 @@ class ProfileEdit extends Component {
         return (
           <div>
             <HeaderWithTitle title="Editar perfil"/>
-            <div className={'container'}>
+            <div className={'container-edit-form'}>
               <ProfileForm/>
             </div>
           </div>

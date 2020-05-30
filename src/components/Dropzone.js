@@ -56,6 +56,7 @@ export default function Dropzone(props) {
         <img
           src={file.preview}
           style={img}
+          alt="files"
         />
       </div>
     </div>

@@ -20,7 +20,6 @@ import AdView from "./views/ad/AdView";
 import Error401 from "./views/error/Error401";
 import Error404 from "./views/error/Error404";
 import Error500 from "./views/error/Error500";
-import BaseLayout from "./views/layouts/BaseLayout";
 import SidebarProvider from "./context/SidebarContext";
 import Home from "./views/Home";
 import Search from "./views/Search";

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import HeaderWithTitle from "../../components/HeaderWithTitle";
 import appointmentApiClient from "../../services/apiManager/appointment";
 import REDIRECT from "../../errorRedirects";
-import Loading from "../Loading";
 import mapboxgl from "mapbox-gl";
 import '../../assets/css/views/appointment/appointment.scss';
 import {Link} from "react-router-dom";
@@ -16,6 +15,7 @@ import LoadingBars from "../../components/LoadingBars";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
+// eslint-disable-next-line no-unused-vars
 let marker;
 
 class Appointment extends Component {

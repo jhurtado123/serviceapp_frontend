@@ -138,7 +138,7 @@ class Profile extends Component {
     const {reviews} = this.state;
     if (typeof reviews !== 'undefined' && reviews.length > 0) {
       return reviews.map((review, i) => {
-        return <ReviewUser key={i} title={review.title} content={review.content} rating={review.rating}/>
+        return <ReviewUser key={i} user={review.user} content={review.content} rating={review.rating}/>
       })
     } else {
       return <p className="not-info">No tienes reviews</p>

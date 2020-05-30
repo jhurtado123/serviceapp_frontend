@@ -7,7 +7,6 @@ import {withAuth} from "../context/AuthContext";
 import ProfileImage from "./ProfileImage";
 import '../assets/css/views/profile/edit.scss';
 
-
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
 let marker;
@@ -31,6 +30,9 @@ class ProfileForm extends Component {
       lng: 41.3825,
     },
     error: undefined,
+    formErrors: {
+      name: '', description: '', address: '', number:'', postalcode: '',
+    },
     encodedFile: undefined,
     status: STATUS.LOADING,
   };
@@ -39,7 +41,7 @@ class ProfileForm extends Component {
 
   async componentDidMount() {
     try {
-      const {data} = await profileApiClient.getProfile()
+      const {data} = await profileApiClient.getProfile();
       this.setState({
         id: data._id,
         name: data.name,
@@ -50,8 +52,8 @@ class ProfileForm extends Component {
         url: await this.getImage(data.profile_image, data._id),
         status: STATUS.LOADED,
         error: undefined,
-      })
-      this.handleMapboxPosition()
+      });
+      this.handleMapboxPosition();
       const {mapCoords: {lat, lng}} = this.state;
       map = new mapboxgl.Map({
         container: this.mapContainer,
@@ -123,7 +125,37 @@ class ProfileForm extends Component {
       [e.target.name]: e.target.value,
       error: undefined,
     });
+    const formErrors = this.validateInput(e);
+    this.setState({
+      formErrors
+    });
   };
+
+  validateInput = (event) => {
+    const {name, value} = event.target;
+    const {formErrors} = this.state;
+    formErrors[name] = '';
+
+    if (!value) {
+      formErrors[name] = 'Debes rellenar este campo';
+      return formErrors;
+    }
+    switch (event.target.getAttribute('data-validate')) {
+      case 'postalCode':
+        if (!this._isValidPostalCode(value)) {
+          formErrors[name] = 'Código postal incorrecto';
+        }
+        break;
+      default:
+        break;
+    }
+
+    return formErrors;
+  };
+
+  _isValidPostalCode(postalCode) {
+    return /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/.test(postalCode);
+  }
 
   handleNewImage = (e) => {
     this.setState({
@@ -136,19 +168,37 @@ class ProfileForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const {user} = this.props;
-    try {
-      const {data: {image}} = await profileApiClient.updateProfile(this.state);
-      user.location.coordinates = [this.state.mapCoords.lat, this.state.mapCoords.lng];
-      user.name = this.state.name;
-      user.description = this.state.description;
-      user.profile_image = image;
+    if (this._isValidForm()) {
+      try {
+        const {data: {image}} = await profileApiClient.updateProfile(this.state);
+        user.location.coordinates = [this.state.mapCoords.lat, this.state.mapCoords.lng];
+        user.name = this.state.name;
+        user.description = this.state.description;
+        user.profile_image = image;
 
-      this.props.history.push('/profile')
-    } catch ({response: {data: {data: errorMessage}}}) {
+        this.props.history.push('/profile')
+      } catch ({response: {data: {data: errorMessage}}}) {
+        this.setState({
+          error: errorMessage,
+        })
+      }
+    } else {
       this.setState({
-        error: errorMessage,
+        error: 'Hay errores en el formulario'
       })
     }
+  };
+
+  _isValidForm = () => {
+    const {formErrors} = this.state;
+    let response = true;
+    Object.keys(formErrors).forEach(key => {
+      if (formErrors[key]) {
+        response = false;
+      }
+    });
+
+    return response;
   };
 
   setBase64(file) {
@@ -162,7 +212,7 @@ class ProfileForm extends Component {
   }
 
    render() {
-    const {name, description, error, postalcode, number, address, encodedFile} = this.state;
+    const {name, description, error, postalcode, number, address, encodedFile, formErrors} = this.state;
     const {user} = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
@@ -175,37 +225,42 @@ class ProfileForm extends Component {
             <label>Nombre</label>
             <input type="text" name={'name'} placeholder={'Nombre'} value={name}
                    onChange={this.handleChange}/>
+            <div className={'form-input-error'}>{formErrors['name'] && formErrors['name']}</div>
           </div>
           <div className={'form-group'}>
             <label>Descripción</label>
             <textarea name={'description'} placeholder={'Descripción personal'} value={description}
                       onChange={this.handleChange}>{description}</textarea>
+            <div className={'form-input-error'}>{formErrors['description'] && formErrors['description']}</div>
           </div>
           <div className={'form-title'}>Localización</div>
           <div className={'custom-location open'}>
             <div className={'dual-form-group'}>
               <div className={'form-group'}>
                 <label>Código postal</label>
-                <input type="text" name={'postalcode'} placeholder={'Código postal'} value={postalcode}
+                <input type="text" data-validate={'postalCode'} name={'postalcode'} placeholder={'Código postal'} value={postalcode}
                        onChange={this.handleChange} onBlur={this.handleMapboxPosition}/>
+                <div className={'form-input-error'}>{formErrors['postalcode'] && formErrors['postalcode']}</div>
               </div>
               <div className={'form-group small'}>
                 <label>Número</label>
                 <input type="text" name={'number'} placeholder={'Número'} value={number} onChange={this.handleChange}
                        onBlur={this.handleMapboxPosition}/>
+                <div className={'form-input-error'}>{formErrors['number'] && formErrors['number']}</div>
               </div>
             </div>
             <div className={'form-group'}>
               <label>Dirección</label>
               <input type="text" name={'address'} placeholder={'Dirección'} value={address} onChange={this.handleChange}
                      onBlur={this.handleMapboxPosition}/>
+              <div className={'form-input-error'}>{formErrors['address'] && formErrors['address']}</div>
             </div>
           </div>
           <div className={'map'}>
             <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
           </div>
 
-          <button className={'button-bck-purple'} onClick={this.handleSubmit}>Guardar cambios</button>
+          <button className={'button-bck-purple'}>Guardar cambios</button>
           {error && <div className={'error-form'}>{error}</div>}
         </div>
       </form>

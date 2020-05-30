@@ -64,6 +64,10 @@ class ProfileApiClient {
   getRewardsAds(){
     return this.apiClient.get('/profile/rewards/ads');
   }
+
+  getUserLevel(id) {
+    return this.apiClient.get(`/profile/${id}/level`)
+  }
   
 }
 

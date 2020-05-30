@@ -19,14 +19,14 @@ class ChatHeader extends Component {
           <React.Fragment>
             <div className={'ad-info'}>
               <Link to={`/ad/${chat.ad._id}`}>{chat.ad.name}</Link>
-              <p>{chat.price} <img src={Token} /></p>
+              <p>{chat.price} <img src={Token} alt="serken" /></p>
             </div>
             <div className={'chat-actions'}>
               <div className={'action negotiate'} onClick={openRenegotiaton}>
-                <img src={RenegotiateIcon} alt=""/>
+                <img src={RenegotiateIcon} alt="renegotiate"/>
               </div>
               <div className={'action close-deal'} onClick={openDealModal}>
-                <img src={CloseDealIcon} alt=""/>
+                <img src={CloseDealIcon} alt="deal"/>
               </div>
             </div>
           </React.Fragment> :

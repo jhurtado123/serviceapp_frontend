@@ -206,3 +206,21 @@ select {
 
   }
 }
+
+.mapboxgl-marker {
+  position: absolute !important;
+  stroke: #472889;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #472889 !important;
+  svg {
+    display: none;
+  }
+}
+
+.form-input-error {
+  color:red;
+  font-size: 12px;
+  margin-top: 8px;
+}
