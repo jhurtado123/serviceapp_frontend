@@ -6,6 +6,8 @@ import {withRouter} from 'react-router-dom';
 import {withAuth} from "../context/AuthContext";
 import ProfileImage from "./ProfileImage";
 import '../assets/css/views/profile/edit.scss';
+import Edit from '../assets/images/icons/edit.png';
+
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiamh1cnRhZG8xMjMiLCJhIjoiY2s3dGlqZWtlMHFveTNvbjF1bjJxYTg2ayJ9.zbzGWyoeQ52ddJTrK2gjdA';
 let map;
@@ -219,6 +221,9 @@ class ProfileForm extends Component {
         <div className={'edit-profile-form'}>
           <div className={'profile-image-container'} onClick={this.handleOpenFileInput}>
             <ProfileImage user={user} otherImage={encodedFile} />
+            <div className={'edit-image-info'}>
+              <img src={Edit} alt="edit"/>
+            </div>
             <input type="file" onChange={this.handleNewImage} accept="image/*" hidden ref={this.inputImage}/>
           </div>
           <div className={'form-group profile-form'}>
