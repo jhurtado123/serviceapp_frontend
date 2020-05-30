@@ -25,13 +25,14 @@ class Login extends Component {
     e.preventDefault();
     const {onLogin} = this.props;
     const {username, password} = this.state;
-    if (!username || !password) {
+    if ((!username || !password) ) {
       this.setState({
         formError: 'Rellena los campos antes de continuar',
       });
       return false;
+    } else {
+      onLogin(this.state);
     }
-    onLogin(this.state);
   };
 
   render() {

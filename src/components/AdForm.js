@@ -24,9 +24,10 @@ class AdForm extends Component {
     images: this.props.images ? this.props.images : [],
     usePersonalAddress: this.props.usePersonalAddress,
     mapCoords: {
-      lat: this.props.mapCoords ?  this.props.mapCoords.lat :  this.props.user.location.coordinates[0],
-      lng: this.props.mapCoords ?  this.props.mapCoords.lng :this.props.user.location.coordinates[1],
+      lat: this.props.mapCoords ? this.props.mapCoords.lat : this.props.user.location.coordinates[0],
+      lng: this.props.mapCoords ? this.props.mapCoords.lng : this.props.user.location.coordinates[1],
     },
+    formErrors: {name: '', description: '', number: '', postalCode: '', address: '', price: ''},
     error: undefined,
     categories: [],
   };
@@ -36,13 +37,56 @@ class AdForm extends Component {
       [e.target.name]: e.target.value,
       error: undefined,
     });
+
+    const formErrors = this.validateInput(e);
+    this.setState({
+      formErrors
+    });
   };
+
+  validateInput = (event) => {
+    const {name, value} = event.target;
+    const {formErrors} = this.state;
+    formErrors[name] = '';
+
+    if (!value) {
+      formErrors[name] = 'Debes rellenar este campo';
+      return formErrors;
+    }
+    switch (event.target.getAttribute('data-validate')) {
+      case 'postalCode':
+        if (!this._isValidPostalCode(value)) {
+          formErrors[name] = 'Código postal incorrecto';
+        }
+        break;
+      case 'price':
+        if (isNaN(value)) {
+          formErrors[name] = 'Precio incorrecto';
+        } else if(parseInt(value) < 1) {
+          formErrors[name] = 'El precio ha de ser superior a 0';
+        }
+      default:
+        break;
+    }
+
+    return formErrors;
+  };
+
+  _isValidPostalCode(postalCode) {
+    return /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/.test(postalCode);
+  }
+
   handleCheckboxChange = (e) => {
+    const {formErrors} = this.state;
+    formErrors['number'] = '';
+    formErrors['postalCode'] = '';
+    formErrors['address'] = '';
     this.setState({
       [e.target.name]: e.target.checked,
       address: '',
       number: '',
       postalCode: '',
+      formErrors,
     })
   };
   handleNewFile = (files) => {
@@ -131,8 +175,32 @@ class AdForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const {onSubmit} = this.props;
-    onSubmit(this.state);
+    if (this._isValidForm()) {
+      const {onSubmit} = this.props;
+      onSubmit(this.state);
+    } else {
+      this.setState({
+        error: 'Hay errores en el formulario'
+      })
+    }
+  };
+
+  _isValidForm = () => {
+    const {formErrors, address, postalCode, usePersonalAddress, price, name, description} = this.state;
+    let response = true;
+    Object.keys(formErrors).forEach(key => {
+      if (formErrors[key]) {
+        response = false;
+      }
+    });
+    if (response && (!name || !description || !price)) {
+      response = false;
+    }
+    if (response && !usePersonalAddress && (!postalCode || !address)) {
+      response = false;
+    }
+
+    return response;
   };
 
   handleCheckboxChangeForm = (e) => {
@@ -149,7 +217,7 @@ class AdForm extends Component {
   render() {
     const {
       name, description, price, number, address, postalCode, tags,
-      images, usePersonalAddress, error, category
+      images, usePersonalAddress, error, category, formErrors
     } = this.state;
     return (
       <React.Fragment>
@@ -159,15 +227,19 @@ class AdForm extends Component {
             <label>Título</label>
             <input type="text" name={'name'} placeholder={'Título del anuncio'} value={name}
                    onChange={this.handleChange}/>
+            <div className={'form-input-error'}>{formErrors['name'] && formErrors['name']}</div>
           </div>
           <div className={'form-group'}>
             <label>Descripción</label>
             <textarea name={'description'} placeholder={'Descripción del anuncio'} value={description}
-                      onChange={this.handleChange}>{description}</textarea>
+                      onChange={this.handleChange}/>
+            <div className={'form-input-error'}>{formErrors['description'] && formErrors['description']}</div>
           </div>
           <div className={'form-group'}>
             <label>Precio (en serkens)</label>
-            <input name={'price'} placeholder={'Precio'} value={price} onChange={this.handleChange} type={'text'}/>
+            <input name={'price'} placeholder={'Precio'} value={price} onChange={this.handleChange}
+                   data-validate={'price'} type={'text'}/>
+            <div className={'form-input-error'}>{formErrors['price'] && formErrors['price']}</div>
           </div>
           <div className={'form-title'}>Localización</div>
           <div className={'form-group checkbox'}>
@@ -181,19 +253,23 @@ class AdForm extends Component {
             <div className={'dual-form-group'}>
               <div className={'form-group'}>
                 <label>Código postal</label>
-                <input type="text" name={'postalCode'} placeholder={'Código postal'} value={postalCode}
+                <input type="text" name={'postalCode'} data-validate={'postalCode'} placeholder={'Código postal'}
+                       value={postalCode}
                        onChange={this.handleChange} onBlur={this.handleMapboxPosition}/>
+                <div className={'form-input-error'}>{formErrors['postalCode'] && formErrors['postalCode']}</div>
               </div>
               <div className={'form-group small'}>
                 <label>Número</label>
                 <input type="text" name={'number'} placeholder={'Número'} value={number} onChange={this.handleChange}
                        onBlur={this.handleMapboxPosition}/>
+                <div className={'form-input-error'}>{formErrors['number'] && formErrors['number']}</div>
               </div>
             </div>
             <div className={'form-group'}>
               <label>Dirección</label>
               <input type="text" name={'address'} placeholder={'Dirección'} value={address} onChange={this.handleChange}
                      onBlur={this.handleMapboxPosition}/>
+              <div className={'form-input-error'}>{formErrors['address'] && formErrors['address']}</div>
             </div>
           </div>
           <div className={'map'}>
