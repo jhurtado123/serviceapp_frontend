@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import '../assets/css/views/profile/Profile.scss';
 import ProfileImage from "./ProfileImage";
+import { Link } from "react-router-dom";
 
 class ReviewUser extends Component{
 
 
-
   displayStars = () => {
     const { rating } = this.props;
-    console.log("El rating", rating)
     // eslint-disable-next-line default-case
     switch (rating) {
       case 5:
@@ -31,7 +30,9 @@ class ReviewUser extends Component{
     return(
       <div className="review-user" >
         <div className={'review-image'}>
-          <ProfileImage user={user} />
+          <Link to={`profile/user/`}>
+            <ProfileImage user={user} />
+          </Link>
         </div>
         <div className="review-container">
             <p className="review-content" >{content}</p>

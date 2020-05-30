@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import adApiClient from "../../services/apiManager/ad";
 import profileApiClient from "../../services/apiManager/profile";
 import '../../assets/css/views/ad/view.scss'
-import Token from '../../assets/images/icons/coin.png';
+import Token from '../../assets/images/icons/coin2.png';
 import Back from '../../assets/images/icons/back-white.png';
 import Location from '../../assets/images/icons/location.png';
 import Tags from '../../assets/images/icons/tags.png';

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import '../assets/css/views/profile/Profile.scss';
+import ProfileImage from "./ProfileImage";
+
 
 class HeaderProfile extends Component {
 
   render() {
-    const { name, level, url, description } = this.props;
+    const { name, level, user, description } = this.props;
     return (
       <div className={'header-profile'}>
         <div className={'header-columns'}>
@@ -12,14 +14,12 @@ class HeaderProfile extends Component {
         </div>
         <div className={'header-columns second-level'}>
           <div className={'coins'}>
-            <span>{level} </span>
-            <span>nivel</span>
+            <span>Nivel {level}</span>
           </div>
-          <div className="img-profile">
-            <img className="avatar" src={url !== '' ? url : require('../assets/images/icons/avatar.png')} alt="avatar" />
+          <div className={'img-profile'}>
+            <ProfileImage user={user} />
           </div>
-          <div className={'coins'}>
-            <span></span>
+          <div>
           </div>
         </div>
         <div className={'center-columns'}>

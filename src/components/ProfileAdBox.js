@@ -18,7 +18,7 @@ class ProfileAdBox extends Component {
             {!isRecover ?
               <React.Fragment>
                 <Link to={`/ad/${ad._id}/edit`}>
-                  <img src={Edit} alt="edit" /><span>Edit</span>
+                  <img src={Edit} alt="edit" /><span>Editar</span>
                 </Link>
                 <div onClick={(e) => {
                   handleDelete(e, ad._id)

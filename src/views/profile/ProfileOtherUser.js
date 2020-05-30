@@ -131,7 +131,7 @@ class ProfileOtherUser extends Component {
     const { reviews } = this.state;
     if (typeof reviews !== 'undefined' && reviews.length > 0) {
       return reviews.map((review, i) => {
-        return <ReviewUser key={i} title={review.title} content={review.content} rating={review.rating} />
+        return <ReviewUser key={i} user={review.user} content={review.content} rating={review.rating} />
       })
     } else {
       return <p className="not-info">Este usuario tiene reviews</p>
@@ -139,21 +139,21 @@ class ProfileOtherUser extends Component {
   }
 
   render() {
-    const { name, level, url, points, description, tokens, showReviews, status } = this.state;
+    const { name, level, _id, points, description, tokens, showReviews, status } = this.state;
     // eslint-disable-next-line default-case
     switch (status) {
       case STATUS.LOADED:
         return (
           <BaseLayout>
           <div>
-            <HeaderProfileOtherUser name={name} level={level} url={url} points={points} description={description} tokens={tokens} />
+            <HeaderProfileOtherUser name={name} level={level} user={_id} points={points} description={description} tokens={tokens} />
             {showReviews ?
-              <div>
+              <div className={'container'}>
                 <button className={'button-user button-user-not'} onClick={this.handleServices}>Servicios</button>
                 <button className={'button-user'} onClick={this.handleReviews}>Reviews</button>
                 {this.getReviewsFromUser()}
               </div> :
-              <div>
+                <div className={'container'}>
                 <button className={'button-user'} onClick={this.handleServices}>Servicios</button>
                 <button className={'button-user button-user-not'} onClick={this.handleReviews}>Reviews</button>
                 {this.printAdsUser()}

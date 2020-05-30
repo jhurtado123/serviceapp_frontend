@@ -138,7 +138,6 @@ class Profile extends Component {
     const {reviews} = this.state;
     if (typeof reviews !== 'undefined' && reviews.length > 0) {
       return reviews.map((review, i) => {
-        console.log(review)
         return <ReviewUser key={i} user={review.user} content={review.content} rating={review.rating}/>
       })
     } else {
