@@ -76,6 +76,7 @@ class ProfileNotifications extends Component {
           />
         )
       }
+      return false;
     })
   };
 

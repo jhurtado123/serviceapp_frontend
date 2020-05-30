@@ -84,7 +84,7 @@ class ProfileForm extends Component {
   }
 
   handleMapboxPosition = async () => {
-    const {address, postalcode, number, changeCoords} = this.state;
+    const {address, postalcode, number} = this.state;
     let data;
     let lat = undefined;
     let lng = undefined;
