@@ -30,20 +30,21 @@ class ProfileOtherUser extends Component {
     ads: [],
     reviews: [],
     showReviews: false,
+    user: {},
     status: STATUS.LOADING,
   }
 
   componentDidMount = () => {
     this.loadProfile()
     this.getLevel()
-  }
+  };
 
   async loadProfile() {
     try {
       const { match: { params: { username } } } = this.props;
 
       const { data: { user } } = await profileApiClient
-        .getProfileOtherUser(username)
+        .getProfileOtherUser(username);
       let theUser = user[0];
       this.setState({
         _id: theUser._id,
@@ -53,7 +54,8 @@ class ProfileOtherUser extends Component {
         postalcode: theUser.postalcode,
         points: theUser.points,
         reviews: theUser.review,
-      })
+        user: theUser,
+      });
       this.getAdsOtherUser()
     }
     catch (error) {
@@ -139,14 +141,15 @@ class ProfileOtherUser extends Component {
   }
 
   render() {
-    const { name, level, _id, points, description, tokens, showReviews, status } = this.state;
+    const { name, level, _id, points, user, description, tokens, showReviews, status } = this.state;
     // eslint-disable-next-line default-case
     switch (status) {
       case STATUS.LOADED:
+        console.log("El id", _id)
         return (
           <BaseLayout>
           <div>
-            <HeaderProfileOtherUser name={name} level={level} user={_id} points={points} description={description} tokens={tokens} />
+            <HeaderProfileOtherUser name={name} level={level} user={user} points={points} description={description} tokens={tokens} />
             {showReviews ?
               <div className={'container'}>
                 <button className={'button-user button-user-not'} onClick={this.handleServices}>Servicios</button>
