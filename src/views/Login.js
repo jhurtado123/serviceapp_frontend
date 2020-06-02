@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import BottomWave from '../assets/images/views/login/wave-login-bottom.png'
-import TopWave from '../assets/images/views/login/wave-login-top.png'
 import '../assets/css/views/login/login.scss';
 import InputWithIcon from "../components/InputWithIcon";
 import {Link} from "react-router-dom";
 import {withAuth} from "../context/AuthContext";
+import Logo from '../assets/images/icons/logo_purple.svg';
+
 
 class Login extends Component {
 
@@ -40,8 +41,7 @@ class Login extends Component {
     const {hasError, errorMessage} = this.props;
     return (
       <div className={'login'}>
-        <img className={'wave-top'} src={TopWave} alt="wave-top"/>
-        <div>LOGO</div>
+        <img className={'logo'} src={Logo} alt={'logo'}/>
         <form method={'post'} onSubmit={this.handleSubmit}>
           <InputWithIcon icon={'user-purple'} name={'username'} placeholder={'Tu username'} value={username} type={'text'}
                          handleChange={this.handleChange}/>
