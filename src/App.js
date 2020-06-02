@@ -49,11 +49,9 @@ function App() {
             <PrivateRoute exact path={'/favorites'} component={Favorites}/>
 
             <PrivateRoute exact path={'/profile/edit'} component={ProfileEdit}/>
-            <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>     
             <PrivateRoute exact path={'/profile/notifications'} component={ProfileNotifications}/>
 
             <PrivateRoute exact path={'/profile/rewards'} component={Rewards}/>
-            <PrivateRoute exact path={'/profile/user/:username'} component={ProfileOtherUser}/>
 
             <PrivateRoute exact path={'/appointments'} component={Appointments}/>
             <PrivateRoute exact path={'/appointments/:id'} component={Appointment}/>
@@ -69,6 +67,8 @@ function App() {
 
             <Route exact path={'/'} component={Home}/>
             <Route exact path={'/search'} component={Search}/>
+            <Route exact path={'/profile/user/:username'} component={ProfileOtherUser}/>
+
           </Switch>
         </div>
       </AuthProvider>

@@ -37,14 +37,14 @@ class ProfileOtherUser extends Component {
   componentDidMount = () => {
     this.loadProfile()
     this.getLevel()
-  }
+  };
 
   async loadProfile() {
     try {
       const { match: { params: { username } } } = this.props;
 
       const { data: { user } } = await profileApiClient
-        .getProfileOtherUser(username)
+        .getProfileOtherUser(username);
       let theUser = user[0];
       this.setState({
         _id: theUser._id,
@@ -55,7 +55,7 @@ class ProfileOtherUser extends Component {
         points: theUser.points,
         reviews: theUser.review,
         user: theUser,
-      })
+      });
       this.getAdsOtherUser()
     }
     catch (error) {
