@@ -3,7 +3,7 @@ import HeaderWithTitle from "../components/HeaderWithTitle";
 import ReactCreditCards from "react-credit-cards";
 import 'react-credit-cards/es/styles-compiled.css';
 import '../assets/css/views/buyTokens.scss';
-import Token from '../assets/images/icons/coin2.png';
+import Token from '../assets/images/icons/coin2.svg';
 import profileApiClient from "../services/apiManager/profile";
 import {withAuth} from "../context/AuthContext";
 import REDIRECT from "../errorRedirects";
