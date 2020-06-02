@@ -19,30 +19,48 @@ let socket = undefined;
 
 class BaseLayout extends Component {
   state = {
-    notification: 0,
+    notificationSocket: 0,
+    notificationUser: 0,
+    allNotifications: 0,
   };
   componentDidMount = () => {
     const { user } = this.props;
     if(user) {
       socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`, {query: `id=${user._id}`});
       this.setSocketEvents()
+      this.getAllNotifications()
     }
   };
 
   setSocketEvents = () => {
     socket.on('notification:count', (data) => {
       this.setState({
-        notification: data.value
+        notificationSocket: data.value
       })
     });
   };
+
+  getAllNotifications = () => {
+    const { user } = this.props; 
+    const { notificationSocket } = this.state; 
+    let notificationsU = [];
+    user.notifications.forEach(e => {
+      if (e.isReaded === false) {
+        notificationsU.push(e)
+      }
+    });
+    let all = notificationsU.length + notificationSocket
+    this.setState({
+      allNotifications: all,
+    })
+  }
 
   componentWillUnmount() {
     this.props.closeMenu();
   }
 
   render() {
-    const { notification} = this.state;
+    const { allNotifications} = this.state;
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
     return (
       <div className={'base-layout'}>
@@ -97,7 +115,7 @@ class BaseLayout extends Component {
         </div>
         {children}
 
-        {isLoggedIn && <Footer notification={notification} />}
+        {isLoggedIn && <Footer notification={allNotifications} />}
         {isOpened && <div className={'backdrop'}/>}
       </div>
     );
