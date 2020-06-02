@@ -155,7 +155,7 @@ In the homepage, you have a Burger menu, Search Bar, Filter Button, Most Popular
     
 -   Link to Buy Serkens
     
--   Link to Backoffice (Exclusive for Role Admin users)
+-   Link to Backoffice (Exclusive for Role Admin users user: jose, password: admin)
     
 ### Search Bar
 To search ads
@@ -272,6 +272,8 @@ The Chat page is divided in header and the chat.
 
 ### Chat: 
 Where all the messages are displayed with the time. The user can send a message and a photo to inform about the service.
+Chat messages are send in real time using a socket connection.
+In chat page both users can renegotiate the final ad price in serkens and agree one date and hour to make the appointment.
     
   
 

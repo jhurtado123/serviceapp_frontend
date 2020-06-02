@@ -7,8 +7,17 @@
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  .logo {
+    position: absolute;
+    width: 250px;
+    top:10vh;
+    left: 50%;
+    margin-bottom: 60px;
+    transform: translateX(-50%);
+  }
 
   form {
+    margin-top: 80px;
     width: 80%;
     position: relative;
     text-align: center;
@@ -36,4 +45,7 @@
     font-size: 22px;
     text-align: center;
   }
+}
+.wave-bottom {
+  height: 50px;
 }
