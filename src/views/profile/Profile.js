@@ -25,6 +25,7 @@ class Profile extends Component {
     tokens: 0,
     level: 0,
     totalpoints: 0,
+    reward:0,
     missingpoints: 0,
     images: [],
     url: '',
@@ -58,7 +59,6 @@ class Profile extends Component {
         .getAdsFromUser()
       this.setState({
         ads,
-        status: STATUS.LOADED,
       })
 
     } catch (error) {
@@ -80,6 +80,8 @@ class Profile extends Component {
         this.setState({
           level: data[0].level,
           totalpoints: data[0].maxpoints,
+          reward: data[0].reward,
+          status: STATUS.LOADED,
         })
       }
       catch (error) {
@@ -147,14 +149,14 @@ class Profile extends Component {
 
 
   render() {
-    const {name, level, url, points, missingpoints, tokens, showReviews, status} = this.state;
+    const {name, level, url, points, reward, missingpoints, tokens, showReviews, status} = this.state;
     // eslint-disable-next-line default-case
     switch (status) {
       case STATUS.LOADED:
         return (
           <BaseLayout>
           <div>
-            <HeaderProfile name={name} level={level} url={url} points={points} missingpoints={missingpoints}
+            <HeaderProfile name={name} level={level} reward={reward} url={url} points={points} missingpoints={missingpoints}
                            tokens={tokens}/>
             {showReviews ?
               <div className={'container'}>

@@ -6,7 +6,7 @@ import ProfileImage from "./ProfileImage";
 class HeaderProfile extends Component {
 
   render(){
-    const { name, level, missingpoints, tokens, user } = this.props;
+    const { name, level, missingpoints, reward, tokens, user } = this.props;
     return (
       <div className={'header-profile'}>
         <div className={'header-columns'}>
@@ -26,7 +26,7 @@ class HeaderProfile extends Component {
         </div>
         <div className={'center-columns'}>
           <div className={'coins'}>
-            Próxima recompensa: 50
+            Próxima recompensa: {reward}
             <img className={'img-coin'} src={require('../assets/images/icons/coin.png')} alt="coin" />
           </div>
           <div>Faltan {missingpoints} puntos para subir al nivel {level + 1}</div>

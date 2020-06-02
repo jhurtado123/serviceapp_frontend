@@ -34,6 +34,7 @@ class Rewards extends Component {
     missingpoints: 0,
     totalads: 0,
     totalpointsads: 0,
+    reward: 0,
     progress: 0,
     pending: 0, 
     status: STATUS.LOADING,
@@ -85,6 +86,8 @@ class Rewards extends Component {
         this.setState({
             level: data[0].level,
             totalpoints: data[0].maxpoints,
+            reward: data[0].reward,
+            status: STATUS.LOADED
             })
         this.getMissingPoints()        
       }
@@ -128,7 +131,6 @@ class Rewards extends Component {
     this.setState({
       progress: (ads / totalads) * 100,
       pending: pendingAds,
-      status: STATUS.LOADED
     })
   }
 
@@ -143,7 +145,7 @@ class Rewards extends Component {
   
 
   render(){
-    const { name, level, url, points, missingpoints, tokens, status, totalpointsads, progress, pending } = this.state;
+    const { name, level, url, points, missingpoints, reward, tokens, status, totalpointsads, progress, pending } = this.state;
 
     // eslint-disable-next-line default-case
     switch (status) {
@@ -151,7 +153,7 @@ class Rewards extends Component {
         return (
           <BaseLayout>
             <div>
-              <HeaderProfile name={name} level={level} url={url} points={points} missingpoints={missingpoints}
+              <HeaderProfile name={name} level={level} reward={reward} url={url} points={points} missingpoints={missingpoints}
                 tokens={tokens} />
             </div>
             <div className={'rewards-container'}>
