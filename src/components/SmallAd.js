@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../assets/css/components/smallAd.scss';
 import ProfileImage from "./ProfileImage";
-import Token from '../assets/images/icons/coin.png';
+import Token from '../assets/images/icons/coin.svg';
 import {Link, withRouter} from "react-router-dom";
 import AdImagePreview from "./AdImagePreview";
 

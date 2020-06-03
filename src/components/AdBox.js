@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import AdImagePreview from "./AdImagePreview";
 import '../assets/css/components/adBox.scss';
 import ProfileImage from "./ProfileImage";
-import Token from '../assets/images/icons/coin.png'
+import Token from '../assets/images/icons/coin.svg'
 import {Link} from 'react-router-dom';
 
 class AdBox extends Component {
