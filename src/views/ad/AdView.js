@@ -33,7 +33,7 @@ class AdView extends Component {
     ad: undefined,
     isMapOpened: false,
     relatedAds: [],
-    showModaNoTokens:false,
+    showModaNoTokens: false,
     ownerLevel: 0,
   };
 
@@ -161,14 +161,16 @@ class AdView extends Component {
                 {({
                     style,
                   }) => (
-                  <Link to={`/profile/user/${ad.owner.username}`} className={'ad-owner'} style={style}>
-                    <div className={'owner-profile'}>
-                      <ProfileImage user={ad.owner}/>
-                      <div className={'owner-data'}>
-                        <h3>{ad.owner.name}</h3>
-                        <p>Level: {ownerLevel} <ReviewUserAverage user={ad.owner}/> </p>
+                  <div className={'ad-owner'} style={style}>
+                    <Link to={`/profile/user/${ad.owner.username}`} >
+                      <div className={'owner-profile'}>
+                        <ProfileImage user={ad.owner}/>
+                        <div className={'owner-data'}>
+                          <h3>{ad.owner.name}</h3>
+                          <p>Level: {ownerLevel} <ReviewUserAverage user={ad.owner}/></p>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                     {
                       user._id === ad.owner._id ?
                         <Link className={'ad-chat-button'} to={`/ad/${ad._id}/edit`}>
@@ -179,7 +181,7 @@ class AdView extends Component {
                           Iniciar chat
                         </div>
                     }
-                  </Link>
+                  </div>
                 )}
               </Sticky>
               <div className={'container'}>
@@ -222,7 +224,8 @@ class AdView extends Component {
             <Modal show={showModaNoTokens} title={'No puedes iniciar el chat'} handleClose={this.handleModalClose}>
               <div className={'info-message'}>
                 Para iniciar el chat debes tener al menos 1 serken en tu cartera.
-                <p>Puedes ofrecer tus servicios para conseguir serkens o puedes comprarlos <Link to={'/buySerkens'}>aquí</Link></p>
+                <p>Puedes ofrecer tus servicios para conseguir serkens o puedes comprarlos <Link
+                  to={'/buySerkens'}>aquí</Link></p>
               </div>
             </Modal>
           </div>
