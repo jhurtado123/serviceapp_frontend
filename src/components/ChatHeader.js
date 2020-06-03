@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import backIcon from '../assets/images/icons/back-white.png';
 import {withRouter} from 'react-router-dom';
-import Token from '../assets/images/icons/coin.png';
+import Token from '../assets/images/icons/coin.svg';
 import '../assets/css/components/chatHeader.scss';
 import {Link} from 'react-router-dom';
 import RenegotiateIcon from '../assets/images/icons/renegotiate.png';

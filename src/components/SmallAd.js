@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../assets/css/components/smallAd.scss';
 import ProfileImage from "./ProfileImage";
-import Token from '../assets/images/icons/coin.png';
+import Token from '../assets/images/icons/coin.svg';
 import {Link, withRouter} from "react-router-dom";
 import AdImagePreview from "./AdImagePreview";
 
@@ -15,7 +15,7 @@ class SmallAd extends Component {
           <h2>{ad.name}</h2>
           <div className={'more-data'}>
             <ProfileImage user={ad.owner} small={true} />
-            <div className={'ad-price'}>{ad.price} <img src={Token} alt="serken" /></div>
+            <div className={'ad-price'}>{ad.price} <img src={Token} alt="serken" className={'img-coin'} /></div>
           </div>
         </div>
       </Link>

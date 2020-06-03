@@ -21,13 +21,13 @@ class HeaderProfile extends Component {
           </div>
           <div className={'coins'}>
             <span>{tokens} </span>
-            <img className={'img-coin'} src={require('../assets/images/icons/coin.png')} alt="coin" />
+            <img className={'img-coin'} src={require('../assets/images/icons/coin.svg')} alt="coin" />
           </div>
         </div>
         <div className={'center-columns'}>
           <div className={'coins'}>
             Próxima recompensa: {reward}
-            <img className={'img-coin'} src={require('../assets/images/icons/coin.png')} alt="coin" />
+            <img className={'img-coin'} src={require('../assets/images/icons/coin.svg')} alt="coin" />
           </div>
           <div>Faltan {missingpoints} puntos para subir al nivel {level + 1}</div>
         </div>

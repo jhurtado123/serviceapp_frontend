@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Token from "../assets/images/icons/coin.png";
+import Token from "../assets/images/icons/coin.svg";
 import Modal from "./Modal";
 import {withAuth} from "../context/AuthContext";
 import '../assets/css/components/renegotiateModal.scss';
