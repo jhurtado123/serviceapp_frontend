@@ -21,12 +21,12 @@ class BaseLayout extends Component {
   state = {
     notificationSocket: 0,
     notificationUser: 0,
-    allNotifications: 0,
   };
-  componentDidMount = () => {
+  async componentDidMount ()  {
     const { user } = this.props;
     if(user) {
       socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`, {query: `id=${user._id}`});
+      this.getUserNotificatons()
       this.setSocketEvents()
       this.getAllNotifications()
     }
@@ -35,32 +35,36 @@ class BaseLayout extends Component {
   setSocketEvents = () => {
     socket.on('notification:count', (data) => {
       this.setState({
-        notificationSocket: data.value
+        notificationSocket: data.value,
       })
     });
+    this.getAllNotifications()
   };
 
-  getAllNotifications = () => {
+  getUserNotificatons = () => {
     const { user } = this.props; 
-    const { notificationSocket } = this.state; 
     let notificationsU = [];
     user.notifications.forEach(e => {
       if (e.isReaded === false) {
         notificationsU.push(e)
       }
     });
-    let all = notificationsU.length + notificationSocket
     this.setState({
-      allNotifications: all,
+      notificationUser: notificationsU.length,
     })
   }
 
+  getAllNotifications = () => {
+    const { notificationSocket, notificationUser } = this.state; 
+    let all = notificationUser + notificationSocket;
+    return all
+  }
   componentWillUnmount() {
     this.props.closeMenu();
   }
 
+
   render() {
-    const { allNotifications} = this.state;
     const {children, openMenu, closeMenu, isOpened, isLoggedIn, user} = this.props;
     return (
       <div className={'base-layout'}>
@@ -115,7 +119,7 @@ class BaseLayout extends Component {
         </div>
         {children}
 
-        {isLoggedIn && <Footer notification={allNotifications} />}
+        {isLoggedIn && <Footer notification={this.getAllNotifications()} />}
         {isOpened && <div className={'backdrop'}/>}
       </div>
     );
