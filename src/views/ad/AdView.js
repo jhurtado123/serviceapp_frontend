@@ -167,7 +167,7 @@ class AdView extends Component {
                         <ProfileImage user={ad.owner}/>
                         <div className={'owner-data'}>
                           <h3>{ad.owner.name}</h3>
-                          <p>Level: {ownerLevel} <ReviewUserAverage user={ad.owner}/></p>
+                          <p>Nivel: {ownerLevel} <ReviewUserAverage user={ad.owner}/></p>
                         </div>
                       </div>
                     </Link>
