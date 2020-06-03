@@ -31,7 +31,7 @@ class RenegotiateModal extends Component {
               :
               <React.Fragment>
                 <div className={'your-tokens'}>
-                  Tokens disponibles: <span>{availableTokens} <img src={Token} alt=""/></span>
+                  Tokens disponibles: <span>{availableTokens}</span>
                 </div>
                 <div className={'price-range'}>
                   <div className={'current-value'}>
