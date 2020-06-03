@@ -15,7 +15,7 @@ class SmallAd extends Component {
           <h2>{ad.name}</h2>
           <div className={'more-data'}>
             <ProfileImage user={ad.owner} small={true} />
-            <div className={'ad-price'}>{ad.price} <img src={Token} alt="serken" /></div>
+            <div className={'ad-price'}>{ad.price} <img src={Token} alt="serken" className={'img-coin'} /></div>
           </div>
         </div>
       </Link>

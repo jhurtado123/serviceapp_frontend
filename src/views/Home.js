@@ -12,7 +12,7 @@ class Home extends Component {
 
   state = {
     search: '',
-    maxRadius: 10,
+    maxRadius: 10000,
     maxPrice: '',
     ads: [],
     orderBy: 'distance',
