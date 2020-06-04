@@ -23,11 +23,13 @@ class VideoCall extends Component {
 
   componentDidMount() {
     const {socket, isCaller} = this.props;
-    navigator.getUserMedia({video: true, audio: true}).then(stream => {
+    navigator.getUserMedia({video: true, audio: true}, (stream) => {
       this.setStream(stream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = stream;
       }
+    }, (error) => {
+      console.log('aaaa');
     });
 
 
