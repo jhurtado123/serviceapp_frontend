@@ -34,7 +34,7 @@ class VideoCall extends Component {
 
 
     if (isCaller) {
-      setTimeout(this.initRTCransmission, 100);
+      setTimeout(this.initRTCransmission, 1000);
     } else {
       this.setCallSocketEvents();
     }
