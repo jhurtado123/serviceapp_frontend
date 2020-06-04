@@ -104,6 +104,8 @@ class VideoCall extends Component {
       },
       stream: stream,
     });
+    console.log('turn:turn.anyfirewall.com:443?transport=tcp');
+
 
     peer.on("signal", data => {
       socket.emit("call:handShake", {chatId: chat._id, signalData: data})
