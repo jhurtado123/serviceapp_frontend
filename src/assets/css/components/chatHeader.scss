@@ -45,16 +45,16 @@
     display: flex;
     flex-flow: row nowrap;
     .action {
-      margin-left: 20px;
+      margin-left: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 5px;
+      padding: 8px;
       border-radius: 50%;
       box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.29);
       cursor: pointer;
       img {
-        width: 34px;
+        width: 20px;
       }
     }
   }
