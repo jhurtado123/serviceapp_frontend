@@ -8,6 +8,7 @@ class VideoCall extends Component {
   state = {
     stream: undefined,
     callerSignal: undefined,
+    hasTransmissionResponse: false,
   };
 
   setStream = (stream) => {
@@ -29,24 +30,31 @@ class VideoCall extends Component {
       }
     });
 
+
     if (isCaller) {
-      this.initRTCransmission();
+      setTimeout(this.initRTCransmission, 200);
     } else {
       this.setCallSocketEvents();
     }
+
+
   }
 
   setCallSocketEvents = () => {
     const {socket} = this.props;
 
     socket.on('call:handShakeRequest', (data) => {
-      console.log('Received handshake request');
-      console.log(data);
+      const {hasTransmissionResponse} = this.state;
+      if (hasTransmissionResponse) return false;
       this.setState({
         callerSignal: data.signalData,
       }, () => {
-        setTimeout( this.responseRTCTransmission, 1000);
-
+        setTimeout(() => {
+          this.responseRTCTransmission();
+          this.setState({
+            hasTransmissionResponse: true,
+          })
+        }, 10);
       })
 
     });
@@ -63,13 +71,10 @@ class VideoCall extends Component {
       stream: stream,
     });
     peer.on("signal", data => {
-      console.log('Accept handshake');
-      console.log(data);
       socket.emit("call:handShakeAccept", {signal: data, chatId: chat._id});
     });
 
     peer.on("stream", stream => {
-      console.log('--------------------__STREAM------------------');
       this.partnerVideo.current.srcObject = stream;
     });
 
@@ -101,19 +106,14 @@ class VideoCall extends Component {
       stream: stream,
     });
     peer.on("signal", data => {
-      console.log('Signal received, sending handShake');
-      console.log(data);
       socket.emit("call:handShake", {chatId: chat._id, signalData: data})
     });
     peer.on("stream", stream => {
-      console.log('--------------------__STREAM------------------');
       if (this.partnerVideo.current) {
         this.partnerVideo.current.srcObject = stream;
       }
     });
     socket.on("call:handShakeRequestAccepted", data => {
-      console.log('Handshake request accepted');
-      console.log(data);
       peer.signal(data.signal);
     })
 
