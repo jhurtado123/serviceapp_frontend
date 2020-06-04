@@ -14,6 +14,8 @@ import CloseGoldIcon from '../../assets/images/icons/close-gold.png';
 import RenegotiateModal from "../../components/RenegotiateModal";
 import DealModal from "../../components/DealModal";
 import LoadingBars from "../../components/LoadingBars";
+import CallModal from "../../components/CallModal";
+import VideoCall from "../../components/VideoCall";
 
 
 let socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`);
@@ -29,6 +31,10 @@ class Chat extends Component {
     showRenegotiateModal: false,
     showDealModal: false,
     isLoading: true,
+    showCallModal: false,
+    isCalling: false,
+    isReceivingCall: false,
+    callInProgress: false,
   };
 
   fileRef = React.createRef();
@@ -114,7 +120,7 @@ class Chat extends Component {
       sender: user._id,
       type: 'renegotiation-resolve',
       data: {
-       content: newPrice, status: status
+        content: newPrice, status: status
       },
       date: new Date(date.setHours(date.getHours() + 2))
     };
@@ -278,7 +284,10 @@ class Chat extends Component {
 
   printMessages = () => {
     const {messages, chat} = this.state;
-    return messages.map((message, index) => <ChatMessage key={index} price={chat.price} message={message} seller={chat.seller} buyer={chat.buyer} resolveNegotiation={this.handleResolveRenegotiation} resolveNewDeal={this.handleResolveNewDeal}/>);
+    return messages.map((message, index) => <ChatMessage key={index} price={chat.price} message={message}
+                                                         seller={chat.seller} buyer={chat.buyer}
+                                                         resolveNegotiation={this.handleResolveRenegotiation}
+                                                         resolveNewDeal={this.handleResolveNewDeal}/>);
   };
 
   async componentDidMount() {
@@ -295,7 +304,7 @@ class Chat extends Component {
       const {data: {messages}} = await chatApiClient.getChatMessages(params.id);
       this.setState({
         messages,
-        isLoading:false,
+        isLoading: false,
       }, () => {
         this.messagesBoxRef.current.scrollTo(0, 999999999);
       });
@@ -322,12 +331,44 @@ class Chat extends Component {
         this.removeNewDealMessages();
       }
     });
+
+    socket.on('call:receiving-call', (data) => {
+      this.setState({
+        showCallModal: true,
+        isReceivingCall: true,
+        isCalling: false,
+      });
+    });
+    socket.on('call:declined-call', (data) => {
+      this.setState({
+        showCallModal: false,
+        isReceivingCall: false,
+        isCalling: false,
+      });
+    });
+
+    socket.on('call:accepted-call', (data) => {
+      this.setState({
+        showCallModal: false,
+        isCalling: false,
+        isReceivingCall: false,
+        callInProgress: true
+      });
+    });
+    socket.on('call:finished', (data) => {
+      this.setState({
+        showCallModal: false,
+        isCalling: false,
+        isReceivingCall: false,
+        callInProgress: false,
+      });
+    })
   };
 
   deleteTokensFromBuyerUser = () => {
     const {chat: {price, buyer}} = this.state;
     const {user} = this.props;
-    if (user._id === buyer._id)  {
+    if (user._id === buyer._id) {
       user.wallet.tokens = parseInt(user.wallet.tokens) - parseInt(price);
     }
   };
@@ -378,36 +419,99 @@ class Chat extends Component {
       socket.emit('room:leave', chat._id);
   }
 
+  handleNewCall = () => {
+    const {chat} = this.state;
+    const {user} = this.props;
+    socket.emit('call:new-call', {chatId: chat._id});
+
+    this.setState({
+      showCallModal: true,
+      isCalling: true,
+      caller: user._id
+    });
+  };
+
+  closeCallModal = () => {
+    const {isReceivingCall, chat} = this.state;
+
+    if (isReceivingCall) {
+      socket.emit('call:decline-call', {chatId: chat._id});
+    }
+
+    this.setState({
+      showCallModal: false,
+      isCalling: false,
+      isReceivingCall: false,
+    });
+  };
+
+  acceptCall = () => {
+    const {chat} = this.state;
+    this.setState({
+      showCallModal: false,
+      isCalling: false,
+      isReceivingCall: false,
+      callInProgress: true
+    });
+
+    socket.emit('call:accept-call', {chatId: chat._id});
+  };
+
+  handUpCall = () => {
+    const {chat} = this.state;
+    this.setState({
+      showCallModal: false,
+      isCalling: false,
+      isReceivingCall: false,
+      callInProgress: false
+    });
+    socket.emit('call:handUp-call', {chatId: chat._id});
+  };
+
   render() {
-    const {messages, chat, writedMessage, encodedImage, showRenegotiateModal, showDealModal, isLoading} = this.state;
+    const {messages, chat, writedMessage, encodedImage, showRenegotiateModal,
+      showDealModal, isLoading, showCallModal,
+      isCalling, isReceivingCall, callInProgress, caller} = this.state;
     const {user} = this.props;
     return (
       <div className={'chat-view'}>
-        <ChatHeader chat={chat} openRenegotiaton={this.handleOpenRenegotiation} openDealModal={this.handleOpenDealModal}/>
+        <ChatHeader chat={chat} openRenegotiaton={this.handleOpenRenegotiation} openDealModal={this.handleOpenDealModal}
+                    videoCall={this.handleNewCall}/>
         <div className={'box-messages container'} ref={this.messagesBoxRef}>
           {isLoading ? <LoadingBars/> :
             chat ?
-            <React.Fragment>
-              {!messages.length ?
-                <div className={'no-messages-box'}>
-                  <Link to={`/profile/user/${chat.seller._id === user._id ? chat.buyer.username : chat.seller.username}`}>
-                    <ProfileImage user={chat.seller._id === user._id ? chat.buyer : chat.seller}/>
-                  </Link>
-                  <p>Tu conversación
-                    con <span>{chat.seller._id === user._id ? chat.buyer.name : chat.seller.name}</span> aún no ha
-                    comenzado.
-                    Escríbele para llegar a un acuerdo sobre el servicio.</p>
-                </div> :
-                this.printMessages()}
-              <RenegotiateModal isThereAnyNegotiation={this.existAnyNegotioation()} isThereAnyDealPending={this.existDealPending()} newNegotiation={this.handleNewPriceNegotiation} show={showRenegotiateModal}
-                                value={chat.price} availableTokens={user.wallet.tokens}
-                                handleClose={this.handleCloseRenegotiateModal} seller={chat.seller}/>
-              <DealModal show={showDealModal} price={chat.price} isThereAnyDealPending={this.existDealPending()}
-                                value={chat.price} availableTokens={user.wallet.tokens}
-                                handleClose={this.handleCloseDealModal} newDeal={this.handleNewDeal} buyerHasNoTokens={user._id === chat.buyer._id && user.wallet.tokens < chat.price}/>
-            </React.Fragment>
-            :
-            <div>Loading</div>}
+              <React.Fragment>
+                {!messages.length ?
+                  <div className={'no-messages-box'}>
+                    <Link
+                      to={`/profile/user/${chat.seller._id === user._id ? chat.buyer.username : chat.seller.username}`}>
+                      <ProfileImage user={chat.seller._id === user._id ? chat.buyer : chat.seller}/>
+                    </Link>
+                    <p>Tu conversación
+                      con <span>{chat.seller._id === user._id ? chat.buyer.name : chat.seller.name}</span> aún no ha
+                      comenzado.
+                      Escríbele para llegar a un acuerdo sobre el servicio.</p>
+                  </div> :
+                  this.printMessages()}
+                <RenegotiateModal isThereAnyNegotiation={this.existAnyNegotioation()}
+                                  isThereAnyDealPending={this.existDealPending()}
+                                  newNegotiation={this.handleNewPriceNegotiation} show={showRenegotiateModal}
+                                  value={chat.price} availableTokens={user.wallet.tokens}
+                                  handleClose={this.handleCloseRenegotiateModal} seller={chat.seller}/>
+
+                <DealModal show={showDealModal} price={chat.price} isThereAnyDealPending={this.existDealPending()}
+                           value={chat.price} availableTokens={user.wallet.tokens}
+                           handleClose={this.handleCloseDealModal} newDeal={this.handleNewDeal}
+                           buyerHasNoTokens={user._id === chat.buyer._id && user.wallet.tokens < chat.price}/>
+
+                <CallModal show={showCallModal} isCalling={isCalling}
+                           otherUser={chat.seller._id === user._id ? chat.buyer : chat.seller}
+                           isReceivingCall={isReceivingCall} handleClose={this.closeCallModal}
+                           acceptCall={this.acceptCall}/>
+                {callInProgress && <VideoCall chat={chat} socket={socket} hangUpCall={this.handUpCall} isCaller={caller === user._id}/>}
+              </React.Fragment>
+              :
+              <div>Loading</div>}
         </div>
         <div className={'box-send-message container ' + (encodedImage ? 'content-image' : '')}>
           <img src={UploadImageIcon} alt="Upload" className={'upload-image'} onClick={this.handleImageUpload}/>
@@ -418,7 +522,7 @@ class Chat extends Component {
               <div className={'remove'} onClick={this.handleRemoveImage}>
                 <img src={CloseGoldIcon} alt=""/>
               </div>
-              <img src={encodedImage} alt="encoded" />
+              <img src={encodedImage} alt="encoded"/>
             </div>
             :
             <input type={'text'} value={writedMessage} onChange={this.handleChange} name={'writedMessage'}/>
