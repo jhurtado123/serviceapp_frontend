@@ -96,19 +96,15 @@ class VideoCall extends Component {
             urls: "stun:stun.l.google.com:19302",
           },
           {
-            url: 'turn:192.158.29.39:3478?transport=tcp',
-            credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-            username: '28224511:1379330808'
+            url: 'turn:turn.anyfirewall.com:443?transport=tcp',
+            credential: 'webrtc',
+            username: 'webrtc'
           },
         ]
       },
       stream: stream,
     });
-    if (Peer.WEBRTC_SUPPORT) {
-      console.log('support');
-    } else {
-      console.log('not support');
-    }
+
     peer.on("signal", data => {
       socket.emit("call:handShake", {chatId: chat._id, signalData: data})
     });
