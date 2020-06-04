@@ -106,6 +106,7 @@ class VideoCall extends Component {
     });
 
     peer.on("signal", data => {
+      console.log('connected data', data);
       socket.emit("call:handShake", {chatId: chat._id, signalData: data})
     });
     peer.on("stream", stream => {
