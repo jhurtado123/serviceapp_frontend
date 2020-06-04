@@ -100,7 +100,7 @@ class BaseLayout extends Component {
             {isLoggedIn && <img src={waveSidebar} className={'wave-top'} alt=""/> }
             {!isLoggedIn &&
             <div className={'login-or-register'}>
-              <Link to={'/login'}>Logueate</Link>
+              <Link to={'/login'}>Entra</Link>
               <p>o</p>
               <Link to={'/register'}>Registrate</Link>
             </div> }
