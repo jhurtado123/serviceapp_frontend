@@ -29,7 +29,7 @@ class VideoCall extends Component {
         this.userVideo.current.srcObject = stream;
       }
     }, (error) => {
-      console.log('aaaa');
+      console.log(error);
     });
 
 
