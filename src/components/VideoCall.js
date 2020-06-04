@@ -34,7 +34,7 @@ class VideoCall extends Component {
 
 
     if (isCaller) {
-      setTimeout(this.initRTCransmission, 200);
+      setTimeout(this.initRTCransmission, 1000);
     } else {
       this.setCallSocketEvents();
     }
@@ -56,7 +56,7 @@ class VideoCall extends Component {
           this.setState({
             hasTransmissionResponse: true,
           })
-        }, 10);
+        }, 1000);
       })
 
     });
@@ -69,7 +69,7 @@ class VideoCall extends Component {
 
     const peer = new Peer({
       initiator: false,
-      trickle: false,
+      trickle: true,
       stream: stream,
     });
     peer.on("signal", data => {
@@ -88,7 +88,7 @@ class VideoCall extends Component {
     const {socket, chat} = this.props;
     const peer = new Peer({
       initiator: true,
-      trickle: false,
+      trickle: true,
       config: {
 
         iceServers: [
