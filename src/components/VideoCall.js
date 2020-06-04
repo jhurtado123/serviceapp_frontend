@@ -94,9 +94,7 @@ class VideoCall extends Component {
 
         iceServers: [
           {
-            urls: "stun:numb.viagenie.ca",
-            credential: 'muazkh',
-            username: 'webrtc@live.com'
+            urls: "stun:stun.l.google.com:19302",
           },
           {
             urls: "turn:numb.viagenie.ca",
