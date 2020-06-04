@@ -151,9 +151,11 @@ class AdView extends Component {
               <div className={'back'}>
                 <img src={Back} alt="" onClick={history.goBack}/>
               </div>
+              {user &&
               <div className={'add-favorites'}>
                 <HandleFavorites adId={ad._id} isFavorite={user.favorites.includes(ad._id)}/>
               </div>
+              }
               <AdImages ad={ad}/>
             </div>
             <StickyContainer>
@@ -162,24 +164,24 @@ class AdView extends Component {
                     style,
                   }) => (
                   <div className={'ad-owner'} style={style}>
-                    <Link to={`/profile/user/${ad.owner.username}`} >
+                    <Link to={`/profile/user/${ad.owner.username}`}>
                       <div className={'owner-profile'}>
                         <ProfileImage user={ad.owner}/>
                         <div className={'owner-data'}>
                           <h3>{ad.owner.name}</h3>
-                          <p>Level: {ownerLevel} <ReviewUserAverage user={ad.owner}/></p>
+                          <p>Nivel: {ownerLevel} <ReviewUserAverage user={ad.owner}/></p>
                         </div>
                       </div>
                     </Link>
-                    {
-                      user._id === ad.owner._id ?
-                        <Link className={'ad-chat-button'} to={`/ad/${ad._id}/edit`}>
-                          Editar anuncio
-                        </Link>
-                        :
-                        <div className={'ad-chat-button'} onClick={this.handleChatInit}>
-                          Iniciar chat
-                        </div>
+                    {user &&
+                    (user._id === ad.owner._id ?
+                      <Link className={'ad-chat-button'} to={`/ad/${ad._id}/edit`}>
+                        Editar anuncio
+                      </Link>
+                      :
+                      <div className={'ad-chat-button'} onClick={this.handleChatInit}>
+                        Iniciar chat
+                      </div>)
                     }
                   </div>
                 )}

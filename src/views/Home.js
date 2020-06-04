@@ -5,7 +5,7 @@ import SearchBarWithFilters from "../components/SearchBarWithFilters";
 import CategoriesHome from "../components/CategoriesHome";
 import BestAds from "../components/BestAds";
 import {withRouter} from 'react-router-dom';
-import { withAuth } from "../context/AuthContext";
+import {withAuth} from "../context/AuthContext";
 import AdRecentlyView from "../components/AdRecentlyView";
 
 class Home extends Component {
@@ -46,6 +46,7 @@ class Home extends Component {
   };
 
   render() {
+    const {user} = this.props;
     return (
       <BaseLayout>
         <SearchBarWithFilters placeholder={'Buscar'} handleChange={this.handleChange} {...this.state}/>
@@ -54,8 +55,14 @@ class Home extends Component {
           <CategoriesHome title="Categorías más populares" handleCategoryClick={this.handleCategoryClick}/>
           <p className="section-title-home">Los mejor valorados</p>
           <BestAds stateFromHome={this.props.location.state}/>
-          <p className="section-title-home">Últimamente has visto</p>
-          <AdRecentlyView />
+          {
+            user &&
+            <React.Fragment>
+              <p className="section-title-home">Últimamente has visto</p>
+              <AdRecentlyView/>
+            </React.Fragment>
+          }
+
         </div>
       </BaseLayout>
     );
