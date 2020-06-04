@@ -86,7 +86,6 @@ class VideoCall extends Component {
   initRTCransmission = () => {
     const {stream} = this.state;
     const {socket, chat} = this.props;
-    console.log('init');
     const peer = new Peer({
       initiator: true,
       trickle: false,
@@ -105,6 +104,11 @@ class VideoCall extends Component {
       },
       stream: stream,
     });
+    if (Peer.WEBRTC_SUPPORT) {
+      console.log('support');
+    } else {
+      console.log('not support');
+    }
     peer.on("signal", data => {
       socket.emit("call:handShake", {chatId: chat._id, signalData: data})
     });
