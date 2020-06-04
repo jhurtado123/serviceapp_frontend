@@ -56,7 +56,7 @@ class VideoCall extends Component {
           this.setState({
             hasTransmissionResponse: true,
           })
-        }, 1000);
+        }, 1);
       })
 
     });
