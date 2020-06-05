@@ -37,6 +37,8 @@ class VideoCall extends Component {
 
   componentDidMount() {
     const {isCaller, socket, hangUpCall} = this.props;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
     navigator.getUserMedia({video: true, audio: true}, (stream) => {
       this.setStream(stream);
       if (this.userVideo.current) {
