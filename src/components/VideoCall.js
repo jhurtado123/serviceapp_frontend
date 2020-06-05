@@ -10,6 +10,7 @@ import VideoUnavailable from '../assets/images/icons/video-unavailable.png';
 import Peer from "simple-peer";
 import LoadingBars from "./LoadingBars";
 import Draggable from 'react-draggable';
+import loadGeometry from "mapbox-gl/src/data/load_geometry";
 
 
 let peer;
@@ -99,7 +100,7 @@ class VideoCall extends Component {
             });
           }
         });
-        peer.removeStream(stream);
+       // peer.removeStream(stream).;
         peer.addStream(newStream);
       }
       this.setStream(newStream);
