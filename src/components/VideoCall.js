@@ -5,6 +5,7 @@ import CameraOn from '../assets/images/icons/video-camera.png';
 import CameraOff from '../assets/images/icons/video-camera-off.png';
 import AudioOn from '../assets/images/icons/speaker.png';
 import AudioOff from '../assets/images/icons/speaker-off.png';
+import SwitchCamera from '../assets/images/icons/switch-camera.png';
 import VideoUnavailable from '../assets/images/icons/video-unavailable.png';
 import Peer from "simple-peer";
 import LoadingBars from "./LoadingBars";
@@ -45,7 +46,7 @@ class VideoCall extends Component {
     this.getCameraDevices();
 
     setTimeout(() => {
-     this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
+     this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
     }, 500);
 
 
@@ -68,6 +69,12 @@ class VideoCall extends Component {
     }
 
   }
+
+  switchCamera = () => {
+    const {stream, cameraDevices} = this.state;
+    stream.getTracks().forEach(track => track.stop());
+    this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
+  };
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
@@ -252,7 +259,7 @@ class VideoCall extends Component {
   };
 
   render() {
-    const {isCameraOn, isPartnerCameraOn, isAudioOn, isLoading} = this.state;
+    const {isCameraOn, isPartnerCameraOn, isAudioOn, isLoading, cameraDevices} = this.state;
     return (
       <div className={'videoCall-wrapper'}>
         {isLoading && <LoadingBars/>}
@@ -278,6 +285,9 @@ class VideoCall extends Component {
             isAudioOn ?
               <img src={AudioOn} onClick={this.toggleAudio} alt={'Toggle camera'}/> :
               <img src={AudioOff} onClick={this.toggleAudio} alt={'Toggle camera'}/>
+          }
+          {
+            cameraDevices.length > 1 && <img  src={SwitchCamera} onClick={this.switchCamera} alt={'Switch camera'}/>
           }
         </div>
         <img className={'handUp-call'} src={HangUpIcon} onClick={this.handleHandUp} alt={'hangUpCall'}/>
