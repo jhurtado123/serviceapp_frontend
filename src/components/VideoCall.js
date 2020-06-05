@@ -101,7 +101,9 @@ class VideoCall extends Component {
           }
         });
        // peer.removeStream(stream).;
-        peer.addStream(newStream);
+        peer.addStream(newStream)
+          .then(res => console.log('res', res) )
+          .catch(err => console.log('ee', err));
       }
       this.setStream(newStream);
       if (this.userVideo.current) {
