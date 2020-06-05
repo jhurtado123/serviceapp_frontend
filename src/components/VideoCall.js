@@ -90,7 +90,7 @@ class VideoCall extends Component {
         });
         console.log(peer.getTracks());
       }
-      //this.setStream(stream);
+      this.setStream(stream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = stream;
       }
