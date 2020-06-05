@@ -13,11 +13,29 @@
     width: 130px;
     height: 180px;
     position: absolute;
-    bottom:0;
-    right: 0px;
-    video {
-      height: 100%;
+    bottom:90px;
+    right: 15px;
+    background: black;
+    border-radius: 15px;
+    .video-unavailable {
+      width: 70%;
     }
+    video {
+      border-radius: 15px;
+      height: 100%;
+      width: 100%;
+      object-fit: fill;
+    }
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  .video-unavailable {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
   }
   #partnerVideo {
     position: absolute;
@@ -27,14 +45,23 @@
     height: 100vh;
     video {
       width: 100%;
-      height: 100%;
+      object-fit: fill;
+      height: 100vh;
+    }
+  }
+  .actions {
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+    img {
+      width: 40px;
+      margin-right: 25px;
     }
   }
   .handUp-call {
     position: absolute;
-    left:50%;
-    transform: translateX(-50%);
-    bottom: 40px;
+    right: 15px;
+    bottom: 15px;
     cursor: pointer;
     width: 55px;
   }
