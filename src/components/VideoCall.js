@@ -82,7 +82,6 @@ class VideoCall extends Component {
     if (peer) peer.removeStream(stream);
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
-      if (peer) peer.addStream(stream);
       this.setStream(stream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = stream;
