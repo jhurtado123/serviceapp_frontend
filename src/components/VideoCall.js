@@ -71,23 +71,28 @@ class VideoCall extends Component {
   }
 
   switchCamera = () => {
-    const {stream, cameraDevices} = this.state;
+    const {cameraDevices} = this.state;
 
     this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
   };
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
+    const {stream} = this.state;
 
-    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
+    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
       if (peer) {
         console.log('add tracks');
-        stream.getTracks().forEach(track => {
-          console.log(track.kind);
+        newStream.getTracks().forEach(track => {
+          if (track.kind === 'video') {
+            stream.getTracks().forEach(lastStreamTrack => {
+              console.log(lastStreamTrack.kind);
+            });
+          }
         });
       }
-      this.setStream(stream);
+      this.setStream(newStream);
       if (this.userVideo.current) {
-        this.userVideo.current.srcObject = stream;
+        this.userVideo.current.srcObject = newStream;
       }
     }, (error) => {
       console.log(error);
