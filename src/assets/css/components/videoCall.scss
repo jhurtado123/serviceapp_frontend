@@ -13,8 +13,8 @@
     width: 130px;
     height: 180px;
     position: absolute;
-    bottom:0;
-    right: 0px;
+    bottom:90px;
+    right: 15px;
     background: black;
     border-radius: 15px;
     .video-unavailable {
@@ -60,9 +60,8 @@
   }
   .handUp-call {
     position: absolute;
-    left:50%;
-    transform: translateX(-50%);
-    bottom: 40px;
+    right: 15px;
+    bottom: 15px;
     cursor: pointer;
     width: 55px;
   }

@@ -72,7 +72,7 @@ class VideoCall extends Component {
 
   switchCamera = () => {
     const {stream, cameraDevices} = this.state;
-    stream.getTracks().forEach(track => track.stop());
+    //stream.getTracks().forEach(track => track.stop());
     this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
   };
 
