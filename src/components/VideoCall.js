@@ -45,7 +45,7 @@ class VideoCall extends Component {
     this.getCameraDevices();
 
     setTimeout(() => {
-     this.setStreamFromCameraDevice(cameraDevices[1]);
+     this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
     }, 500);
 
 
