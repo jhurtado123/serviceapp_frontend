@@ -337,6 +337,7 @@ class Chat extends Component {
         showCallModal: true,
         isReceivingCall: true,
         isCalling: false,
+        caller: undefined,
       });
     });
     socket.on('call:declined-call', (data) => {

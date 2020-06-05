@@ -3,6 +3,7 @@ import '../assets/css/components/videoCall.scss';
 import HangUpIcon from '../assets/images/icons/hangUp.png';
 import Peer from "simple-peer";
 
+let peer;
 class VideoCall extends Component {
 
   state = {
@@ -22,7 +23,7 @@ class VideoCall extends Component {
 
 
   componentDidMount() {
-    const {socket, isCaller} = this.props;
+    const {isCaller, socket, hangUpCall} = this.props;
     navigator.getUserMedia({video: true, audio: true}, (stream) => {
       this.setStream(stream);
       if (this.userVideo.current) {
@@ -32,13 +33,16 @@ class VideoCall extends Component {
       console.log(error);
     });
 
-
+    socket.on("call:handUpDestroyPeerEmit", data => {
+      if (peer) peer.destroy();
+      if (peer) peer = null;
+      hangUpCall();
+    });
     if (isCaller) {
       setTimeout(this.initRTCransmission, 1000);
     } else {
       this.setCallSocketEvents();
     }
-
 
   }
 
@@ -47,6 +51,7 @@ class VideoCall extends Component {
 
     socket.on('call:handShakeRequest', (data) => {
       const {hasTransmissionResponse} = this.state;
+
       if (hasTransmissionResponse) return false;
       this.setState({
         callerSignal: data.signalData,
@@ -55,19 +60,17 @@ class VideoCall extends Component {
           this.responseRTCTransmission();
           this.setState({
             hasTransmissionResponse: true,
-          })
+          });
         }, 1);
       })
-
     });
-
   };
 
   responseRTCTransmission = () => {
     const {socket, chat} = this.props;
     const {callerSignal, stream} = this.state;
 
-    const peer = new Peer({
+    peer = new Peer({
       initiator: false,
       trickle: false,
       stream: stream,
@@ -80,13 +83,22 @@ class VideoCall extends Component {
       this.partnerVideo.current.srcObject = stream;
     });
 
+    peer.on('error', (err) => {
+      this.handleHandUp();
+    });
+
+    peer.on('close', () => {
+    });
+
     peer.signal(callerSignal);
   };
 
   initRTCransmission = () => {
     const {stream} = this.state;
     const {socket, chat} = this.props;
-    const peer = new Peer({
+    if (peer) peer.destroy();
+
+    peer = new Peer({
       initiator: true,
       trickle: false,
       config: {
@@ -106,20 +118,54 @@ class VideoCall extends Component {
     });
 
     peer.on("signal", data => {
-      console.log('connected data', data);
-      socket.emit("call:handShake", {chatId: chat._id, signalData: data})
+      socket.emit("call:handShake", {chatId: chat._id, signalData: data});
     });
     peer.on("stream", stream => {
       if (this.partnerVideo.current) {
         this.partnerVideo.current.srcObject = stream;
       }
     });
+
+    peer.on('error', (err) => {
+      console.log('Peer error', err);
+      this.handleHandUp();
+    });
+
+    peer.on('close', () => {
+      console.log('closed');
+    });
+
     socket.on("call:handShakeRequestAccepted", data => {
       peer.signal(data.signal);
-    })
+    });
 
   };
 
+  handleHandUp = () => {
+    const {hangUpCall, socket, chat} = this.props;
+    socket.emit('call:handUpDestroyPeer', {chatId: chat._id,});
+    if (peer) peer.destroy();
+    hangUpCall();
+  };
+
+  componentWillUnmount = () => {
+    const {socket, chat} = this.props;
+    const {stream} = this.state;
+    stream.getTracks().forEach(track => track.stop());
+    socket.emit('call:handUpDestroyPeer', {chatId: chat._id,});
+    this.removeSocketEvents();
+    this.setState({
+      hasTransmissionResponse: false,
+    });
+    if (peer) peer.destroy(1);
+  };
+
+  removeSocketEvents = () => {
+    const {socket} = this.props;
+    socket.off('call:handShakeRequest');
+    socket.off('call:handUpDestroyPeerEmit');
+    socket.off('call:handShakeRequestAccepted');
+  };
 
   getUserVideo = () => {
     const {stream} = this.state;
@@ -139,8 +185,6 @@ class VideoCall extends Component {
   };
 
   render() {
-    const {hangUpCall} = this.props;
-
     return (
       <div className={'videoCall-wrapper'}>
         <div id={'partnerVideo'}>
@@ -149,7 +193,7 @@ class VideoCall extends Component {
         <div id={'selfVideo'}>
           {this.getUserVideo()}
         </div>
-        <img className={'handUp-call'} src={HangUpIcon} onClick={hangUpCall} alt={'hangUpCall'}/>
+        <img className={'handUp-call'} src={HangUpIcon} onClick={this.handleHandUp} alt={'hangUpCall'}/>
       </div>
     );
   }
