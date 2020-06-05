@@ -38,23 +38,16 @@ class VideoCall extends Component {
 
   componentDidMount() {
     const {isCaller, socket, hangUpCall} = this.props;
+    const {cameraDevices} = this.state;
+
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-    navigator.mediaDevices.enumerateDevices().then(function(devices) {
-     const cameras = devices.filter(function(device) {
-       return device.kind === 'videoinput';
-      });
-      console.log(cameras);
-    });
+    this.getCameraDevices();
 
-    navigator.getUserMedia({video: {   width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
-      this.setStream(stream);
-      if (this.userVideo.current) {
-        this.userVideo.current.srcObject = stream;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    setTimeout(() => {
+     this.setStreamFromCameraDevice(cameraDevices[1]);
+    }, 500);
+
 
     socket.on("call:handUpDestroyPeerEmit", data => {
       if (peer) peer.destroy();
@@ -75,6 +68,26 @@ class VideoCall extends Component {
     }
 
   }
+
+  setStreamFromCameraDevice = (cameraDeviceId) => {
+    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
+      this.setStream(stream);
+      if (this.userVideo.current) {
+        this.userVideo.current.srcObject = stream;
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  };
+
+  getCameraDevices = () => {
+    const {cameraDevices} = this.state;
+    navigator.mediaDevices.enumerateDevices().then(function(devices) {
+      devices.forEach(function(device) {
+        if (device.kind === 'videoinput') cameraDevices.push(device);
+      });
+    });
+  };
 
 
   setCallSocketEvents = () => {
