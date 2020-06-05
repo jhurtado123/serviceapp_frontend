@@ -86,6 +86,7 @@ class VideoCall extends Component {
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
     const {stream} = this.state;
+    console.log(cameraDeviceId);
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
       if (peer) {
@@ -99,6 +100,8 @@ class VideoCall extends Component {
           }
         });
       }
+      peer.removeStream(stream);
+      peer.addStream(newStream);
       this.setStream(newStream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = newStream;
