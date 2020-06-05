@@ -82,6 +82,7 @@ class VideoCall extends Component {
     if (peer) peer.removeStream(stream);
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
+      if (peer) peer.addStream(stream);
       this.setStream(stream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = stream;
@@ -161,12 +162,19 @@ class VideoCall extends Component {
 
         iceServers: [
           {
-            urls: "stun:stun.l.google.com:19302",
+            urls: "stun:eu-turn3.xirsys.com",
           },
           {
-            url: 'turn:numb.viagenie.ca',
-            credential: 'muazkh',
-            username: 'webrtc@live.com'
+            username: "mCUg_vLCEZnFETmpcyvcxb1gpXHc1KhZO9b_8DnvZJh1jHrQOUi1p1jA9pW2B5sNAAAAAF7agmxqaHVydGFkbzEyMw==",
+            credential: "f9dab90e-a752-11ea-a15a-0242ac140004",
+            urls: [
+              "turn:eu-turn3.xirsys.com:80?transport=udp",
+              "turn:eu-turn3.xirsys.com:3478?transport=udp",
+              "turn:eu-turn3.xirsys.com:80?transport=tcp",
+              "turn:eu-turn3.xirsys.com:3478?transport=tcp",
+              "turns:eu-turn3.xirsys.com:443?transport=tcp",
+              "turns:eu-turn3.xirsys.com:5349?transport=tcp"
+            ]
           },
         ]
       },
