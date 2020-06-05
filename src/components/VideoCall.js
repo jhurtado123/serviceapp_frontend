@@ -28,7 +28,6 @@ class VideoCall extends Component {
   };
 
   setStream = (stream) => {
-    if (peer) peer.setStream(stream);
     this.setState({
       stream
     })
@@ -73,15 +72,21 @@ class VideoCall extends Component {
 
   switchCamera = () => {
     const {stream, cameraDevices} = this.state;
-    stream.getTracks().forEach(track => track.stop());
+    stream.getTracks().forEach(track => {
+      peer.removeTrack(track, stream);
+      track.stop();
+    });
     this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
   };
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
-    const {stream} = this.state;
-    if (peer) peer.removeStream(stream);
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
+      if (peer) {
+        stream.getTracks().forEach(track => {
+          peer.addTrack(track, stream);
+        });
+      }
       this.setStream(stream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = stream;
@@ -129,8 +134,8 @@ class VideoCall extends Component {
     peer = new Peer({
       initiator: false,
       trickle: false,
+      stream: stream,
     });
-    peer.addStream(stream);
     peer.on("signal", data => {
       socket.emit("call:handShakeAccept", {signal: data, chatId: chat._id});
     });
@@ -178,8 +183,9 @@ class VideoCall extends Component {
           },
         ]
       },
+      stream: stream,
     });
-    peer.addStream(stream);
+
     peer.on("signal", data => {
       socket.emit("call:handShake", {chatId: chat._id, signalData: data});
       this.setState({
