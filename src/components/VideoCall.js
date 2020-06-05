@@ -93,24 +93,25 @@ class VideoCall extends Component {
       if (peer) {
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
+            console.log('new steam', newStream);
             stream.getTracks().forEach(lastStreamTrack => {
+              console.log('last streams' , lastStreamTrack);
               if (track.kind === 'video') {
+                console.log('last stream', lastStreamTrack );
                 peer.replaceTrack(lastStreamTrack, track, stream);
               }
             });
           }
         });
        // peer.removeStream(stream).;
-        peer.addStream(newStream)
-          .then(res => console.log('res', res) )
-          .catch(err => console.log('ee', err));
+        //peer.addStream(newStream);
       }
       this.setStream(newStream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = newStream;
       }
     }, (error) => {
-      console.log(error);
+      console.log('err', error);
     });
   };
 
