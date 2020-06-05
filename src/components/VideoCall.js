@@ -41,9 +41,10 @@ class VideoCall extends Component {
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
     navigator.mediaDevices.enumerateDevices().then(function(devices) {
-      devices.forEach(function(device) {
-       console.log(device.deviceId);
+     const cameras = devices.filter(function(device) {
+       return device.kind === 'videoinput';
       });
+      console.log(cameras);
     });
 
     navigator.getUserMedia({video: {   width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
