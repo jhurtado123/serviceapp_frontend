@@ -25,6 +25,7 @@ class VideoCall extends Component {
     isAudioOn: true,
     isLoading: true,
     cameraDevices: [],
+    activeCameraIndex: 0,
   };
 
   setStream = (stream) => {
@@ -46,7 +47,11 @@ class VideoCall extends Component {
     this.getCameraDevices();
 
     setTimeout(() => {
-     this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
+      if (cameraDevices.length) {
+        this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
+      } else {
+        this.toggleVideoCamera();
+      }
     }, 500);
 
 
@@ -71,9 +76,12 @@ class VideoCall extends Component {
   }
 
   switchCamera = () => {
-    const {cameraDevices} = this.state;
-
-    this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
+    const {cameraDevices, activeCameraIndex} = this.state;
+    let newIndex = activeCameraIndex === 0 ? 1 : 0;
+    this.setState({
+      activeCameraIndex:  newIndex,
+    });
+    this.setStreamFromCameraDevice(cameraDevices[newIndex].deviceId);
   };
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
@@ -81,7 +89,6 @@ class VideoCall extends Component {
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
       if (peer) {
-        console.log('add tracks');
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
             stream.getTracks().forEach(lastStreamTrack => {
