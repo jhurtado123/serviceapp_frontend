@@ -23,6 +23,7 @@ class VideoCall extends Component {
     isPartnerCameraOn: true,
     isAudioOn: true,
     isLoading: true,
+    cameraDevices: [],
   };
 
   setStream = (stream) => {
@@ -39,7 +40,13 @@ class VideoCall extends Component {
     const {isCaller, socket, hangUpCall} = this.props;
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-    navigator.getUserMedia({video: true, audio: true}, (stream) => {
+    navigator.mediaDevices.enumerateDevices().then(function(devices) {
+      devices.forEach(function(device) {
+       console.log(device.deviceId);
+      });
+    });
+
+    navigator.getUserMedia({video: {   width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
       this.setStream(stream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = stream;
@@ -67,6 +74,7 @@ class VideoCall extends Component {
     }
 
   }
+
 
   setCallSocketEvents = () => {
     const {socket} = this.props;
