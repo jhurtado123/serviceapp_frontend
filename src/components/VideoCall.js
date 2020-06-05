@@ -1,15 +1,28 @@
 import React, {Component} from 'react';
 import '../assets/css/components/videoCall.scss';
 import HangUpIcon from '../assets/images/icons/hangUp.png';
+import CameraOn from '../assets/images/icons/video-camera.png';
+import CameraOff from '../assets/images/icons/video-camera-off.png';
+import AudioOn from '../assets/images/icons/speaker.png';
+import AudioOff from '../assets/images/icons/speaker-off.png';
+import VideoUnavailable from '../assets/images/icons/video-unavailable.png';
 import Peer from "simple-peer";
+import LoadingBars from "./LoadingBars";
+import Draggable from 'react-draggable';
+
 
 let peer;
+
 class VideoCall extends Component {
 
   state = {
     stream: undefined,
     callerSignal: undefined,
     hasTransmissionResponse: false,
+    isCameraOn: true,
+    isPartnerCameraOn: true,
+    isAudioOn: true,
+    isLoading: true,
   };
 
   setStream = (stream) => {
@@ -38,6 +51,13 @@ class VideoCall extends Component {
       if (peer) peer = null;
       hangUpCall();
     });
+
+    socket.on("call:toggled-videocam", data => {
+      this.setState({
+        isPartnerCameraOn: !this.state.isPartnerCameraOn,
+      })
+    });
+
     if (isCaller) {
       setTimeout(this.initRTCransmission, 1000);
     } else {
@@ -60,6 +80,7 @@ class VideoCall extends Component {
           this.responseRTCTransmission();
           this.setState({
             hasTransmissionResponse: true,
+            isLoading: false,
           });
         }, 1);
       })
@@ -119,6 +140,9 @@ class VideoCall extends Component {
 
     peer.on("signal", data => {
       socket.emit("call:handShake", {chatId: chat._id, signalData: data});
+      this.setState({
+        isLoading: false,
+      });
     });
     peer.on("stream", stream => {
       if (this.partnerVideo.current) {
@@ -165,15 +189,33 @@ class VideoCall extends Component {
     socket.off('call:handShakeRequest');
     socket.off('call:handUpDestroyPeerEmit');
     socket.off('call:handShakeRequestAccepted');
+    socket.off('call:toggled-videocam');
+  };
+
+  toggleVideoCamera = () => {
+    const {isCameraOn, stream} = this.state;
+    const {socket, chat} = this.props;
+    socket.emit('call:toggle-videocam', {chatId: chat._id});
+    stream.getVideoTracks()[0].enabled = !isCameraOn;
+    this.setState({
+      isCameraOn: !isCameraOn,
+    })
+  };
+
+  toggleAudio = () => {
+    const {isAudioOn, stream} = this.state;
+    stream.getAudioTracks()[0].enabled = !isAudioOn;
+    this.setState({
+      isAudioOn: !isAudioOn,
+    })
   };
 
   getUserVideo = () => {
-    const {stream} = this.state;
+    const {stream, isCameraOn} = this.state;
     let userVideo;
-
     if (stream) {
       userVideo = (
-        <video playsInline muted ref={this.userVideo} autoPlay/>
+        <video className={isCameraOn ? '' : 'hidden'} playsInline muted ref={this.userVideo} autoPlay/>
       );
     }
 
@@ -181,17 +223,38 @@ class VideoCall extends Component {
   };
 
   getPartnerVideo = () => {
-    return (<video playsInline ref={this.partnerVideo} autoPlay/>)
+    const {isPartnerCameraOn} = this.state;
+    return (<video className={isPartnerCameraOn ? '' : 'hidden'} playsInline ref={this.partnerVideo} autoPlay/>)
   };
 
   render() {
+    const {isCameraOn, isPartnerCameraOn, isAudioOn, isLoading} = this.state;
     return (
       <div className={'videoCall-wrapper'}>
+        {isLoading && <LoadingBars/>}
         <div id={'partnerVideo'}>
           {this.getPartnerVideo()}
+          <img src={VideoUnavailable} alt={'No video'}
+               className={'video-unavailable ' + (isPartnerCameraOn ? 'hidden' : '')}/>
         </div>
-        <div id={'selfVideo'}>
-          {this.getUserVideo()}
+        <Draggable>
+          <div id={'selfVideo'}>
+            {this.getUserVideo()}
+            <img src={VideoUnavailable} alt={'No video'}
+                 className={'video-unavailable ' + (isCameraOn ? 'hidden' : '')}/>
+          </div>
+        </Draggable>
+        <div className={'actions'}>
+          {
+            isCameraOn ?
+              <img src={CameraOn} onClick={this.toggleVideoCamera} alt={'Toggle camera'}/> :
+              <img src={CameraOff} onClick={this.toggleVideoCamera} alt={'Toggle camera'}/>
+          }
+          {
+            isAudioOn ?
+              <img src={AudioOn} onClick={this.toggleAudio} alt={'Toggle camera'}/> :
+              <img src={AudioOff} onClick={this.toggleAudio} alt={'Toggle camera'}/>
+          }
         </div>
         <img className={'handUp-call'} src={HangUpIcon} onClick={this.handleHandUp} alt={'hangUpCall'}/>
       </div>
