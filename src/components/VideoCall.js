@@ -83,12 +83,14 @@ class VideoCall extends Component {
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
       if (peer) {
+        console.log(peer.getTracks());
         console.log('add tracks');
         stream.getTracks().forEach(track => {
           peer.addTrack(track, stream);
         });
+        console.log(peer.getTracks());
       }
-      this.setStream(stream);
+      //this.setStream(stream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = stream;
       }
