@@ -28,7 +28,7 @@ class VideoCall extends Component {
   };
 
   setStream = (stream) => {
-    if (peer) peer.stream = stream;
+    if (peer) peer.setStream(stream);
     this.setState({
       stream
     })
@@ -129,8 +129,8 @@ class VideoCall extends Component {
     peer = new Peer({
       initiator: false,
       trickle: false,
-      stream: stream,
     });
+    peer.addStream(stream);
     peer.on("signal", data => {
       socket.emit("call:handShakeAccept", {signal: data, chatId: chat._id});
     });
@@ -178,9 +178,8 @@ class VideoCall extends Component {
           },
         ]
       },
-      stream: stream,
     });
-
+    peer.addStream(stream);
     peer.on("signal", data => {
       socket.emit("call:handShake", {chatId: chat._id, signalData: data});
       this.setState({
