@@ -85,7 +85,9 @@ class VideoCall extends Component {
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
             stream.getTracks().forEach(lastStreamTrack => {
-              console.log(lastStreamTrack.kind);
+              if (track.kind === 'video') {
+                peer.replaceTrack(lastStreamTrack, track, stream);
+              }
             });
           }
         });
