@@ -72,6 +72,7 @@ class VideoCall extends Component {
 
   switchCamera = () => {
     const {stream, cameraDevices} = this.state;
+    console.log(peer.stream);
     stream.getTracks().forEach(track => {
       peer.removeTrack(track, stream);
       //track.stop();
