@@ -89,7 +89,7 @@ class VideoCall extends Component {
     const {stream} = this.state;
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
-      if (peer) {
+      if (peer && stream) {
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
             console.log('new steam', newStream);
