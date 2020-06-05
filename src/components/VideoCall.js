@@ -28,6 +28,7 @@ class VideoCall extends Component {
   };
 
   setStream = (stream) => {
+    if (peer) peer.addStream(stream);
     this.setState({
       stream
     })
@@ -71,12 +72,15 @@ class VideoCall extends Component {
   }
 
   switchCamera = () => {
-    const {stream, cameraDevices} = this.state;
+    const {cameraDevices} = this.state;
     //stream.getTracks().forEach(track => track.stop());
     this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
   };
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
+    const {stream} = this.state;
+    peer.removeStream(stream);
+
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
       this.setStream(stream);
       if (this.userVideo.current) {
