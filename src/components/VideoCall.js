@@ -28,7 +28,7 @@ class VideoCall extends Component {
   };
 
   setStream = (stream) => {
-    if (peer) peer.addStream(stream);
+    if (peer) peer.stream = stream;
     this.setState({
       stream
     })
@@ -166,14 +166,15 @@ class VideoCall extends Component {
           {
             username: "mCUg_vLCEZnFETmpcyvcxb1gpXHc1KhZO9b_8DnvZJh1jHrQOUi1p1jA9pW2B5sNAAAAAF7agmxqaHVydGFkbzEyMw==",
             credential: "f9dab90e-a752-11ea-a15a-0242ac140004",
-            urls: [
-              "turn:eu-turn3.xirsys.com:80?transport=udp",
+            urls: "turn:eu-turn3.xirsys.com:80?transport=udp",
+           /** urls: [
+
               "turn:eu-turn3.xirsys.com:3478?transport=udp",
               "turn:eu-turn3.xirsys.com:80?transport=tcp",
               "turn:eu-turn3.xirsys.com:3478?transport=tcp",
               "turns:eu-turn3.xirsys.com:443?transport=tcp",
               "turns:eu-turn3.xirsys.com:5349?transport=tcp"
-            ]
+            ]**/
           },
         ]
       },
