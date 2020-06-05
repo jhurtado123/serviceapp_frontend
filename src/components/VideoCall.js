@@ -82,7 +82,7 @@ class VideoCall extends Component {
       if (peer) {
         console.log('add tracks');
         stream.getTracks().forEach(track => {
-          console.log(track);
+          console.log(track.kind);
         });
       }
       this.setStream(stream);
