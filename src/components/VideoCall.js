@@ -87,7 +87,6 @@ class VideoCall extends Component {
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
     const {stream} = this.state;
-    console.log(cameraDeviceId);
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
       if (peer) {
@@ -242,7 +241,7 @@ class VideoCall extends Component {
   componentWillUnmount = () => {
     const {socket, chat} = this.props;
     const {stream} = this.state;
-    stream.getTracks().forEach(track => track.stop());
+    if (stream) stream.getTracks().forEach(track => track.stop());
     socket.emit('call:handUpDestroyPeer', {chatId: chat._id,});
     this.removeSocketEvents();
     this.setState({
