@@ -27,7 +27,7 @@ class AdForm extends Component {
       lat: this.props.mapCoords ? this.props.mapCoords.lat : this.props.user.location.coordinates[0],
       lng: this.props.mapCoords ? this.props.mapCoords.lng : this.props.user.location.coordinates[1],
     },
-    formErrors: {name: '', description: '', number: '', postalCode: '', address: '', price: ''},
+    formErrors: {name: '', description: '', postalCode: '', address: '', price: ''},
     error: undefined,
     categories: [],
   };
@@ -78,7 +78,6 @@ class AdForm extends Component {
 
   handleCheckboxChange = (e) => {
     const {formErrors} = this.state;
-    formErrors['number'] = '';
     formErrors['postalCode'] = '';
     formErrors['address'] = '';
     this.setState({
@@ -262,7 +261,6 @@ class AdForm extends Component {
                 <label>Número</label>
                 <input type="text" name={'number'} placeholder={'Número'} value={number} onChange={this.handleChange}
                        onBlur={this.handleMapboxPosition}/>
-                <div className={'form-input-error'}>{formErrors['number'] && formErrors['number']}</div>
               </div>
             </div>
             <div className={'form-group'}>
