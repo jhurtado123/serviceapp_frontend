@@ -26,8 +26,8 @@ class BaseLayout extends Component {
     const { user } = this.props;
     if(user) {
       socket = io.connect(`${process.env.REACT_APP_BACKEND_URI}`, {query: `id=${user._id}`});
-      this.getUserNotificatons()
-      this.setSocketEvents()
+      this.getUserNotificatons();
+      this.setSocketEvents();
       this.getAllNotifications()
     }
   };
