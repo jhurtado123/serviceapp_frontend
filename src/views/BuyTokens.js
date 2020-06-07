@@ -64,7 +64,7 @@ class BuyTokens extends Component {
     const {tokens} = this.state;
     try {
       await profileApiClient.buyTokens(tokens);
-      user.wallet.tokens = parseInt(user.wallet.tokens + tokens);
+      user.wallet.tokens = parseInt(user.wallet.tokens) + parseInt(tokens);
       this.setState({
         showSuccess: true,
       })
