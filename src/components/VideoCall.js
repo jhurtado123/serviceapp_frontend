@@ -11,7 +11,6 @@ import Peer from "simple-peer";
 import LoadingBars from "./LoadingBars";
 import Draggable from 'react-draggable';
 
-
 let peer;
 
 class VideoCall extends Component {
@@ -25,6 +24,7 @@ class VideoCall extends Component {
     isAudioOn: true,
     isLoading: true,
     cameraDevices: [],
+    activeCameraIndex: 0,
   };
 
   setStream = (stream) => {
@@ -46,7 +46,11 @@ class VideoCall extends Component {
     this.getCameraDevices();
 
     setTimeout(() => {
-     this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
+      if (cameraDevices.length) {
+        this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
+      } else {
+        this.toggleVideoCamera();
+      }
     }, 500);
 
 
@@ -71,29 +75,40 @@ class VideoCall extends Component {
   }
 
   switchCamera = () => {
-    const {stream, cameraDevices} = this.state;
-    stream.getTracks().forEach(track => {
-      peer.removeTrack(track, stream);
-      //track.stop();
+    const {cameraDevices, activeCameraIndex} = this.state;
+    let newIndex = activeCameraIndex === 0 ? 1 : 0;
+    this.setState({
+      activeCameraIndex:  newIndex,
     });
-    this.setStreamFromCameraDevice(cameraDevices[1].deviceId);
+    this.setStreamFromCameraDevice(cameraDevices[newIndex].deviceId);
   };
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
+    const {stream} = this.state;
 
-    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (stream) => {
-      if (peer) {
-        console.log('add tracks');
-        stream.getTracks().forEach(track => {
-          peer.addTrack(track, stream);
+    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
+      if (peer && stream) {
+        newStream.getTracks().forEach(track => {
+          if (track.kind === 'video') {
+            console.log('new steam', newStream);
+            stream.getTracks().forEach(lastStreamTrack => {
+              console.log('last streams' , lastStreamTrack);
+              if (track.kind === 'video') {
+                console.log('last stream', lastStreamTrack );
+                peer.replaceTrack(lastStreamTrack, track, stream);
+              }
+            });
+          }
         });
+       // peer.removeStream(stream).;
+        //peer.addStream(newStream);
       }
-      this.setStream(stream);
+      this.setStream(newStream);
       if (this.userVideo.current) {
-        this.userVideo.current.srcObject = stream;
+        this.userVideo.current.srcObject = newStream;
       }
     }, (error) => {
-      console.log(error);
+      console.log('err', error);
     });
   };
 
@@ -224,7 +239,7 @@ class VideoCall extends Component {
   componentWillUnmount = () => {
     const {socket, chat} = this.props;
     const {stream} = this.state;
-    stream.getTracks().forEach(track => track.stop());
+    if (stream) stream.getTracks().forEach(track => track.stop());
     socket.emit('call:handUpDestroyPeer', {chatId: chat._id,});
     this.removeSocketEvents();
     this.setState({
