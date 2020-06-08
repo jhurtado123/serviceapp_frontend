@@ -7,7 +7,7 @@ class CallModal extends Component {
 
 
   printData() {
-    const {isCalling, handleClose, isReceivingCall, otherUser, acceptCall} = this.props;
+    const {isCalling, handleClose, isReceivingCall, otherUser, acceptCall, isNotConnected} = this.props;
     if (isCalling) {
       return <React.Fragment>
         <p className={'info-message'}>Llamando...</p>
@@ -23,6 +23,14 @@ class CallModal extends Component {
         <div className={'buttons'}>
           <div className={'close'} onClick={handleClose}>Declinar</div>
           <div className={'accept'} onClick={acceptCall}>Aceptar</div>
+        </div>
+      </React.Fragment>
+    }
+    if (isNotConnected) {
+      return <React.Fragment>
+        <p className={'info-message'}>{otherUser.name} no está conectado en este chat.</p>
+        <div className={'buttons'}>
+          <div className={'close'} onClick={handleClose}>Cerrar</div>
         </div>
       </React.Fragment>
     }
