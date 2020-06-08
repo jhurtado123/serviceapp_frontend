@@ -35,6 +35,7 @@ class Chat extends Component {
     isCalling: false,
     isReceivingCall: false,
     callInProgress: false,
+    isOtherUserNotConnected: false,
   };
 
   fileRef = React.createRef();
@@ -285,9 +286,9 @@ class Chat extends Component {
   printMessages = () => {
     const {messages, chat} = this.state;
     return messages.map((message, index) => <ChatMessage key={index} price={chat.price} message={message}
-                                                         seller={chat.seller} buyer={chat.buyer}
-                                                         resolveNegotiation={this.handleResolveRenegotiation}
-                                                         resolveNewDeal={this.handleResolveNewDeal}/>);
+                                                        seller={chat.seller} buyer={chat.buyer}
+                                                        resolveNegotiation={this.handleResolveRenegotiation}
+                                                        resolveNewDeal={this.handleResolveNewDeal}/>);
   };
 
   async componentDidMount() {
@@ -338,6 +339,7 @@ class Chat extends Component {
         isReceivingCall: true,
         isCalling: false,
         caller: undefined,
+        isOtherUserNotConnected: false,
       });
     });
     socket.on('call:declined-call', (data) => {
@@ -345,6 +347,20 @@ class Chat extends Component {
         showCallModal: false,
         isReceivingCall: false,
         isCalling: false,
+        callInProgress: false,
+        caller: undefined,
+        isOtherUserNotConnected: false,
+      });
+    });
+
+    socket.on('call:declined-call-no-connected', (data) => {
+      this.setState({
+        showCallModal: true,
+        isReceivingCall: false,
+        isCalling: false,
+        callInProgress: false,
+        caller: undefined,
+        isOtherUserNotConnected: true,
       });
     });
 
@@ -353,7 +369,8 @@ class Chat extends Component {
         showCallModal: false,
         isCalling: false,
         isReceivingCall: false,
-        callInProgress: true
+        callInProgress: true,
+        isOtherUserNotConnected: false,
       });
     });
     socket.on('call:finished', (data) => {
@@ -362,6 +379,7 @@ class Chat extends Component {
         isCalling: false,
         isReceivingCall: false,
         callInProgress: false,
+        isOtherUserNotConnected: false,
       });
     })
   };
@@ -471,7 +489,7 @@ class Chat extends Component {
 
   render() {
     const {messages, chat, writedMessage, encodedImage, showRenegotiateModal,
-      showDealModal, isLoading, showCallModal,
+      showDealModal, isLoading, showCallModal, isOtherUserNotConnected,
       isCalling, isReceivingCall, callInProgress, caller} = this.state;
     const {user} = this.props;
     return (
@@ -508,7 +526,7 @@ class Chat extends Component {
                 <CallModal show={showCallModal} isCalling={isCalling}
                            otherUser={chat.seller._id === user._id ? chat.buyer : chat.seller}
                            isReceivingCall={isReceivingCall} handleClose={this.closeCallModal}
-                           acceptCall={this.acceptCall}/>
+                           acceptCall={this.acceptCall} isNotConnected={isOtherUserNotConnected}/>
                 {callInProgress && <VideoCall chat={chat} socket={socket} hangUpCall={this.handUpCall} isCaller={caller === user._id}/>}
               </React.Fragment>
               :

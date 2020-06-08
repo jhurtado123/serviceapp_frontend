@@ -7,7 +7,7 @@ class RegisterPartTwo extends Component {
     return (
       <React.Fragment>
         <InputWithIcon icon={'location-purple'} name={'postalCode'} placeholder={'Tu código postal'} value={postalCode} type={'text'}
-                       handleChange={handleChange}/>
+                      handleChange={handleChange}/>
         {error && <div className={'error-form'}>{error}</div> }
         <button className={'button-bck-purple register-button'} onClick={onRegister} >Registrarme</button>
       </React.Fragment>

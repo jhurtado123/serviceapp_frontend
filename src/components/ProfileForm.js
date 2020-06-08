@@ -213,7 +213,7 @@ class ProfileForm extends Component {
     };
   }
 
-   render() {
+  render() {
     const {name, description, error, postalcode, number, address, encodedFile, formErrors} = this.state;
     const {user} = this.props;
     return (
@@ -229,7 +229,7 @@ class ProfileForm extends Component {
           <div className={'form-group profile-form'}>
             <label>Nombre</label>
             <input type="text" name={'name'} placeholder={'Nombre'} value={name}
-                   onChange={this.handleChange}/>
+                  onChange={this.handleChange}/>
             <div className={'form-input-error'}>{formErrors['name'] && formErrors['name']}</div>
           </div>
           <div className={'form-group'}>
@@ -244,27 +244,26 @@ class ProfileForm extends Component {
               <div className={'form-group'}>
                 <label>Código postal</label>
                 <input type="text" data-validate={'postalCode'} name={'postalcode'} placeholder={'Código postal'} value={postalcode}
-                       onChange={this.handleChange} onBlur={this.handleMapboxPosition}/>
+                      onChange={this.handleChange} onBlur={this.handleMapboxPosition}/>
                 <div className={'form-input-error'}>{formErrors['postalcode'] && formErrors['postalcode']}</div>
               </div>
               <div className={'form-group small'}>
                 <label>Número</label>
                 <input type="text" name={'number'} placeholder={'Número'} value={number} onChange={this.handleChange}
-                       onBlur={this.handleMapboxPosition}/>
+                      onBlur={this.handleMapboxPosition}/>
                 <div className={'form-input-error'}>{formErrors['number'] && formErrors['number']}</div>
               </div>
             </div>
             <div className={'form-group'}>
               <label>Dirección</label>
               <input type="text" name={'address'} placeholder={'Dirección'} value={address} onChange={this.handleChange}
-                     onBlur={this.handleMapboxPosition}/>
+                    onBlur={this.handleMapboxPosition}/>
               <div className={'form-input-error'}>{formErrors['address'] && formErrors['address']}</div>
             </div>
           </div>
           <div className={'map'}>
             <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
           </div>
-
           <button className={'button-bck-purple'}>Guardar cambios</button>
           {error && <div className={'error-form'}>{error}</div>}
         </div>

@@ -46,7 +46,7 @@ class Appointments extends Component {
                                           user={appointment.buyer._id === user._id ? appointment.seller : appointment.buyer}/>;
       if (appointment.ad.name.includes(search)) {
         return <AppointmentBox key={index} appointment={appointment}
-                               user={appointment.buyer._id === user._id ? appointment.seller : appointment.buyer}/>;
+                              user={appointment.buyer._id === user._id ? appointment.seller : appointment.buyer}/>;
       }
       return false;
     })
@@ -63,7 +63,7 @@ class Appointments extends Component {
             <div className={'appointments-list-container container ' }>
               {this.printAppointments()}
             </div>:
-            <div className={'page-message'}>
+            <div className={'page-message container'}>
               <p>¡No tienes citas activas!</p>
               <Link to={'/'} className={'button-bck-purple'}>Volver a la home</Link>
             </div>

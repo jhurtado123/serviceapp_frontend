@@ -210,8 +210,11 @@ class AdForm extends Component {
 
 
   printCategories() {
-    return this.state.categories.map((element, index) => <option key={index}
-                                                                 value={element._id}>{element.name}</option>);
+    return this.state.categories.map((element, index) => <option 
+      key={index}
+      value={element._id}>
+        {element.name}
+      </option>);
   }
 
   render() {
@@ -226,7 +229,7 @@ class AdForm extends Component {
           <div className={'form-group'}>
             <label>Título</label>
             <input type="text" name={'name'} placeholder={'Título del anuncio'} value={name}
-                   onChange={this.handleChange}/>
+                  onChange={this.handleChange}/>
             <div className={'form-input-error'}>{formErrors['name'] && formErrors['name']}</div>
           </div>
           <div className={'form-group'}>
@@ -238,14 +241,14 @@ class AdForm extends Component {
           <div className={'form-group'}>
             <label>Precio (en serkens)</label>
             <input name={'price'} placeholder={'Precio'} value={price} onChange={this.handleChange}
-                   data-validate={'price'} type={'text'}/>
+                  data-validate={'price'} type={'text'}/>
             <div className={'form-input-error'}>{formErrors['price'] && formErrors['price']}</div>
           </div>
           <div className={'form-title'}>Localización</div>
           <div className={'form-group checkbox'}>
             <input onChange={this.handleCheckboxChangeForm} onBlur={this.handleMapboxPosition} id={'usePersonalAddress'}
-                   type={'checkbox'} checked={usePersonalAddress} value={usePersonalAddress}
-                   name={'usePersonalAddress'}/>
+                  type={'checkbox'} checked={usePersonalAddress} value={usePersonalAddress}
+                  name={'usePersonalAddress'}/>
             <label htmlFor={'usePersonalAddress'} className={'checkbox-pretty'}/>
             <label htmlFor={'usePersonalAddress'}>Usar la dirección de mi perfil</label>
           </div>
@@ -254,35 +257,33 @@ class AdForm extends Component {
               <div className={'form-group'}>
                 <label>Código postal</label>
                 <input type="text" name={'postalCode'} data-validate={'postalCode'} placeholder={'Código postal'}
-                       value={postalCode}
-                       onChange={this.handleChange} onBlur={this.handleMapboxPosition}/>
+                      value={postalCode}
+                      onChange={this.handleChange} onBlur={this.handleMapboxPosition}/>
                 <div className={'form-input-error'}>{formErrors['postalCode'] && formErrors['postalCode']}</div>
               </div>
               <div className={'form-group small'}>
                 <label>Número</label>
                 <input type="text" name={'number'} placeholder={'Número'} value={number} onChange={this.handleChange}
-                       onBlur={this.handleMapboxPosition}/>
+                      onBlur={this.handleMapboxPosition}/>
                 <div className={'form-input-error'}>{formErrors['number'] && formErrors['number']}</div>
               </div>
             </div>
             <div className={'form-group'}>
               <label>Dirección</label>
               <input type="text" name={'address'} placeholder={'Dirección'} value={address} onChange={this.handleChange}
-                     onBlur={this.handleMapboxPosition}/>
+                    onBlur={this.handleMapboxPosition}/>
               <div className={'form-input-error'}>{formErrors['address'] && formErrors['address']}</div>
             </div>
           </div>
           <div className={'map'}>
             <div ref={el => this.mapContainer = el} className={'mapContainer'}/>
           </div>
-
           <div className={'form-title'}>Otros</div>
           <div className={'form-group'}>
             <label>Categoría</label>
             <select name={'category'} onChange={this.handleChange} value={category}>
               {this.printCategories()}
             </select>
-
           </div>
           <div className={'form-group'}>
             <label>Etiquetas</label>

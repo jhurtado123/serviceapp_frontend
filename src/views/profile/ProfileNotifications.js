@@ -19,7 +19,17 @@ class ProfileNotifications extends Component {
   };
 
   componentDidMount = () => {
-    this.getProfile()
+    this.getProfile();
+    this.setAllNotificationsReaded();
+  };
+
+  setAllNotificationsReaded = () => {
+    const {user} = this.props;
+    user.notifications.forEach(e => {
+      if (e.isReaded === false) {
+        e.isReaded = true;
+      }
+    });
   };
 
   handleSearch = (e) => {

@@ -44,9 +44,9 @@ class Login extends Component {
         <img className={'logo'} src={Logo} alt={'logo'}/>
         <form method={'post'} onSubmit={this.handleSubmit}>
           <InputWithIcon icon={'user-purple'} name={'username'} placeholder={'Tu username'} value={username} type={'text'}
-                         handleChange={this.handleChange}/>
+                        handleChange={this.handleChange}/>
           <InputWithIcon icon={'lock-purple'} name={'password'} placeholder={'Tu contraseña'} value={password} type={'password'}
-                         handleChange={this.handleChange}/>
+                        handleChange={this.handleChange}/>
           <button className={'submit-login'}>Login</button>
           {formError && <div className={'error-form'}>{formError}</div> }
           {hasError && <div className={'error-form'}>{errorMessage}</div> }

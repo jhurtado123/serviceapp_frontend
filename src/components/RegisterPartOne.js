@@ -18,13 +18,13 @@ class RegisterPartOne extends Component {
           <span>Serkens</span>
         </h1>
         <InputWithIcon icon={'name-purple'} name={'name'} placeholder={'Tu nombre'} value={name} type={'text'}
-                       handleChange={handleChange}/>
+                      handleChange={handleChange}/>
         <InputWithIcon icon={'user-purple'} name={'username'} placeholder={'Tu nombre de usuario'} value={username}
-                       type={'text'} feedback={feedback}
-                       handleChange={handleChange}/>
+                      type={'text'} feedback={feedback}
+                      handleChange={handleChange}/>
         <InputWithIcon icon={'lock-purple'} name={'password'} placeholder={'Tu contraseña'} value={password}
-                       type={'password'}
-                       handleChange={handleChange}/>
+                      type={'password'}
+                      handleChange={handleChange}/>
         {error && <div className={'error-form'}>{error}</div> }
         <button className={'button-bck-purple register-button'} onClick={handleNextClick} >Siguiente</button>
       </React.Fragment>

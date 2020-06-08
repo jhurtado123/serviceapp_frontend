@@ -188,7 +188,7 @@ class VideoCall extends Component {
             username: "mCUg_vLCEZnFETmpcyvcxb1gpXHc1KhZO9b_8DnvZJh1jHrQOUi1p1jA9pW2B5sNAAAAAF7agmxqaHVydGFkbzEyMw==",
             credential: "f9dab90e-a752-11ea-a15a-0242ac140004",
             urls: "turn:eu-turn3.xirsys.com:80?transport=udp",
-           /** urls: [
+          /** urls: [
 
               "turn:eu-turn3.xirsys.com:3478?transport=udp",
               "turn:eu-turn3.xirsys.com:80?transport=tcp",
@@ -299,13 +299,13 @@ class VideoCall extends Component {
         <div id={'partnerVideo'}>
           {this.getPartnerVideo()}
           <img src={VideoUnavailable} alt={'No video'}
-               className={'video-unavailable ' + (isPartnerCameraOn ? 'hidden' : '')}/>
+              className={'video-unavailable ' + (isPartnerCameraOn ? 'hidden' : '')}/>
         </div>
         <Draggable>
           <div id={'selfVideo'}>
             {this.getUserVideo()}
             <img src={VideoUnavailable} alt={'No video'}
-                 className={'video-unavailable ' + (isCameraOn ? 'hidden' : '')}/>
+                className={'video-unavailable ' + (isCameraOn ? 'hidden' : '')}/>
           </div>
         </Draggable>
         <div className={'actions'}>
