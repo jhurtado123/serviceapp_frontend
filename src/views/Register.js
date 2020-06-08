@@ -108,8 +108,8 @@ class Register extends Component {
         <div className={'wrapper'}>
           {!isInSecondStep ?
             <RegisterPartOne {...this.state} usernameValidated={usernameValidated}
-                             validatingUsername={validatingUsername} handleChange={this.handleChange}
-                             handleNextClick={this.handleNextClick}/> :
+                            validatingUsername={validatingUsername} handleChange={this.handleChange}
+                            handleNextClick={this.handleNextClick}/> :
             <RegisterPartTwo onRegister={this.handleRegister} postalCode={postalCode} error={error} handleChange={this.handleChange}/>
           }
         </div>

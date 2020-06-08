@@ -285,9 +285,9 @@ class Chat extends Component {
   printMessages = () => {
     const {messages, chat} = this.state;
     return messages.map((message, index) => <ChatMessage key={index} price={chat.price} message={message}
-                                                         seller={chat.seller} buyer={chat.buyer}
-                                                         resolveNegotiation={this.handleResolveRenegotiation}
-                                                         resolveNewDeal={this.handleResolveNewDeal}/>);
+                                                        seller={chat.seller} buyer={chat.buyer}
+                                                        resolveNegotiation={this.handleResolveRenegotiation}
+                                                        resolveNewDeal={this.handleResolveNewDeal}/>);
   };
 
   async componentDidMount() {

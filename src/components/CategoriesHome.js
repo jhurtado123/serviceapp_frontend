@@ -42,7 +42,7 @@ class CategoriesHome extends Component {
         return (
           <div key={i}>
           <CategoryPreview handleCategoryClick={handleCategoryClick} key={i} id={category._id[0]._id} name={category._id[0].name}
-                           img={category._id[0].default_image}/>
+                          img={category._id[0].default_image}/>
           </div>
         )
       })
@@ -56,7 +56,7 @@ class CategoriesHome extends Component {
       case STATUS.LOADING:
         return (
           <div className={'loading'}>
-           <SmallLoadingBars/>
+            <SmallLoadingBars/>
           </div>
         )
       case STATUS.LOADED:

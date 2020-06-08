@@ -11,7 +11,7 @@ class ProfileAdBox extends Component {
     const {ad, handleDelete, isRecover, handleRecover} = this.props;
     return (
       <div className={'profile-ad-box'}>
-       <AdImagePreview ad={ad} />
+        <AdImagePreview ad={ad} />
         <div className={'ad-data'}>
           <h2>{ad.name}</h2>
           <div className={'action-buttons ' + (isRecover && ' is-recover')}>

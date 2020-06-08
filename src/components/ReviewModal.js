@@ -142,8 +142,8 @@ class ReviewModal extends Component {
                   <React.Fragment>
                     <div className={'form-group checkbox'}>
                       <input onChange={this.handleCheckboxMediation} id={'showMediationForm'}
-                             type={'checkbox'} checked={showMediationForm} value={showMediationForm}
-                             name={'showMediationForm'}/>
+                            type={'checkbox'} checked={showMediationForm} value={showMediationForm}
+                            name={'showMediationForm'}/>
                       <label htmlFor={'showMediationForm'} className={'checkbox-pretty'}/>
                       <label htmlFor={'showMediationForm'}>Solicitar una mediación</label>
                     </div>

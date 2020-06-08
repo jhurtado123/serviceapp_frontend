@@ -38,8 +38,8 @@ class RenegotiateModal extends Component {
                     {price} <img src={Token} alt=""/>
                   </div>
                   <input type="range" name={'price'} min={1} max={seller._id === user._id ? 10000 : availableTokens}
-                         value={price}
-                         onChange={this.handleChange}/>
+                        value={price}
+                        onChange={this.handleChange}/>
                 </div>
                 <div className={'buttons'}>
                   <div className={'close'} onClick={handleClose}>Cancelar</div>

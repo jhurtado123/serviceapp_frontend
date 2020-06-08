@@ -157,7 +157,7 @@ class Profile extends Component {
           <BaseLayout>
           <div>
             <HeaderProfile name={name} level={level} reward={reward} url={url} points={points} missingpoints={missingpoints}
-                           tokens={tokens}/>
+                          tokens={tokens}/>
             {showReviews ?
               <div className={'container'}>
                   <button className={'button-user button-user-not'} onClick={this.handleServices}>Servicios</button>

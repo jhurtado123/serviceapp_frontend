@@ -94,11 +94,11 @@ class BuyTokens extends Component {
                 </div>
                 <div className={'range'}>
                   <input type="range" name={'tokens'} min={5} max={10000}
-                         value={tokens}
-                         onChange={this.handleInputChange}/>
+                        value={tokens}
+                        onChange={this.handleInputChange}/>
                 </div>
                 <div className={'continue-button button-bck-purple ' + (showStep2 ? 'hide' : '')}
-                     onClick={this.handleStep2Show}>Continuar
+                    onClick={this.handleStep2Show}>Continuar
                 </div>
               </div>
               <div className={'step2 ' + (showStep2 ? 'show' : '')} ref={this.step2}>

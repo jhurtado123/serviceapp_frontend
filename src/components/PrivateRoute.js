@@ -17,10 +17,8 @@ class PrivateRoute extends Component {
                         pathname: "/login",
                         state: {from: props.location},
                       }}/>)
-
                   }
           />)
-
     );
   }
 }
