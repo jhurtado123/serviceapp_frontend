@@ -87,7 +87,7 @@ class VideoCall extends Component {
   setStreamFromCameraDevice = (cameraDeviceId) => {
     const {stream} = this.state;
 
-    navigator.getUserMedia({video: {deviceId: cameraDeviceId, width: 400, height: 800}, audio: true}, (newStream) => {
+    navigator.getUserMedia({video: {deviceId: cameraDeviceId, width: 600, height: 300}, audio: true}, (newStream) => {
       if (peer && stream) {
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
