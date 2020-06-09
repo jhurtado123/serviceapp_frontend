@@ -50,6 +50,7 @@ class VideoCall extends Component {
         this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
       } else {
         this.toggleVideoCamera();
+        this.setStreamFromCameraDevice(null);
       }
     }, 500);
 
@@ -83,18 +84,15 @@ class VideoCall extends Component {
     this.setStreamFromCameraDevice(cameraDevices[newIndex].deviceId);
   };
 
-  setStreamFromCameraDevice = (cameraDeviceId) => {
+  setStreamFromCameraDevice = (cameraDeviceId = null) => {
     const {stream} = this.state;
 
-    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
+    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 896 }, height: { ideal: 414 } }, audio: true}, (newStream) => {
       if (peer && stream) {
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
-            console.log('new steam', newStream);
             stream.getTracks().forEach(lastStreamTrack => {
-              console.log('last streams' , lastStreamTrack);
               if (track.kind === 'video') {
-                console.log('last stream', lastStreamTrack );
                 peer.replaceTrack(lastStreamTrack, track, stream);
               }
             });
@@ -164,9 +162,6 @@ class VideoCall extends Component {
       this.handleHandUp();
     });
 
-    peer.on('close', () => {
-    });
-
     peer.signal(callerSignal);
   };
 
@@ -188,14 +183,6 @@ class VideoCall extends Component {
             username: "mCUg_vLCEZnFETmpcyvcxb1gpXHc1KhZO9b_8DnvZJh1jHrQOUi1p1jA9pW2B5sNAAAAAF7agmxqaHVydGFkbzEyMw==",
             credential: "f9dab90e-a752-11ea-a15a-0242ac140004",
             urls: "turn:eu-turn3.xirsys.com:80?transport=udp",
-          /** urls: [
-
-              "turn:eu-turn3.xirsys.com:3478?transport=udp",
-              "turn:eu-turn3.xirsys.com:80?transport=tcp",
-              "turn:eu-turn3.xirsys.com:3478?transport=tcp",
-              "turns:eu-turn3.xirsys.com:443?transport=tcp",
-              "turns:eu-turn3.xirsys.com:5349?transport=tcp"
-            ]**/
           },
         ]
       },
@@ -215,12 +202,7 @@ class VideoCall extends Component {
     });
 
     peer.on('error', (err) => {
-      console.log('Peer error', err);
       this.handleHandUp();
-    });
-
-    peer.on('close', () => {
-      console.log('closed');
     });
 
     socket.on("call:handShakeRequestAccepted", data => {
