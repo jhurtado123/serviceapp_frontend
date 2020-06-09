@@ -79,7 +79,7 @@ class VideoCall extends Component {
     const {cameraDevices, activeCameraIndex} = this.state;
     let newIndex = activeCameraIndex === 0 ? 1 : 0;
     this.setState({
-      activeCameraIndex:  newIndex,
+      activeCameraIndex: newIndex,
     });
     this.setStreamFromCameraDevice(cameraDevices[newIndex].deviceId);
   };
@@ -87,7 +87,7 @@ class VideoCall extends Component {
   setStreamFromCameraDevice = (cameraDeviceId) => {
     const {stream} = this.state;
 
-    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 896 }, height: { ideal: 414 } }, audio: true}, (newStream) => {
+    navigator.getUserMedia({video: {deviceId: cameraDeviceId, width: 400, height: 800}, audio: true}, (newStream) => {
       if (peer && stream) {
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
@@ -98,7 +98,7 @@ class VideoCall extends Component {
             });
           }
         });
-       // peer.removeStream(stream).;
+        // peer.removeStream(stream).;
         //peer.addStream(newStream);
       }
       this.setStream(newStream);
@@ -126,8 +126,8 @@ class VideoCall extends Component {
 
   getCameraDevices = () => {
     const {cameraDevices} = this.state;
-    navigator.mediaDevices.enumerateDevices().then(function(devices) {
-      devices.forEach(function(device) {
+    navigator.mediaDevices.enumerateDevices().then(function (devices) {
+      devices.forEach(function (device) {
         if (device.kind === 'videoinput') cameraDevices.push(device);
       });
     });
@@ -263,11 +263,13 @@ class VideoCall extends Component {
   };
 
   toggleAudio = () => {
-    const {isAudioOn, stream} = this.state;
-    if (stream) stream.getAudioTracks()[0].enabled = !isAudioOn;
-    this.setState({
-      isAudioOn: !isAudioOn,
-    })
+    const {isAudioOn, stream, cameraDevices} = this.state;
+    if (stream && cameraDevices) {
+      stream.getAudioTracks()[0].enabled = !isAudioOn;
+      this.setState({
+        isAudioOn: !isAudioOn,
+      })
+    }
   };
 
   getUserVideo = () => {
@@ -295,13 +297,13 @@ class VideoCall extends Component {
         <div id={'partnerVideo'}>
           {this.getPartnerVideo()}
           <img src={VideoUnavailable} alt={'No video'}
-              className={'video-unavailable ' + (isPartnerCameraOn ? 'hidden' : '')}/>
+               className={'video-unavailable ' + (isPartnerCameraOn ? 'hidden' : '')}/>
         </div>
         <Draggable>
           <div id={'selfVideo'}>
             {this.getUserVideo()}
             <img src={VideoUnavailable} alt={'No video'}
-                className={'video-unavailable ' + (isCameraOn ? 'hidden' : '')}/>
+                 className={'video-unavailable ' + (isCameraOn ? 'hidden' : '')}/>
           </div>
         </Draggable>
         <div className={'actions'}>
@@ -316,7 +318,7 @@ class VideoCall extends Component {
               <img src={AudioOff} onClick={this.toggleAudio} alt={'Toggle camera'}/>
           }
           {
-            cameraDevices.length > 1 && <img  src={SwitchCamera} onClick={this.switchCamera} alt={'Switch camera'}/>
+            cameraDevices.length > 1 && <img src={SwitchCamera} onClick={this.switchCamera} alt={'Switch camera'}/>
           }
         </div>
         <img className={'handUp-call'} src={HangUpIcon} onClick={this.handleHandUp} alt={'hangUpCall'}/>
