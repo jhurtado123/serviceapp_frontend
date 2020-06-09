@@ -260,7 +260,7 @@ class VideoCall extends Component {
     const {isCameraOn, stream} = this.state;
     const {socket, chat} = this.props;
     socket.emit('call:toggle-videocam', {chatId: chat._id});
-    stream.getVideoTracks()[0].enabled = !isCameraOn;
+    if (stream) stream.getVideoTracks()[0].enabled = !isCameraOn;
     this.setState({
       isCameraOn: !isCameraOn,
     })
@@ -268,7 +268,7 @@ class VideoCall extends Component {
 
   toggleAudio = () => {
     const {isAudioOn, stream} = this.state;
-    stream.getAudioTracks()[0].enabled = !isAudioOn;
+    if (stream) stream.getAudioTracks()[0].enabled = !isAudioOn;
     this.setState({
       isAudioOn: !isAudioOn,
     })
