@@ -50,7 +50,7 @@ class VideoCall extends Component {
         this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
       } else {
         this.toggleVideoCamera();
-        this.setStreamFromCameraDevice(null);
+        this.setStreamOnlyFromMicro();
       }
     }, 500);
 
@@ -84,7 +84,7 @@ class VideoCall extends Component {
     this.setStreamFromCameraDevice(cameraDevices[newIndex].deviceId);
   };
 
-  setStreamFromCameraDevice = (cameraDeviceId = null) => {
+  setStreamFromCameraDevice = (cameraDeviceId) => {
     const {stream} = this.state;
 
     navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 896 }, height: { ideal: 414 } }, audio: true}, (newStream) => {
@@ -101,6 +101,20 @@ class VideoCall extends Component {
        // peer.removeStream(stream).;
         //peer.addStream(newStream);
       }
+      this.setStream(newStream);
+      if (this.userVideo.current) {
+        this.userVideo.current.srcObject = newStream;
+      }
+    }, (error) => {
+      console.log('err', error);
+    });
+  };
+
+  setStreamOnlyFromMicro = () => {
+    const {stream} = this.state;
+
+    navigator.getUserMedia({audio: true}, (newStream) => {
+
       this.setStream(newStream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = newStream;
