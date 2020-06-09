@@ -97,9 +97,6 @@ class VideoCall extends Component {
                 try {
                   peer.replaceTrack(lastStreamTrack, track, stream);
                 } catch (e) {}
-                try {
-                  peer.replaceTrack(lastStreamTrack, track, newStream);
-                } catch (e) {}
                 if (lastStream) {
                   try {
                     peer.replaceTrack(lastStreamTrack, track, lastStream);
@@ -109,10 +106,8 @@ class VideoCall extends Component {
             });
           }
         });
-        // peer.removeStream(stream).;
-        //peer.addStream(newStream);
       }
-      if (stream) {
+      if (stream && !lastStream) {
         this.setState({
           lastStream: stream,
         })
