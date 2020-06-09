@@ -25,6 +25,7 @@ class VideoCall extends Component {
     isLoading: true,
     cameraDevices: [],
     activeCameraIndex: 0,
+    lastStream: undefined,
   };
 
   setStream = (stream) => {
@@ -50,6 +51,7 @@ class VideoCall extends Component {
         this.setStreamFromCameraDevice(cameraDevices[0].deviceId);
       } else {
         this.toggleVideoCamera();
+        this.setStreamOnlyFromMicro();
       }
     }, 500);
 
@@ -78,31 +80,52 @@ class VideoCall extends Component {
     const {cameraDevices, activeCameraIndex} = this.state;
     let newIndex = activeCameraIndex === 0 ? 1 : 0;
     this.setState({
-      activeCameraIndex:  newIndex,
+      activeCameraIndex: newIndex,
     });
     this.setStreamFromCameraDevice(cameraDevices[newIndex].deviceId);
   };
 
   setStreamFromCameraDevice = (cameraDeviceId) => {
-    const {stream} = this.state;
+    const {stream, lastStream} = this.state;
 
-    navigator.getUserMedia({video: { deviceId: cameraDeviceId,  width: { ideal: 1280 }, height: { ideal: 720 } }, audio: true}, (newStream) => {
+    navigator.getUserMedia({video: {deviceId: cameraDeviceId, width: 300, height: 100}, audio: true}, (newStream) => {
       if (peer && stream) {
         newStream.getTracks().forEach(track => {
           if (track.kind === 'video') {
-            console.log('new steam', newStream);
             stream.getTracks().forEach(lastStreamTrack => {
-              console.log('last streams' , lastStreamTrack);
               if (track.kind === 'video') {
-                console.log('last stream', lastStreamTrack );
-                peer.replaceTrack(lastStreamTrack, track, stream);
+                try {
+                  peer.replaceTrack(lastStreamTrack, track, stream);
+                } catch (e) {}
+                if (lastStream) {
+                  try {
+                    peer.replaceTrack(lastStreamTrack, track, lastStream);
+                  } catch (e) {}
+                }
               }
             });
           }
         });
-       // peer.removeStream(stream).;
-        //peer.addStream(newStream);
       }
+      if (stream && !lastStream) {
+        this.setState({
+          lastStream: stream,
+        })
+      }
+      this.setStream(newStream);
+      if (this.userVideo.current) {
+        this.userVideo.current.srcObject = newStream;
+      }
+    }, (error) => {
+      console.log('err', error);
+    });
+  };
+
+  setStreamOnlyFromMicro = () => {
+    const {stream} = this.state;
+
+    navigator.getUserMedia({audio: true}, (newStream) => {
+
       this.setStream(newStream);
       if (this.userVideo.current) {
         this.userVideo.current.srcObject = newStream;
@@ -114,8 +137,8 @@ class VideoCall extends Component {
 
   getCameraDevices = () => {
     const {cameraDevices} = this.state;
-    navigator.mediaDevices.enumerateDevices().then(function(devices) {
-      devices.forEach(function(device) {
+    navigator.mediaDevices.enumerateDevices().then(function (devices) {
+      devices.forEach(function (device) {
         if (device.kind === 'videoinput') cameraDevices.push(device);
       });
     });
@@ -164,9 +187,6 @@ class VideoCall extends Component {
       this.handleHandUp();
     });
 
-    peer.on('close', () => {
-    });
-
     peer.signal(callerSignal);
   };
 
@@ -188,14 +208,6 @@ class VideoCall extends Component {
             username: "mCUg_vLCEZnFETmpcyvcxb1gpXHc1KhZO9b_8DnvZJh1jHrQOUi1p1jA9pW2B5sNAAAAAF7agmxqaHVydGFkbzEyMw==",
             credential: "f9dab90e-a752-11ea-a15a-0242ac140004",
             urls: "turn:eu-turn3.xirsys.com:80?transport=udp",
-          /** urls: [
-
-              "turn:eu-turn3.xirsys.com:3478?transport=udp",
-              "turn:eu-turn3.xirsys.com:80?transport=tcp",
-              "turn:eu-turn3.xirsys.com:3478?transport=tcp",
-              "turns:eu-turn3.xirsys.com:443?transport=tcp",
-              "turns:eu-turn3.xirsys.com:5349?transport=tcp"
-            ]**/
           },
         ]
       },
@@ -215,12 +227,7 @@ class VideoCall extends Component {
     });
 
     peer.on('error', (err) => {
-      console.log('Peer error', err);
       this.handleHandUp();
-    });
-
-    peer.on('close', () => {
-      console.log('closed');
     });
 
     socket.on("call:handShakeRequestAccepted", data => {
@@ -267,11 +274,13 @@ class VideoCall extends Component {
   };
 
   toggleAudio = () => {
-    const {isAudioOn, stream} = this.state;
-    if (stream) stream.getAudioTracks()[0].enabled = !isAudioOn;
-    this.setState({
-      isAudioOn: !isAudioOn,
-    })
+    const {isAudioOn, stream, cameraDevices} = this.state;
+    if (stream && cameraDevices) {
+      stream.getAudioTracks()[0].enabled = !isAudioOn;
+      this.setState({
+        isAudioOn: !isAudioOn,
+      })
+    }
   };
 
   getUserVideo = () => {
@@ -299,13 +308,13 @@ class VideoCall extends Component {
         <div id={'partnerVideo'}>
           {this.getPartnerVideo()}
           <img src={VideoUnavailable} alt={'No video'}
-              className={'video-unavailable ' + (isPartnerCameraOn ? 'hidden' : '')}/>
+               className={'video-unavailable ' + (isPartnerCameraOn ? 'hidden' : '')}/>
         </div>
         <Draggable>
           <div id={'selfVideo'}>
             {this.getUserVideo()}
             <img src={VideoUnavailable} alt={'No video'}
-                className={'video-unavailable ' + (isCameraOn ? 'hidden' : '')}/>
+                 className={'video-unavailable ' + (isCameraOn ? 'hidden' : '')}/>
           </div>
         </Draggable>
         <div className={'actions'}>
@@ -320,7 +329,7 @@ class VideoCall extends Component {
               <img src={AudioOff} onClick={this.toggleAudio} alt={'Toggle camera'}/>
           }
           {
-            cameraDevices.length > 1 && <img  src={SwitchCamera} onClick={this.switchCamera} alt={'Switch camera'}/>
+            cameraDevices.length > 1 && <img src={SwitchCamera} onClick={this.switchCamera} alt={'Switch camera'}/>
           }
         </div>
         <img className={'handUp-call'} src={HangUpIcon} onClick={this.handleHandUp} alt={'hangUpCall'}/>
